@@ -1,0 +1,15 @@
+name: fomo
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - scikit-learn
+  - jupyter
+  - xgboost
+  - seaborn
+  - numpy
+  - pip
+  - pip:
+    - pymoo
+
