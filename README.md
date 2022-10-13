@@ -1,2 +1,2 @@
 # fomo
-A Fairness-oriented multi-objective optimizer
+A fairness-oriented multi-objective optimization
