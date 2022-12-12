@@ -6,12 +6,13 @@ from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
 from sklearn.metrics import make_scorer
-from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import SGDClassifier, SGDRegressor
 # pymoo
 from pymoo.core.algorithm import Algorithm
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 from .problem import FomoProblem
+import fomo.metrics as metrics
 
 class FomoEstimator(BaseEstimator):
     """ The base estimator for training fair models.  
@@ -30,30 +31,24 @@ class FomoEstimator(BaseEstimator):
     algorithm: pymoo Algorithm, default=None
         The multi-objective optimizer to use. Should be compatible with 
         `pymoo.core.algorithm.Algorithm`. 
+    random_state: int | None
+        Random seed. 
 
-    Examples
-    --------
-    >>> from fomo import FomoEstimator
-    >>> import numpy as np
-    >>> X = np.arange(100).reshape(100, 1)
-    >>> y = np.zeros((100, ))
-    >>> estimator = FomoEstimator()
-    >>> estimator.fit(X, y)
-    FomoEstimator()
     """
     def __init__(self, 
-                 estimator,
-                 fairness_metrics,
-                 accuracy_metrics,
-                 algorithm,
+                 estimator: BaseEstimator,
+                 fairness_metrics: list[str],
+                 accuracy_metrics: list[str],
+                 algorithm: Algorithm,
                  random_state
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
+         self.accuracy_metrics=accuracy_metrics
          self.algorithm=algorithm
          self.random_state=random_state
 
-    def fit(self, X, y, groups=None):
+    def fit(self, X, y, protected_features=None, Xp=None):
         """Train the model.
 
         1. Train a population of self.estimator models with random weights. 
@@ -67,19 +62,20 @@ class FomoEstimator(BaseEstimator):
         y : array-like, shape (n_samples,) or (n_samples, n_outputs)
             The target values (class labels in classification, real numbers in
             regression).
-
+        protected_columns: list[str] | None
+            The columns in DataFrame X used to assign fairness. 
+        Xp : {array-like, sparse matrix}, shape (n_samples, n_protected_features)
+            The input samples for measuring/optimizing fairness during training.
         Returns
         -------
         self : object
             Returns self.
         """
-        X, y = check_X_y(X, y, accept_sparse=True)
+        # X, y = check_X_y(X, y, accept_sparse=True)
 
         # define problem
         self.problem_ = FomoProblem(fomo_estimator=self)
 
-        # define algorithm
-        
         ########################################
         # minimize
         self.res_ = minimize(self.problem_,
@@ -129,11 +125,11 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         The classes seen at :meth:`fit`.
     """
     def __init__(self, 
-                 estimator=SGDClassifier(),
+                 estimator: ClassifierMixin=SGDClassifier(),
                  fairness_metrics=None,
                  accuracy_metrics=None,
-                 algorithm=NSGA2(),
-                 random_state=None
+                 algorithm: Algorithm = NSGA2(),
+                 random_state: int=None
                 ):
         super().__init__(
             estimator, 
@@ -143,7 +139,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             random_state
         )
 
-    def fit(self, X, y, groups=None):
+    def fit(self, X, y, protected_features=None, Xp=None):
         """A reference implementation of a fitting function for a classifier.
 
         Parameters
@@ -165,6 +161,11 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
         self.X_ = X
         self.y_ = y
+
+        self._init_metrics()
+
+        super().fit(X, y, protected_features=protected_features, Xp=Xp)
+
         # Return the classifier
         return self
 
@@ -193,8 +194,11 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
     def _init_metrics(self):
         """ Check metric definitions and/or define when necessary. """
-        if len(self.accuracy_metrics) == 0:
+        self.metrics_ = []
+        if self.accuracy_metrics is None:
             self.metrics_.append(make_scorer(self.estimator.score))
+        if len(self.fairness_metrics) == 0:
+            self.metrics_.append(metrics.multicalibration_loss)
 
 
 class FomoRegressor(RegressorMixin, BaseEstimator):
@@ -212,11 +216,33 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
     ----------
     n_features_ : int
         The number of features of the data passed to :meth:`fit`.
-    """
-    def __init__(self, demo_param='demo'):
-        self.demo_param = demo_param
 
-    def fit(self, X, y, groups=None):
+    Examples
+    --------
+    >>> from fomo import FomoEstimator
+    >>> import numpy as np
+    >>> X = np.arange(100).reshape(100, 1)
+    >>> y = np.zeros((100, ))
+    >>> estimator = FomoEstimator()
+    >>> estimator.fit(X, y)
+    FomoEstimator()
+    """
+    def __init__(self, 
+                 estimator: RegressorMixin=SGDRegressor(),
+                 fairness_metrics: list[str]=None,
+                 accuracy_metrics: list[str]=None,
+                 algorithm: str ='NSGA2',
+                 random_state: int=None
+                ):
+        super().__init__(
+            estimator, 
+            fairness_metrics, 
+            accuracy_metrics,
+            algorithm, 
+            random_state
+        )
+
+    def fit(self, X, y, protected_features=None, Xp=None):
         """A reference implementation of a fitting function for a classifier.
 
         Parameters
@@ -238,7 +264,9 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
 
         self.X_ = X
         self.y_ = y
-        # Return the classifier
+        super().fit(X, y, protected_features=protected_features, Xp=Xp)
+
+        # Return the regressor
         return self
 
     def predict(self, X):

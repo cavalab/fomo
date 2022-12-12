@@ -9,7 +9,9 @@ dependencies:
   - xgboost
   - seaborn
   - numpy
+  - pytest
   - pip
   - pip:
     - pymoo
+    - pmlb
 

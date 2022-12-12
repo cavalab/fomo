@@ -2,13 +2,12 @@ import copy
 import pytest
 import pandas as pd
 from fomo import FomoClassifier
-# from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import roc_auc_score, average_precision_score
 from pmlb import pmlb   
-import pmc.utils as utils
-import pmc.metrics as metrics
+import fomo.metrics as metrics
 
 dataset = pmlb.fetch_data('adult', 
                           local_cache_dir='/home/bill/projects/pmlb'
@@ -33,12 +32,11 @@ groups = ['race','sex','native-country']
 
 
 
-
 testdata = [
-    ('MC','marginal'), 
-    ('MC','intersectional'), 
-    ('PMC', 'marginal'),
-    ('PMC', 'intersectional')
+    (metrics.multicalibration_loss,'marginal'), 
+    (metrics.multicalibration_loss,'intersectional'), 
+    (metrics.subgroup_FNR, 'marginal'),
+    (metrics.subgroup_FNR, 'intersectional')
            ]
 
 @pytest.mark.parametrize("metric,grouping", testdata)
@@ -46,21 +44,21 @@ def test_training(metric,grouping):
     """Test training"""
     params = dict(
         estimator = LogisticRegression(),
-        auditor_type = Auditor(groups=groups,grouping=grouping),
-        eta = 0.3,
-        gamma=0.1,
-        alpha=0.1,
-        rho=0.2,
-        max_iters=1000,
-        verbosity=2,
-        n_bins=5,
+        fairness_metrics=[metric],
+        # algorithm=NSGA2()
+        # eta = 0.3,
+        # gamma=0.1,
+        # alpha=0.1,
+        # rho=0.2,
+        # max_iters=1000,
+        # verbosity=2,
+        # n_bins=5,
         # iter_sample='bootstrap'
     )
 
-    est = MultiCalibrator(**params, metric=metric)
+    est = FomoClassifier(**params)
 
     est.fit(Xval,yval)
-
 
     print('model\tfold\tAUROC\tAUPRC\tMC\tPMC')
     for x,y_true,fold in [(Xtrain, ytrain,'train'), 
