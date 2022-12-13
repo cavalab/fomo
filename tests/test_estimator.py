@@ -2,6 +2,7 @@ import copy
 import pytest
 import pandas as pd
 from fomo import FomoClassifier
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
@@ -12,15 +13,11 @@ import fomo.metrics as metrics
 dataset = pmlb.fetch_data('adult', 
                           local_cache_dir='/home/bill/projects/pmlb'
 )
+dataset = dataset.sample(n=2000)
 X = dataset.drop('target',axis=1)
 y = dataset['target']
-Xtrainval,Xtest, ytrainval,ytest = train_test_split(X,y,
-                                                    stratify=y,
-                                                    random_state=42,
-                                                    test_size=0.2
-                                                   )
-Xtrain,Xval, ytrain,yval = train_test_split(Xtrainval,ytrainval,
-                                            stratify=ytrainval, 
+Xtrain,Xtest, ytrain,ytest = train_test_split(X,y,
+                                            stratify=y, 
                                             random_state=42,
                                             test_size=0.5
                                            )
@@ -42,27 +39,18 @@ testdata = [
 @pytest.mark.parametrize("metric,grouping", testdata)
 def test_training(metric,grouping):
     """Test training"""
-    params = dict(
+    est = FomoClassifier(
         estimator = LogisticRegression(),
-        fairness_metrics=[metric],
-        # algorithm=NSGA2()
-        # eta = 0.3,
-        # gamma=0.1,
-        # alpha=0.1,
-        # rho=0.2,
-        # max_iters=1000,
-        # verbosity=2,
-        # n_bins=5,
-        # iter_sample='bootstrap'
+        fairness_metrics=[metrics.subgroup_FPR],
+        verbose=True
     )
 
-    est = FomoClassifier(**params)
+    est.fit(Xtrain,ytrain,protected_features=groups, termination=('n_gen',5))
 
-    est.fit(Xval,yval)
+    est.fit(Xtrain,ytrain,protected_features=groups)
 
     print('model\tfold\tAUROC\tAUPRC\tMC\tPMC')
     for x,y_true,fold in [(Xtrain, ytrain,'train'), 
-                          (Xval, yval,'val'),
                           (Xtest, ytest,'test')]:
         y_pred = pd.Series(est.predict_proba(x)[:,1], index=x.index)
         print(metric,end='\t')
@@ -96,3 +84,6 @@ def test_training(metric,grouping):
         print(f'{pmc:.3f}')
         # print('-----------')
 
+if __name__=='__main__':
+    for td in testdata:
+        test_training(*td)

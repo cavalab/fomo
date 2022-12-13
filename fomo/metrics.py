@@ -10,7 +10,8 @@ import pandas as pd
 from tqdm import tqdm
 import logging
 import itertools as it
-from fomo.utils import categorize
+from fomo.utils import categorize 
+from sklearn.metrics import mean_squared_error
 
 logger = logging.getLogger(__name__)
 
@@ -239,7 +240,11 @@ def FPR(y_true, y_pred):
     If y_pred is floats, this is the "soft" false positive rate 
     (i.e. the average probability estimate for the negative class)
     """
-    return np.sum(y_pred[y_true])/np.sum(~y_true)
+    # if there are no negative labels, return zero
+    if np.sum(y_true) == len(y_true):
+        return 0
+    yt = y_true.astype(bool)
+    return np.sum(y_pred[~yt])/np.sum(~yt)
 
 def FNR(y_true, y_pred):
     """Returns False Negative Rate.
@@ -254,7 +259,11 @@ def FNR(y_true, y_pred):
     If y_pred is floats, this is the "soft" false negative rate 
     (i.e. the average probability estimate for the negative class)
     """
-    return np.sum(1-y_pred[y_true])/np.sum(y_true)
+    # if there are no postive labels, return zero
+    if np.sum(y_true) == 0:
+        return 0
+    yt = y_true.astype(bool)
+    return np.sum(1-y_pred[yt])/np.sum(yt)
 
 def subgroup_fairness(
     estimator,
@@ -266,7 +275,9 @@ def subgroup_fairness(
     grouping='intersectional'
 ):
     """Calculate the subgroup fairness of estimator on X according to `metric'.
+    TODO: handle use case when Xp is passed
     """
+    assert isinstance(X, pd.DataFrame), "X should be a dataframe"
     assert groups is not None or X_protected is not None, "groups or X_protected must be defined."
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true)
@@ -281,10 +292,9 @@ def subgroup_fairness(
 
     assert groups is not None, "groups must be defined."
 
-    if categories is None:
-        categories = group(X, y_pred, groups, grouping)
+    categories = X.groupby(groups).groups
 
-    if isinstance(metric,'str'):
+    if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
     elif callable(metric):
         loss_fn = metric
@@ -293,7 +303,10 @@ def subgroup_fairness(
 
     for c, idx in categories.items():
         gamma = len(idx) / len(X)
-        category_loss = gamma*loss_fn(y_true.loc[idx].values, y_pred.loc[idx].values)
+        category_loss = gamma*loss_fn(
+            y_true.loc[idx].values, 
+            y_pred.loc[idx].values
+        )
 
         if  category_loss > max_loss:
             max_loss = category_loss
@@ -305,3 +318,6 @@ def subgroup_FPR(estimator, X, y_true, **kwargs):
 
 def subgroup_FNR(estimator, X, y_true, **kwargs):
     return subgroup_fairness( estimator, X, y_true, 'FNR', **kwargs)
+
+def subgroup_MSE(estimator, X, y_true, **kwargs):
+    return subgroup_fairness( estimator, X, y_true, mean_squared_error, **kwargs)

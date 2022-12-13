@@ -33,6 +33,19 @@ def category_diff(cat1, cat2):
     else:
         return False
 
+# def group(X, y, groups, grouping):
+#     """Map data to an existing set of categories."""
+#     if grouping=='intersectional':
+#         group_ids = df.groupby(groups).groups
+#     elif grouping=='marginal':
+#         group_ids = df[groups].groupby(groups).groups
+#         group_ids = {}
+#         for g in groups:
+#             grp = df.groupby(g).groups
+#             for k,v in grp.items():
+#                 group_ids[(g,k)] = v
+#     return group_ids
+
 def categorize(X, y, groups, grouping,
                n_bins=10,
                bins=None,
@@ -45,6 +58,8 @@ def categorize(X, y, groups, grouping,
     categories = None 
 
     if bins is None:
+        if n_bins is None:
+            n_bins = 10
         bins = np.linspace(float(1.0/n_bins), 1.0, n_bins)
         bins[0] = 0.0
     else:
@@ -57,15 +72,8 @@ def categorize(X, y, groups, grouping,
                                            retbins=True
                                           )
     categories = {}
-    if grouping=='intersectional':
-        group_ids = df.groupby(groups).groups
-    elif grouping=='marginal':
-        group_ids = df[groups].groupby(groups).groups
-        group_ids = {}
-        for g in groups:
-            grp = df.groupby(g).groups
-            for k,v in grp.items():
-                group_ids[(g,k)] = v
+    # group_ids = groupby(X, y, groups, grouping)
+    group_ids = df.groupby(groups).groups
 
     min_grp_size = gamma*len(X) 
     min_cat_size = min_grp_size*alpha/n_bins

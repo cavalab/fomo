@@ -5,14 +5,21 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
-from sklearn.metrics import make_scorer
+from sklearn.metrics import make_scorer, roc_auc_score, r2_score
 from sklearn.linear_model import SGDClassifier, SGDRegressor
+from sklearn.base import clone
 # pymoo
 from pymoo.core.algorithm import Algorithm
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 from .problem import FomoProblem
 import fomo.metrics as metrics
+# from pymoo.decomposition.asf import ASF
+from pymoo.mcdm.high_tradeoff import HighTradeoffPoints
+from pymoo.visualization.scatter import Scatter
+# plotting
+import matplotlib.pyplot as plt
+
 
 class FomoEstimator(BaseEstimator):
     """ The base estimator for training fair models.  
@@ -40,15 +47,17 @@ class FomoEstimator(BaseEstimator):
                  fairness_metrics: list[str],
                  accuracy_metrics: list[str],
                  algorithm: Algorithm,
-                 random_state
+                 random_state: int,
+                 verbose:bool
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
          self.accuracy_metrics=accuracy_metrics
          self.algorithm=algorithm
          self.random_state=random_state
+         self.verbose=verbose
 
-    def fit(self, X, y, protected_features=None, Xp=None):
+    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """Train the model.
 
         1. Train a population of self.estimator models with random weights. 
@@ -72,20 +81,45 @@ class FomoEstimator(BaseEstimator):
             Returns self.
         """
         # X, y = check_X_y(X, y, accept_sparse=True)
-
+        self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
         # define problem
         self.problem_ = FomoProblem(fomo_estimator=self)
+
+        # metric arguments
+        self.metric_kwargs = dict(
+            groups=protected_features, 
+            X_protected=Xp
+        )
 
         ########################################
         # minimize
         self.res_ = minimize(self.problem_,
                              self.algorithm,
-                             seed=self.random_state
+                             seed=self.random_state,
+                             verbose=self.verbose,
+                             **kwargs
                             )
-        
+        # choose "best" estimator
+        self.best_estimator_ = self._pick_best() 
         self.is_fitted_ = True
         # `fit` should always return `self`
         return self
+
+    def _pick_best(self):
+        """Picks the best solution based on high tradeoff point. """
+        # weights = np.array([0.5 for n in range(self.n_obj_)])
+        # decomp = ASF()
+        # I = decomp(F, weights).argmin()
+        F = self.res_.F
+        dm = HighTradeoffPoints()
+        I = dm(F)[0]
+        print("Best regarding decomposition: Point %s - %s" % (I, F[I]))
+        self.best_weights_ = self.res_.X[I]
+        print(f'best_weights: {self.best_weights_}')
+        self.I_ = I
+        best_est = clone(self.estimator)
+        best_est.fit(self.X_, self.y_, sample_weight=self.best_weights_)
+        return best_est
 
     def predict(self, X):
         """ A reference implementation of a predicting function.
@@ -102,7 +136,23 @@ class FomoEstimator(BaseEstimator):
         """
         X = check_array(X, accept_sparse=True)
         check_is_fitted(self, 'is_fitted_')
-        return np.ones(X.shape[0], dtype=np.int64)
+        return self.best_estimator_.predict(X)
+
+    def plot(self):
+        check_is_fitted(self, 'is_fitted_')
+        F = self.res_.F
+        I = self.I_
+        axis_labels = (
+            [ am._score_func.__name__ for am in self.accuracy_metrics_ ] 
+            + [ fn.__name__ for fn in self.fairness_metrics_ ]
+        )
+        plot = (
+            Scatter()
+            .add(F, alpha=0.2)
+            .add(F[I], color="red", s=100)
+        )
+        plot.axis_labels = axis_labels
+        return plot
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """ An example classifier which implements a 1-NN algorithm.
@@ -129,17 +179,19 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  fairness_metrics=None,
                  accuracy_metrics=None,
                  algorithm: Algorithm = NSGA2(),
-                 random_state: int=None
+                 random_state: int=None,
+                 verbose: bool = False
                 ):
         super().__init__(
             estimator, 
             fairness_metrics, 
             accuracy_metrics,
             algorithm, 
-            random_state
+            random_state,
+            verbose
         )
 
-    def fit(self, X, y, protected_features=None, Xp=None):
+    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """A reference implementation of a fitting function for a classifier.
 
         Parameters
@@ -155,7 +207,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             Returns self.
         """
         # Check that X and y have correct shape
-        X, y = check_X_y(X, y)
+        # X, y = check_X_y(X, y)
         # Store the classes seen during fit
         self.classes_ = unique_labels(y)
 
@@ -164,7 +216,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
         self._init_metrics()
 
-        super().fit(X, y, protected_features=protected_features, Xp=Xp)
+        super().fit(X, y, protected_features=protected_features, Xp=Xp, **kwargs)
 
         # Return the classifier
         return self
@@ -187,18 +239,22 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         check_is_fitted(self, ['X_', 'y_'])
 
         # Input validation
-        X = check_array(X)
+        # X = check_array(X)
 
-        y_pred = None
-        return y_pred
+        return super().predict(X)
+
+    def predict_proba(self, X):
+        """ Return prediction probabilities."""
+        return self.best_estimator_.predict_proba(X)
 
     def _init_metrics(self):
         """ Check metric definitions and/or define when necessary. """
-        self.metrics_ = []
+        self.accuracy_metrics_ = self.accuracy_metrics
+        self.fairness_metrics_ = self.fairness_metrics
         if self.accuracy_metrics is None:
-            self.metrics_.append(make_scorer(self.estimator.score))
-        if len(self.fairness_metrics) == 0:
-            self.metrics_.append(metrics.multicalibration_loss)
+            self.accuracy_metrics_ = [make_scorer(roc_auc_score, greater_is_better=False)]
+        if self.fairness_metrics is None:
+            self.fairness_metrics_ = [metrics.multicalibration_loss]
 
 
 class FomoRegressor(RegressorMixin, BaseEstimator):
@@ -232,17 +288,19 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  fairness_metrics: list[str]=None,
                  accuracy_metrics: list[str]=None,
                  algorithm: str ='NSGA2',
-                 random_state: int=None
+                 random_state: int=None,
+                 verbose: bool = False
                 ):
         super().__init__(
             estimator, 
             fairness_metrics, 
             accuracy_metrics,
             algorithm, 
-            random_state
+            random_state,
+            verbose
         )
 
-    def fit(self, X, y, protected_features=None, Xp=None):
+    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """A reference implementation of a fitting function for a classifier.
 
         Parameters
@@ -264,7 +322,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
 
         self.X_ = X
         self.y_ = y
-        super().fit(X, y, protected_features=protected_features, Xp=Xp)
+        super().fit(X, y, protected_features=protected_features, Xp=Xp, **kwargs)
 
         # Return the regressor
         return self
@@ -289,4 +347,13 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
         # Input validation
         X = check_array(X)
 
-        return self.y_
+        return super().predict(X)
+
+    def _init_metrics(self):
+        """ Check metric definitions and/or define when necessary. """
+        self.accuracy_metrics_ = []
+        self.fairness_metrics_ = []
+        if self.accuracy_metrics is None:
+            self.accuracy_metrics_.append(make_scorer(1-r2_score))
+        if len(self.fairness_metrics) == 0:
+            self.fairness_metrics_.append(metrics.subgroup_MSE)
