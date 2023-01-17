@@ -70,9 +70,9 @@ def multicalibration_loss(
     bins=None,
     categories=None,
     proportional=False,
-    alpha=0.0,
-    gamma=0.0,
-    rho=0.0
+    alpha=0.01,
+    gamma=0.01,
+    rho=0.1
 ):
     """custom scoring function for multicalibration.
        calculate current loss in terms of (proportional) multicalibration"""
@@ -109,63 +109,17 @@ def multicalibration_loss(
 
     return loss
 
-def multicalibration_score(estimator, X, y_true, groups, **kwargs):
-    return -multicalibration_loss(estimator, X, y_true, groups, **kwargs)
+def multicalibration_score(estimator, X, y_true, **kwargs):
+    return -multicalibration_loss(estimator, X, y_true, **kwargs)
 
-def proportional_multicalibration_loss(estimator, X, y_true, groups, **kwargs):
+def proportional_multicalibration_loss(estimator, X, y_true, **kwargs):
     kwargs['proportional'] = True
-    return multicalibration_loss(estimator, X, y_true, groups,  **kwargs)
+    return multicalibration_loss(estimator, X, y_true, **kwargs)
 
 def proportional_multicalibration_score(estimator, X, y_true, groups, **kwargs):
     return -proportional_multicalibration_loss(estimator, X, y_true, groups,  **kwargs)
 
-def differential_calibration(
-    estimator, 
-    X, 
-    y_true,
-    groups,
-    n_bins=None,
-    bins=None,
-    stratified_categories=None,
-    alpha=0.0,
-    gamma=0.0,
-    rho=0.0
-):
-    """Return the differential calibration of estimator on groups."""
-
-    assert isinstance(X, pd.DataFrame), "X needs to be a dataframe"
-    assert all([g in X.columns for g in groups]), ("groups not found in"
-                                                   " X.columns")
-    if not isinstance(y_true, pd.Series):
-        y_true = pd.Series(y_true)
-
-    y_pred = estimator.predict_proba(X)[:,1]
-
-    if stratified_categories is None:
-        stratified_categories = stratify_groups(X, y_pred, groups,
-                                n_bins=n_bins,
-                                bins=bins,
-                                alpha=alpha, 
-                                gamma=gamma
-                               )
-    logger.info(f'# categories: {len(stratified_categories)}')
-    dc_max = 0
-    logger.info("calclating pairwise differential calibration...")
-    for interval in stratified_categories.keys():
-        for (ci,i),(cj,j) in pairwise(stratified_categories[interval].items()):
-
-            yi = max(y_true.loc[i].mean(), rho)
-            yj = max(y_true.loc[j].mean(), rho)
-
-            dc = np.abs( np.log(yi) - np.log(yj) )
-
-            if dc > dc_max:
-                dc_max = dc
-
-    return dc_max
-
-
-def differential_calibration(
+def differential_calibration_loss(
     estimator, 
     X, 
     y_true,
@@ -211,6 +165,9 @@ def differential_calibration(
                 dc_max = dc
 
     return dc_max
+
+def differential_calibration_score(estimator, X, y_true, **kwargs):
+    return -differential_calibration_loss(estimator, X, y_true, **kwargs)
 
 def TPR(y_true, y_pred):
     """Returns True Positive Rate.

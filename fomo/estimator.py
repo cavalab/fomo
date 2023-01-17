@@ -1,15 +1,20 @@
 """
 This is a module to be used as a reference for building other modules
 """
+import pdb
 import numpy as np
+import copy
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
-from sklearn.metrics import make_scorer, roc_auc_score, r2_score
+from sklearn.metrics import make_scorer, roc_auc_score, r2_score, mean_squared_error
 from sklearn.linear_model import SGDClassifier, SGDRegressor
 from sklearn.base import clone
+import multiprocessing
+
 # pymoo
 from pymoo.core.algorithm import Algorithm
+from pymoo.core.problem import StarmapParallelization
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 from .problem import FomoProblem
@@ -48,7 +53,9 @@ class FomoEstimator(BaseEstimator):
                  accuracy_metrics: list[str],
                  algorithm: Algorithm,
                  random_state: int,
-                 verbose:bool
+                 verbose:bool,
+                 n_jobs:int,
+                 batch_size:int
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -56,6 +63,8 @@ class FomoEstimator(BaseEstimator):
          self.algorithm=algorithm
          self.random_state=random_state
          self.verbose=verbose
+         self.n_jobs=n_jobs
+         self.batch_size=batch_size
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """Train the model.
@@ -80,10 +89,16 @@ class FomoEstimator(BaseEstimator):
         self : object
             Returns self.
         """
+        self._init_model()
         # X, y = check_X_y(X, y, accept_sparse=True)
         self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
         # define problem
-        self.problem_ = FomoProblem(fomo_estimator=self)
+        # initialize the thread pool and create the runner
+        n_processes = self.n_jobs if self.n_jobs > 0 else multiprocessing.cpu_count()
+        pool = multiprocessing.Pool(n_processes)
+        runner = StarmapParallelization(pool.starmap)
+
+        self.problem_ = FomoProblem(fomo_estimator=self, elementwise_runner=runner)
 
         # metric arguments
         self.metric_kwargs = dict(
@@ -99,6 +114,7 @@ class FomoEstimator(BaseEstimator):
                              verbose=self.verbose,
                              **kwargs
                             )
+        pool.close()
         # choose "best" estimator
         self.best_estimator_ = self._pick_best() 
         self.is_fitted_ = True
@@ -111,8 +127,11 @@ class FomoEstimator(BaseEstimator):
         # decomp = ASF()
         # I = decomp(F, weights).argmin()
         F = self.res_.F
-        dm = HighTradeoffPoints()
-        I = dm(F)[0]
+        if len(F) == 1:
+            I = 0
+        else:
+            dm = HighTradeoffPoints()
+            I = dm(F)[0]
         print("Best regarding decomposition: Point %s - %s" % (I, F[I]))
         self.best_weights_ = self.res_.X[I]
         print(f'best_weights: {self.best_weights_}')
@@ -140,12 +159,17 @@ class FomoEstimator(BaseEstimator):
 
     def plot(self):
         check_is_fitted(self, 'is_fitted_')
-        F = self.res_.F
+        F = copy.copy(self.res_.F)
         I = self.I_
         axis_labels = (
             [ am._score_func.__name__ for am in self.accuracy_metrics_ ] 
             + [ fn.__name__ for fn in self.fairness_metrics_ ]
         )
+        axis_labels = [al.replace('_',' ') for al in axis_labels]
+        # reverse F for metrics where higher is better
+        for i,m in enumerate(self.accuracy_metrics_ + self.fairness_metrics_): 
+            if hasattr(m, '_sign'):
+                F[:,i] = F[:,i]*m._sign
         plot = (
             Scatter()
             .add(F, alpha=0.2)
@@ -153,6 +177,12 @@ class FomoEstimator(BaseEstimator):
         )
         plot.axis_labels = axis_labels
         return plot
+
+    def _init_model(self):
+        if hasattr(self.estimator, 'random_state'):
+            self.estimator.random_state = self.random_state
+        if hasattr(self.estimator, 'n_jobs'):
+            self.estimator.n_jobs = 1
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """ An example classifier which implements a 1-NN algorithm.
@@ -180,7 +210,9 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  accuracy_metrics=None,
                  algorithm: Algorithm = NSGA2(),
                  random_state: int=None,
-                 verbose: bool = False
+                 verbose: bool = False,
+                 n_jobs: int = -1,
+                 batch_size: int = 0
                 ):
         super().__init__(
             estimator, 
@@ -188,7 +220,9 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             accuracy_metrics,
             algorithm, 
             random_state,
-            verbose
+            verbose,
+            n_jobs,
+            batch_size
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -289,7 +323,9 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  accuracy_metrics: list[str]=None,
                  algorithm: str ='NSGA2',
                  random_state: int=None,
-                 verbose: bool = False
+                 verbose: bool = False,
+                 n_jobs: int = -1,
+                 batch_size: int = 0
                 ):
         super().__init__(
             estimator, 
@@ -297,7 +333,9 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             accuracy_metrics,
             algorithm, 
             random_state,
-            verbose
+            verbose,
+            n_jobs,
+            batch_size
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -354,6 +392,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
         self.accuracy_metrics_ = []
         self.fairness_metrics_ = []
         if self.accuracy_metrics is None:
-            self.accuracy_metrics_.append(make_scorer(1-r2_score))
+            # self.accuracy_metrics_.append(make_scorer(r2_score, greater_is_better=False))
+            self.accuracy_metrics_.append(make_scorer(mean_squared_error))
         if len(self.fairness_metrics) == 0:
             self.fairness_metrics_.append(metrics.subgroup_MSE)

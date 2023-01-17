@@ -23,7 +23,7 @@ Xtrain,Xtest, ytrain,ytest = train_test_split(X,y,
                                            )
 
 # groups = ['age','workclass','race','sex','native-country']
-groups = ['race','sex','native-country']
+GROUPS = ['race','sex','native-country']
 # groups = ['race', 'sex']
 # groups = list(X.columns)
 
@@ -41,13 +41,13 @@ def test_training(metric,grouping):
     """Test training"""
     est = FomoClassifier(
         estimator = LogisticRegression(),
-        fairness_metrics=[metrics.subgroup_FPR],
+        fairness_metrics=[metric],
         verbose=True
     )
 
-    est.fit(Xtrain,ytrain,protected_features=groups, termination=('n_gen',5))
+    est.fit(Xtrain,ytrain,protected_features=GROUPS, termination=('n_gen',1))
 
-    est.fit(Xtrain,ytrain,protected_features=groups)
+    # est.fit(Xtrain,ytrain,protected_features=groups)
 
     print('model\tfold\tAUROC\tAUPRC\tMC\tPMC')
     for x,y_true,fold in [(Xtrain, ytrain,'train'), 
@@ -55,34 +55,15 @@ def test_training(metric,grouping):
         y_pred = pd.Series(est.predict_proba(x)[:,1], index=x.index)
         print(metric,end='\t')
         print(fold,end='\t')
+        score = metric(
+            est,
+            x, 
+            y_true, 
+            groups=GROUPS
+        )
+        print(f'Fold:{fold}\t{metric.__name__}:{score}',end='\t')
         for score in [roc_auc_score, average_precision_score]: 
-            print(f'{score(y_true, y_pred):.3f}',end='\t')
-        mc = metrics.multicalibration_loss(
-            est,
-            x, 
-            y_true, 
-            groups,
-            grouping=grouping,
-            alpha=params['alpha'], 
-            gamma=params['gamma'],
-            n_bins=params['n_bins'],
-            rho=params['rho']
-        )
-        pmc = metrics.proportional_multicalibration_loss(
-            est,
-            x, 
-            y_true, 
-            groups,
-            grouping=grouping,
-            proportional=True,
-            alpha=params['alpha'], 
-            gamma=params['gamma'],
-            n_bins=params['n_bins'],
-            rho=params['rho']
-        )
-        print(f'{mc:.3f}',end='\t')
-        print(f'{pmc:.3f}')
-        # print('-----------')
+            print(f'{score.__name__}: {score(y_true, y_pred):.3f}')
 
 if __name__=='__main__':
     for td in testdata:
