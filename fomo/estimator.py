@@ -3,6 +3,7 @@ This is a module to be used as a reference for building other modules
 """
 import pdb
 import copy
+import math
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
@@ -150,7 +151,7 @@ class FomoEstimator(BaseEstimator):
         if not hasattr(self, 'estimator_archive_'):
             print("Need to fit archive models. You can set `store_final_models` to True to avoid this step.")
             self.estimator_archive_ = self._store_final_models()
-        return self._output_archive('predict', X)
+        return self._output_archive('predict', X=X)
 
 
     def _pick_best(self):
@@ -163,7 +164,14 @@ class FomoEstimator(BaseEstimator):
             I = 0
         else:
             dm = HighTradeoffPoints()
-            I = dm(F)[0]
+            I = dm(F)
+            if I: 
+                if len(I) > 1:
+                    I = I[math.floor(len(I)/2)]
+                else:
+                    I = I[0]
+            else:
+                I = np.random.randint(len(F))
         print("Best regarding decomposition: Point %s - %s" % (I, F[I]))
         self.best_weights_ = self.res_.X[I]
         print(f'best_weights: {self.best_weights_}')
@@ -330,7 +338,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         if not hasattr(self, 'estimator_archive_'):
             print("Need to fit archive models. You can set `store_final_models` to True to avoid this step.")
             self.estimator_archive_ = self._store_final_models()
-        return self._output_archive('predict_proba', X)
+        return self._output_archive('predict_proba', X=X)
 
 
 class FomoRegressor(RegressorMixin, BaseEstimator):
