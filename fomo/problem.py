@@ -21,6 +21,7 @@ class FomoProblem(ElementwiseProblem):
             **kwargs
         )
 
+    @profile
     def _evaluate(self, sample_weight, out, *args, **kwargs):
         """Evaluate the weights by fitting an estimator and evaluating."""
 

@@ -47,8 +47,6 @@ def test_training(metric,grouping):
 
     est.fit(Xtrain,ytrain,protected_features=GROUPS, termination=('n_gen',1))
 
-    # est.fit(Xtrain,ytrain,protected_features=groups)
-
     print('model\tfold\tAUROC\tAUPRC\tMC\tPMC')
     for x,y_true,fold in [(Xtrain, ytrain,'train'), 
                           (Xtest, ytest,'test')]:
