@@ -4,6 +4,7 @@ This is a module to be used as a reference for building other modules
 import pdb
 import numpy as np
 import copy
+import math
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
@@ -55,7 +56,8 @@ class FomoEstimator(BaseEstimator):
                  random_state: int,
                  verbose:bool,
                  n_jobs:int,
-                 batch_size:int
+                 batch_size:int,
+                 store_final_models:bool
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -65,6 +67,7 @@ class FomoEstimator(BaseEstimator):
          self.verbose=verbose
          self.n_jobs=n_jobs
          self.batch_size=batch_size
+         self.store_final_models=store_final_models
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """Train the model.
@@ -90,14 +93,14 @@ class FomoEstimator(BaseEstimator):
             Returns self.
         """
         self._init_model()
-        # X, y = check_X_y(X, y, accept_sparse=True)
         self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
+        ########################################
         # define problem
         # initialize the thread pool and create the runner
         n_processes = self.n_jobs if self.n_jobs > 0 else multiprocessing.cpu_count()
+        print('running',n_processes,'processes')
         pool = multiprocessing.Pool(n_processes)
         runner = StarmapParallelization(pool.starmap)
-
         self.problem_ = FomoProblem(fomo_estimator=self, elementwise_runner=runner)
 
         # metric arguments
@@ -115,11 +118,35 @@ class FomoEstimator(BaseEstimator):
                              **kwargs
                             )
         pool.close()
+        ########################################
         # choose "best" estimator
         self.best_estimator_ = self._pick_best() 
         self.is_fitted_ = True
-        # `fit` should always return `self`
+        # store archive of estimators
+        if self.store_final_models:
+            self.estimator_archive_ = self._store_final_models()
         return self
+
+    def _store_final_models(self):
+        """Store archive of fitted estimators using final weights."""
+        estimator_archive_ = []
+        for x in self.res_.X:
+            est = clone(self.estimator).fit(self.X_, self.y_, sample_weight=x)
+            estimator_archive_.append(est)
+        return estimator_archive_
+
+    def _output_archive(self, fn, **kwargs):
+        """Call a function on every estimator in the archive and return output."""
+        return [getattr(est, fn)(**kwargs) for est in self.estimator_archive_]
+
+    def predict_archive(self, X):
+        """Return a list of predictions from the archive models. """
+        check_is_fitted(self, 'is_fitted_')
+        if not hasattr(self, 'estimator_archive_'):
+            print("Need to fit archive models. You can set `store_final_models` to True to avoid this step.")
+            self.estimator_archive_ = self._store_final_models()
+        return self._output_archive('predict', X=X)
+
 
     def _pick_best(self):
         """Picks the best solution based on high tradeoff point. """
@@ -131,7 +158,14 @@ class FomoEstimator(BaseEstimator):
             I = 0
         else:
             dm = HighTradeoffPoints()
-            I = dm(F)[0]
+            I = dm(F)
+            if I: 
+                if len(I) > 1:
+                    I = I[math.floor(len(I)/2)]
+                else:
+                    I = I[0]
+            else:
+                I = np.random.randint(len(F))
         print("Best regarding decomposition: Point %s - %s" % (I, F[I]))
         self.best_weights_ = self.res_.X[I]
         print(f'best_weights: {self.best_weights_}')
@@ -212,7 +246,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  random_state: int=None,
                  verbose: bool = False,
                  n_jobs: int = -1,
-                 batch_size: int = 0
+                 batch_size: int = 0,
+                 store_final_models: bool = False
                 ):
         super().__init__(
             estimator, 
@@ -222,7 +257,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             random_state,
             verbose,
             n_jobs,
-            batch_size
+            batch_size,
+            store_final_models
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -290,6 +326,14 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         if self.fairness_metrics is None:
             self.fairness_metrics_ = [metrics.multicalibration_loss]
 
+    def predict_proba_archive(self, X):
+        """Return a list of predictions from the archive models. """
+        check_is_fitted(self, 'is_fitted_')
+        if not hasattr(self, 'estimator_archive_'):
+            print("Need to fit archive models. You can set `store_final_models` to True to avoid this step.")
+            self.estimator_archive_ = self._store_final_models()
+        return self._output_archive('predict_proba', X=X)
+
 
 class FomoRegressor(RegressorMixin, BaseEstimator):
     """ An example transformer that returns the element-wise square root.
@@ -325,7 +369,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  random_state: int=None,
                  verbose: bool = False,
                  n_jobs: int = -1,
-                 batch_size: int = 0
+                 batch_size: int = 0,
+                 store_final_models: bool = False
                 ):
         super().__init__(
             estimator, 
@@ -335,7 +380,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             random_state,
             verbose,
             n_jobs,
-            batch_size
+            batch_size,
+            store_final_models
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
