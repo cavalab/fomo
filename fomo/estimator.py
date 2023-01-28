@@ -1,9 +1,10 @@
 """
 This is a module to be used as a reference for building other modules
 """
-import pdb
+import ipdb
 import copy
 import math
+import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
@@ -57,7 +58,8 @@ class FomoEstimator(BaseEstimator):
                  verbose:bool,
                  n_jobs:int,
                  batch_size:int,
-                 store_final_models:bool
+                 store_final_models:bool,
+                 problem_type
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -68,8 +70,8 @@ class FomoEstimator(BaseEstimator):
          self.n_jobs=n_jobs
          self.batch_size=batch_size
          self.store_final_models=store_final_models
+         self.problem_type=problem_type
 
-    @profile
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """Train the model.
 
@@ -95,25 +97,26 @@ class FomoEstimator(BaseEstimator):
         """
         self._init_model()
         self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
+
         ########################################
         # define problem
-        # initialize the thread pool and create the runner
-        n_processes = self.n_jobs if self.n_jobs > 0 else multiprocessing.cpu_count()
-        print('running',n_processes,'processes')
-        pool = multiprocessing.Pool(n_processes)
-        # pool = ThreadPool(n_processes)
-        runner = StarmapParallelization(pool.starmap)
-        self.problem_ = FomoProblem(
-            fomo_estimator=self, 
-            elementwise_runner=runner,
-            elementwise_evaluation=True
-        )
-
         # metric arguments
-        self.metric_kwargs = dict(
+        metric_kwargs = dict(
             groups=protected_features, 
             X_protected=Xp
         )
+        problem_kwargs=dict(fomo_estimator=self, metric_kwargs=metric_kwargs)
+        # parallelization
+        n_processes = self.n_jobs if self.n_jobs > 0 else multiprocessing.cpu_count()
+        print('running',n_processes,'processes')
+        if n_processes > 1:
+            pool = multiprocessing.Pool(n_processes)
+            runner = StarmapParallelization(pool.starmap)
+            problem_kwargs.update(dict(elementwise_runner=runner))
+
+        self.problem_ = self.problem_type(**problem_kwargs)
+        print('number of variables:',self.problem_.n_var)
+        print('number of objectives:',self.problem_.n_obj)
 
         ########################################
         # minimize
@@ -123,7 +126,8 @@ class FomoEstimator(BaseEstimator):
                              verbose=self.verbose,
                              **kwargs
                             )
-        pool.close()
+        if n_processes > 1:
+            pool.close()
         ########################################
         # choose "best" estimator
         self.best_estimator_ = self._pick_best() 
@@ -151,6 +155,7 @@ class FomoEstimator(BaseEstimator):
         if not hasattr(self, 'estimator_archive_'):
             print("Need to fit archive models. You can set `store_final_models` to True to avoid this step.")
             self.estimator_archive_ = self._store_final_models()
+
         return self._output_archive('predict', X=X)
 
 
@@ -172,12 +177,11 @@ class FomoEstimator(BaseEstimator):
                     I = I[0]
             else:
                 I = np.random.randint(len(F))
-        print("Best regarding decomposition: Point %s - %s" % (I, F[I]))
         self.best_weights_ = self.res_.X[I]
-        print(f'best_weights: {self.best_weights_}')
         self.I_ = I
         best_est = clone(self.estimator)
-        best_est.fit(self.X_, self.y_, sample_weight=self.best_weights_)
+        sample_weight = self.problem_.get_sample_weight(self.best_weights_)
+        best_est.fit(self.X_, self.y_, sample_weight=sample_weight)
         return best_est
 
     def predict(self, X):
@@ -193,7 +197,7 @@ class FomoEstimator(BaseEstimator):
         y : ndarray, shape (n_samples,)
             Returns an array of ones.
         """
-        X = check_array(X, accept_sparse=True)
+        # X = check_array(X, accept_sparse=True)
         check_is_fitted(self, 'is_fitted_')
         return self.best_estimator_.predict(X)
 
@@ -253,7 +257,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  verbose: bool = False,
                  n_jobs: int = -1,
                  batch_size: int = 0,
-                 store_final_models: bool = False
+                 store_final_models: bool = False,
+                 problem_type = FomoProblem
                 ):
         super().__init__(
             estimator, 
@@ -264,7 +269,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             verbose,
             n_jobs,
             batch_size,
-            store_final_models
+            store_final_models,
+            problem_type
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -376,7 +382,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  verbose: bool = False,
                  n_jobs: int = -1,
                  batch_size: int = 0,
-                 store_final_models: bool = False
+                 store_final_models: bool = False,
+                 problem_type = FomoProblem
                 ):
         super().__init__(
             estimator, 
@@ -387,7 +394,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             verbose,
             n_jobs,
             batch_size,
-            store_final_models
+            store_final_models,
+            problem_type
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -406,7 +414,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             Returns self.
         """
         # Check that X and y have correct shape
-        X, y = check_X_y(X, y)
+        # X, y = check_X_y(X, y)
         # Store the classes seen during fit
         self.classes_ = unique_labels(y)
 
@@ -435,7 +443,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
         check_is_fitted(self, ['X_', 'y_'])
 
         # Input validation
-        X = check_array(X)
+        # X = check_array(X)
 
         return super().predict(X)
 

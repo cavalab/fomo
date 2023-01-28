@@ -3,12 +3,19 @@ from pymoo.core.problem import ElementwiseProblem
 from sklearn.base import clone, ClassifierMixin
 from sklearn.utils import resample
 import warnings
+import inspect
 
 class FomoProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
 
-    def __init__(self, fomo_estimator=None, **kwargs):
+    def __init__(
+        self, 
+        fomo_estimator, 
+        metric_kwargs={},
+        **kwargs
+        ):
         self.fomo_estimator=fomo_estimator
+        self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)
         n_obj = (len(self.fomo_estimator.accuracy_metrics_)
                  +len(self.fomo_estimator.fairness_metrics_)
@@ -21,7 +28,9 @@ class FomoProblem(ElementwiseProblem):
             **kwargs
         )
 
-    @profile
+    def get_sample_weight(self, x):
+        return x
+
     def _evaluate(self, sample_weight, out, *args, **kwargs):
         """Evaluate the weights by fitting an estimator and evaluating."""
 
@@ -49,7 +58,7 @@ class FomoProblem(ElementwiseProblem):
             f[i] = metric(est, X, y)
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
-            f[j] = metric(est, X, y, **self.fomo_estimator.metric_kwargs)
+            f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-
+        len(inspect.signature(metric).parameters)
         out['F'] = np.asarray(f)
