@@ -2,9 +2,10 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.utils import check_random_state
 # from itertools import chain
 import numpy as np
+import pandas as pd
+from scipy.special import expit
 
 class MLP(MLPClassifier):
-
 
     def get_n_weights(self):
         """Sets coefs_ and intercepts_ to x."""
@@ -17,6 +18,11 @@ class MLP(MLPClassifier):
     def fit(self, X, y):
         raise NotImplementedError('Dont call fit on this class!')
         return self
+    
+    def predict(self, X):
+        # one-hot encode X
+        # X = pd.get_dummies(X.astype('category'))
+        return self.predict_proba(X)[:,1]
 
     def init(self, X, incremental=False):
         """Overload of MLP training. Just determines the dimensions of 
@@ -24,6 +30,11 @@ class MLP(MLPClassifier):
         Adapted from _multilayer_perceptron.py::_fit()
 
         """
+        # one-hot encode X
+        # X = pd.get_dummies(X.astype('category'))
+        # print('Xohc shape:',X.shape)
+        # import pdb
+        # pdb.set_trace()
         # make a random y
         y = np.random.randint(0,1,size=len(X))
         # Make sure self.hidden_layer_sizes is a list
@@ -93,3 +104,28 @@ class MLP(MLPClassifier):
             start = end
 
         return self
+
+class Linear:
+
+    def __init__(self, Xp):
+        # Xohc = pd.get_dummies(Xp.astype('category'))
+        # print('Xohc shape:',Xohc.shape)
+        self.coefs_ = np.empty(Xp.shape[1] + 1) 
+
+    def get_n_weights(self):
+        """Sets coefs_ and intercepts_ to x."""
+        return len(self.coefs_)
+
+    def set_weights(self, x):
+        """Sets coefs_ and intercepts_ to x."""
+        self.coefs_ = x
+
+    def fit(self, X, y):
+        raise NotImplementedError('Dont call fit on this class!')
+        return self
+
+    def predict(self, X):
+        # Xohc = pd.get_dummies(X.astype('category'))
+        intercept = np.ones(X.shape[0])
+        Xintercept = np.column_stack((intercept, X))
+        return expit(np.dot(Xintercept,self.coefs_))

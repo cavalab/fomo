@@ -19,7 +19,7 @@ from pymoo.core.algorithm import Algorithm
 from pymoo.core.problem import StarmapParallelization
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
-from .problem import FomoProblem
+from .problem import BasicProblem
 import fomo.metrics as metrics
 # from pymoo.decomposition.asf import ASF
 from pymoo.mcdm.high_tradeoff import HighTradeoffPoints
@@ -141,7 +141,11 @@ class FomoEstimator(BaseEstimator):
         """Store archive of fitted estimators using final weights."""
         estimator_archive_ = []
         for x in self.res_.X:
-            est = clone(self.estimator).fit(self.X_, self.y_, sample_weight=x)
+            sample_weight = self.problem_.get_sample_weight(x)
+            est = clone(self.estimator).fit(
+                self.X_, self.y_, 
+                sample_weight=sample_weight
+            )
             estimator_archive_.append(est)
         return estimator_archive_
 
@@ -165,12 +169,13 @@ class FomoEstimator(BaseEstimator):
         # decomp = ASF()
         # I = decomp(F, weights).argmin()
         F = self.res_.F
-        if len(F) == 1:
+
+        if len(F) <= 1:
             I = 0
         else:
             dm = HighTradeoffPoints()
             I = dm(F)
-            if I: 
+            if I is not None: 
                 if len(I) > 1:
                     I = I[math.floor(len(I)/2)]
                 else:
@@ -258,7 +263,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  n_jobs: int = -1,
                  batch_size: int = 0,
                  store_final_models: bool = False,
-                 problem_type = FomoProblem
+                 problem_type = BasicProblem
                 ):
         super().__init__(
             estimator, 
@@ -383,7 +388,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  n_jobs: int = -1,
                  batch_size: int = 0,
                  store_final_models: bool = False,
-                 problem_type = FomoProblem
+                 problem_type = BasicProblem
                 ):
         super().__init__(
             estimator, 

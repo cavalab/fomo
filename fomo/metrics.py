@@ -4,6 +4,7 @@ TODO:
     - false negative fairness
     - mean squared error
 """
+import warnings
 import ipdb
 import numpy as np
 import pandas as pd
@@ -12,6 +13,7 @@ import logging
 import itertools as it
 from fomo.utils import categorize 
 from sklearn.metrics import mean_squared_error
+import gerryfair
 
 logger = logging.getLogger(__name__)
 
@@ -222,6 +224,45 @@ def FNR(y_true, y_pred):
     yt = y_true.astype(bool)
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
+
+def subgroup_loss(y_true, y_pred, X_protected, metric):
+    assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
+    if not isinstance(y_true, pd.Series):
+        y_true = pd.Series(y_true, index=X_protected.index)
+    else:
+        y_true.index = X_protected.index
+
+    y_pred = pd.Series(y_pred, index=X_protected.index)
+
+    groups = list(X_protected.columns)
+    categories = X_protected.groupby(groups).groups
+
+    if isinstance(metric,str):
+        loss_fn = FPR if metric=='FPR' else FNR
+    elif callable(metric):
+        loss_fn = metric
+    else:
+        raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
+
+    max_loss = 0.0
+    for c, idx in categories.items():
+        gamma = len(idx) / len(X_protected)
+        category_loss = gamma*loss_fn(
+            y_true.loc[idx].values, 
+            y_pred.loc[idx].values
+        )
+
+        if  category_loss > max_loss:
+            max_loss = category_loss
+
+    return max_loss
+
+def subgroup_FPR_loss(y_true, y_pred, X_protected):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR')
+
+def subgroup_FNR_loss(y_true, y_pred, X_protected):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FNR')
+
 def subgroup_fairness(
     estimator,
     X,
@@ -236,39 +277,18 @@ def subgroup_fairness(
     """
     assert isinstance(X, pd.DataFrame), "X should be a dataframe"
     assert groups is not None or X_protected is not None, "groups or X_protected must be defined."
-    if not isinstance(y_true, pd.Series):
-        y_true = pd.Series(y_true)
 
     y_pred = estimator.predict_proba(X)[:,1]
-    y_pred = pd.Series(y_pred, index=y_true.index)
+    # y_pred = estimator.predict(X)
 
-
-    assert isinstance(y_true, pd.Series)
-    assert isinstance(y_pred, pd.Series)
-    max_loss = 0.0
-
-    assert groups is not None, "groups must be defined."
-
-    categories = X.groupby(groups).groups
-
-    if isinstance(metric,str):
-        loss_fn = FPR if metric=='FPR' else FNR
-    elif callable(metric):
-        loss_fn = metric
+    # assert groups is not None, "groups must be defined."
+    if groups is None:
+        assert X_protected is not None, "cannot define both groups and X_protected"
     else:
-        raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
+        assert X_protected is None, "cannot define both groups and X_protected"
+        X_protected = X[groups]
 
-    for c, idx in categories.items():
-        gamma = len(idx) / len(X)
-        category_loss = gamma*loss_fn(
-            y_true.loc[idx].values, 
-            y_pred.loc[idx].values
-        )
-
-        if  category_loss > max_loss:
-            max_loss = category_loss
-
-    return max_loss
+    return subgroup_loss(y_true, y_pred, X_protected, metric)
 
 def subgroup_FPR(estimator, X, y_true, **kwargs):
     return subgroup_fairness( estimator, X, y_true, 'FPR', **kwargs)
@@ -278,3 +298,80 @@ def subgroup_FNR(estimator, X, y_true, **kwargs):
 
 def subgroup_MSE(estimator, X, y_true, **kwargs):
     return subgroup_fairness( estimator, X, y_true, mean_squared_error, **kwargs)
+
+
+def auditor_loss(y_true, y_pred, X_protected, metric):
+    auditor = gerryfair.model.Auditor(X_protected, y_true, metric)
+    _,violation = auditor.audit(y_pred)
+    return violation
+
+def auditor_FPR(y_true, y_pred, X_protected):
+    return auditor_loss(y_true, y_pred, X_protected, 'FP')
+
+def auditor_FNR(y_true, y_pred, X_protected):
+    return auditor_loss(y_true, y_pred, X_protected, 'FN')
+
+def audit(
+    estimator,
+    X,
+    y_true,
+    metric:str,
+    groups=None,
+    X_protected=None,
+    grouping='intersectional'
+):
+    assert isinstance(X, pd.DataFrame), "X should be a dataframe"
+    assert groups is not None or X_protected is not None, "groups or X_protected must be defined."
+    if isinstance(y_true, pd.Series):
+       y_true = y_true.values
+
+    y_pred = estimator.predict(X)
+    # y_pred = pd.Series(y_pred, index=y_true.index)
+
+    assert metric in ('FP','FN'), f'metric must be "FP" or "FN", not {metric}'
+    # assert isinstance(y_true, pd.Series)
+    # assert isinstance(y_pred, pd.Series)
+
+    if groups is not None:
+        assert X_protected is None, "cannot define both groups and X_protected"
+        X_protected = X[groups]
+
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore')
+        return auditor_loss(y_true, y_pred, X_protected, metric)
+
+def audit_FPR_loss(
+    estimator,
+    X,
+    y_true,
+    groups=None,
+    X_protected=None,
+    grouping='intersectional'
+):
+    return audit(
+        estimator,
+        X,
+        y_true,
+        'FP',
+        groups,
+        X_protected,
+        grouping
+    )
+
+def audit_FNR_loss(
+    estimator,
+    X,
+    y_true,
+    groups=None,
+    X_protected=None,
+    grouping='intersectional'
+):
+    return audit(
+        estimator,
+        X,
+        y_true,
+        'FN',
+        groups,
+        X_protected,
+        grouping
+    )
