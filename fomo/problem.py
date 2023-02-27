@@ -2,6 +2,7 @@ import numpy as np
 from pymoo.core.problem import ElementwiseProblem
 from sklearn.base import clone, ClassifierMixin
 from sklearn.utils import resample
+from sklearn.pipeline import Pipeline
 import warnings
 import inspect
 from .surrogate_models import MLP, Linear
@@ -37,22 +38,17 @@ class BasicProblem(ElementwiseProblem):
 
         X = self.fomo_estimator.X_
         y = self.fomo_estimator.y_
-        # batch sampling
-        if self.fomo_estimator.batch_size > 0:
-            stratify = y if isinstance(self.fomo_estimator, ClassifierMixin) else None
-            X, y, sample_weight = resample(
-                X, 
-                y,
-                sample_weight, 
-                n_samples=self.fomo_estimator.batch_size,
-                random_state=self.fomo_estimator.random_state, 
-                stratify=stratify
-            )
-
         est = clone(self.fomo_estimator.estimator)
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            est.fit(X,y,sample_weight=sample_weight)
+            if isinstance(est, Pipeline):
+                stepname = est.steps[-1][0]
+                param_name = stepname + '__sample_weight'
+                kwarg = {param_name:sample_weight}
+                est.fit(X, y, **kwarg)
+            else:
+                est.fit(X,y,sample_weight=sample_weight)
         f = np.empty(self.n_obj)
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
@@ -124,7 +120,13 @@ class SurrogateProblem(ElementwiseProblem):
         est = clone(self.fomo_estimator.estimator)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            est.fit(X,y,sample_weight=sample_weight)
+            if isinstance(est, Pipeline):
+                stepname = est.steps[-1][0]
+                param_name = stepname + '__sample_weight'
+                kwarg = {param_name:sample_weight}
+                est.fit(X, y, **kwarg)
+            else:
+                est.fit(X,y,sample_weight=sample_weight)
 
         f = np.empty(self.n_obj)
         j = 0
