@@ -12,10 +12,6 @@ import logging
 import itertools as it
 from fomo.utils import categorize 
 from sklearn.metrics import mean_squared_error
-<<<<<<< HEAD
-# import gerryfair
-=======
->>>>>>> 719342a9addb9abeebea767fa94498268216c6eb
 
 logger = logging.getLogger(__name__)
 
