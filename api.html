@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -185,14 +185,228 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="api">
-<h1>API<a class="headerlink" href="#api" title="Permalink to this heading">#</a></h1>
+          <section id="module-fomo">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-fomo" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="fomo.FomoClassifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fomo.</span></span><span class="sig-name descname"><span class="pre">FomoClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator:</span> <span class="pre">~sklearn.base.ClassifierMixin</span> <span class="pre">=</span> <span class="pre">SGDClassifier()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fairness_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm:</span> <span class="pre">~pymoo.core.algorithm.Algorithm</span> <span class="pre">=</span> <span class="pre">&lt;pymoo.algorithms.moo.nsga2.NSGA2</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_final_models:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_type=&lt;class</span> <span class="pre">'fomo.problem.BasicProblem'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier" title="Permalink to this definition">#</a></dt>
+<dd><p>FOMO Classifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>estimator</strong><span class="classifier">sklearn-like estimator</span></dt><dd><p>The underlying ML model to be trained. 
+The ML model must accept <cite>sample_weight</cite> as an argument to <a class="reference internal" href="#fomo.FomoClassifier.fit" title="fomo.FomoClassifier.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.</p>
+</dd>
+<dt><strong>fairness_metrics</strong><span class="classifier">list[Callable]</span></dt><dd><p>The fairness metrics to try to optimize during fitting.</p>
+</dd>
+<dt><strong>accuracy_metrics</strong><span class="classifier">list[Callable]</span></dt><dd><p>The accuracy metrics to try to optimize during fitting.</p>
+</dd>
+<dt><strong>algorithm: pymoo Algorithm</strong></dt><dd><p>The multi-objective optimizer to use. Should be compatible with 
+<cite>pymoo.core.algorithm.Algorithm</cite>.</p>
+</dd>
+<dt><strong>random_state: int | None</strong></dt><dd><p>Random seed.</p>
+</dd>
+<dt><strong>verbose: bool</strong></dt><dd><p>Whether to print progress.</p>
+</dd>
+<dt><strong>n_jobs: int</strong></dt><dd><p>Number of parallel processes to use. Parallelizes evaluation.</p>
+</dd>
+<dt><strong>store_final_models: bool</strong></dt><dd><p>If True, the final set of models will be stored in the estimator.</p>
+</dd>
+<dt><strong>problem_type: ElementwiseProblem</strong></dt><dd><p>Determines the evaluation class to be used. Options:
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">BasicProblem</span></code>
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">MLPProblem</span></code>
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">LinearProblem</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fomo</span> <span class="kn">import</span> <span class="n">FomoClassifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pmlb</span> <span class="kn">import</span> <span class="n">pmlb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">pmlb</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s1">&#39;adult&#39;</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span> <span class="o">=</span> <span class="n">FomoClassifier</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoClassifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protected_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Train the model.</p>
+<ol class="arabic simple">
+<li><p>Train a population of self.estimator models with random weights.</p></li>
+<li><p>Update sample weights using self.algorithm.</p></li>
+<li><p>Select a given model as best, but also save the set of models.</p></li>
+</ol>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The training input samples.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">array-like, shape (n_samples,)</span></dt><dd><p>The target values. An array of int.</p>
+</dd>
+<dt><strong>protected_features: list[str]|None, default = None</strong></dt><dd><p>The columns of X to calculate fairness over. If specifying columns,
+do not also specify <cite>Xp</cite>.</p>
+</dd>
+<dt><strong>Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None</strong></dt><dd><p>The protected feature values used to calculate fairness. If <cite>Xp</cite> is 
+specified, <cite>protected_features</cite> must be None.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">passed to <cite>pymo.optimize.minimize</cite>.</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">object</span></dt><dd><p>Returns self.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoClassifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier.predict" title="Permalink to this definition">#</a></dt>
+<dd><p>Predict labels from X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The input samples.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">ndarray, shape (n_samples,)</span></dt><dd><p>The label for each sample is the label of the closest sample
+seen during fit.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoClassifier.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier.predict_proba" title="Permalink to this definition">#</a></dt>
+<dd><p>Return prediction probabilities.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoClassifier.predict_proba_archive">
+<span class="sig-name descname"><span class="pre">predict_proba_archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier.predict_proba_archive" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a list of predictions from the archive models.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fomo.FomoRegressor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fomo.</span></span><span class="sig-name descname"><span class="pre">FomoRegressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator:</span> <span class="pre">~sklearn.base.RegressorMixin</span> <span class="pre">=</span> <span class="pre">SGDRegressor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fairness_metrics:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_metrics:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'NSGA2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_final_models:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_type=&lt;class</span> <span class="pre">'fomo.problem.BasicProblem'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoRegressor" title="Permalink to this definition">#</a></dt>
+<dd><p>Fomo class for regression models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>estimator</strong><span class="classifier">sklearn-like estimator</span></dt><dd><p>The underlying ML model to be trained. 
+The ML model must accept <cite>sample_weight</cite> as an argument to <a class="reference internal" href="#fomo.FomoRegressor.fit" title="fomo.FomoRegressor.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.</p>
+</dd>
+<dt><strong>fairness_metrics</strong><span class="classifier">list[Callable]</span></dt><dd><p>The fairness metrics to try to optimize during fitting.</p>
+</dd>
+<dt><strong>accuracy_metrics</strong><span class="classifier">list[Callable]</span></dt><dd><p>The accuracy metrics to try to optimize during fitting.</p>
+</dd>
+<dt><strong>algorithm: pymoo Algorithm</strong></dt><dd><p>The multi-objective optimizer to use. Should be compatible with 
+<cite>pymoo.core.algorithm.Algorithm</cite>.</p>
+</dd>
+<dt><strong>random_state: int | None</strong></dt><dd><p>Random seed.</p>
+</dd>
+<dt><strong>verbose: bool</strong></dt><dd><p>Whether to print progress.</p>
+</dd>
+<dt><strong>n_jobs: int</strong></dt><dd><p>Number of parallel processes to use. Parallelizes evaluation.</p>
+</dd>
+<dt><strong>store_final_models: bool</strong></dt><dd><p>If True, the final set of models will be stored in the estimator.</p>
+</dd>
+<dt><strong>problem_type: ElementwiseProblem</strong></dt><dd><p>Determines the evaluation class to be used. Options:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicProblem</span></code>: loss function weights are directly optimized.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">MLPProblem</span></code>: weights of a multilayer perceptron are optimized to estimate loss function weights.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearProblem</span></code>: weights of a logistic model are optimized to estimate loss function weights.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fomo</span> <span class="kn">import</span> <span class="n">FomoRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pmlb</span> <span class="kn">import</span> <span class="n">pmlb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">pmlb</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s1">&#39;adult&#39;</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span> <span class="o">=</span> <span class="n">FomoRegressor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_features_</strong><span class="classifier">int</span></dt><dd><p>The number of features of the data passed to <a class="reference internal" href="#fomo.FomoRegressor.fit" title="fomo.FomoRegressor.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoRegressor.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protected_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoRegressor.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Train a set of regressors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The training input samples.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">array-like, shape (n_samples,)</span></dt><dd><p>The target values. An array of int.</p>
+</dd>
+<dt><strong>protected_features: list|None, default = None</strong></dt><dd><p>The columns of X to calculate fairness over. If specifying columns,
+do not also specify <cite>Xp</cite>.</p>
+</dd>
+<dt><strong>Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None</strong></dt><dd><p>The protected feature values used to calculate fairness. If <cite>Xp</cite> is 
+specified, <cite>protected_features</cite> must be None.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">object</span></dt><dd><p>Returns self.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fomo.FomoRegressor.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoRegressor.predict" title="Permalink to this definition">#</a></dt>
+<dd><p>Predict outcome.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like, shape (n_samples, n_features)</span></dt><dd><p>The input samples.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">ndarray, shape (n_samples,)</span></dt><dd><p>The label for each sample is the label of the closest sample
+seen during fit.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -237,8 +451,38 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#fomo.FomoClassifier"><code class="docutils literal notranslate"><span class="pre">FomoClassifier</span></code></a><ul>
+<li><a class="reference internal" href="#fomo.FomoClassifier.fit"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.fit()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.FomoClassifier.predict"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.predict()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.FomoClassifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.predict_proba()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.FomoClassifier.predict_proba_archive"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.predict_proba_archive()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fomo.FomoRegressor"><code class="docutils literal notranslate"><span class="pre">FomoRegressor</span></code></a><ul>
+<li><a class="reference internal" href="#fomo.FomoRegressor.fit"><code class="docutils literal notranslate"><span class="pre">FomoRegressor.fit()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.FomoRegressor.predict"><code class="docutils literal notranslate"><span class="pre">FomoRegressor.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
