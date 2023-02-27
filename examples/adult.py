@@ -12,8 +12,9 @@ from pmlb import pmlb
 import fomo.metrics as metrics
 from pymoo.algorithms.moo.nsga2 import NSGA2
 
-dataset = pmlb.fetch_data('adult', 
-                          local_cache_dir='/home/bill/projects/pmlb'
+dataset = pmlb.fetch_data(
+    'adult', 
+    local_cache_dir='/home/bill/projects/pmlb'
 )
 # dataset = dataset.sample(n=1000)
 X = dataset.drop('target',axis=1)

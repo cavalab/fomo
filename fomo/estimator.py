@@ -1,7 +1,6 @@
 """
 This is a module to be used as a reference for building other modules
 """
-import ipdb
 import copy
 import math
 import numpy as np
@@ -11,6 +10,7 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.metrics import make_scorer, roc_auc_score, r2_score, mean_squared_error
 from sklearn.linear_model import SGDClassifier, SGDRegressor
 from sklearn.base import clone
+from sklearn.pipeline import Pipeline
 import multiprocessing
 from multiprocessing.pool import ThreadPool
 
@@ -153,10 +153,14 @@ class FomoEstimator(BaseEstimator):
         estimator_archive_ = []
         for x in self.res_.X:
             sample_weight = self.problem_.get_sample_weight(x)
-            est = clone(self.estimator).fit(
-                self.X_, self.y_, 
-                sample_weight=sample_weight
-            )
+            est = clone(self.estimator)
+            if isinstance(est, Pipeline):
+                stepname = est.steps[-1][0]
+                param_name = stepname + '__sample_weight'
+                kwarg = {param_name:sample_weight}
+                est.fit(self.X_, self.y_, **kwarg)
+            else:
+                est.fit(self.X_, self.y_, sample_weight=sample_weight)
             estimator_archive_.append(est)
         return estimator_archive_
 
@@ -197,7 +201,14 @@ class FomoEstimator(BaseEstimator):
         self.I_ = I
         best_est = clone(self.estimator)
         sample_weight = self.problem_.get_sample_weight(self.best_weights_)
-        best_est.fit(self.X_, self.y_, sample_weight=sample_weight)
+
+        if isinstance(best_est, Pipeline):
+            stepname = best_est.steps[-1][0]
+            param_name = stepname + '__sample_weight'
+            kwarg = {param_name:sample_weight}
+            best_est.fit(self.X_, self.y_, **kwarg)
+        else:
+            best_est.fit(self.X_, self.y_, sample_weight=sample_weight)
         return best_est
 
     def predict(self, X):

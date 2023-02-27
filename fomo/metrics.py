@@ -12,7 +12,10 @@ import logging
 import itertools as it
 from fomo.utils import categorize 
 from sklearn.metrics import mean_squared_error
+<<<<<<< HEAD
 # import gerryfair
+=======
+>>>>>>> 719342a9addb9abeebea767fa94498268216c6eb
 
 logger = logging.getLogger(__name__)
 
@@ -224,7 +227,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric):
+def subgroup_loss(y_true, y_pred, X_protected, metric, weights=None):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -243,6 +246,7 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
     else:
         raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
 
+    base_loss = loss_fn(y_true, y_pred)
     max_loss = 0.0
     for c, idx in categories.items():
         gamma = len(idx) / len(X_protected)
@@ -254,22 +258,26 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
         if  category_loss > max_loss:
             max_loss = category_loss
 
-    return max_loss
+    return np.abs(max_loss - base_loss)
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FPR')
+def subgroup_FPR_loss(y_true, y_pred, X_protected, weights=None):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', weights=weights)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FNR')
+def subgroup_FNR_loss(y_true, y_pred, X_protected, weights):
+    return subgroup_loss(y_true, y_pred, X_protected, weights, 'FNR', weights=weights)
 
-def subgroup_fairness(
+def subgroup_MSE_loss(y_true, y_pred, X_protected, weights):
+    return subgroup_loss(y_true, y_pred, X_protected, weights, mean_squared_error, weights=weights)
+
+def subgroup_scorer(
     estimator,
     X,
     y_true,
     metric,
     groups=None,
     X_protected=None,
-    grouping='intersectional'
+    grouping='intersectional',
+    weights=None
 ):
     """Calculate the subgroup fairness of estimator on X according to `metric'.
     TODO: handle use case when Xp is passed
@@ -287,6 +295,7 @@ def subgroup_fairness(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
+<<<<<<< HEAD
     return subgroup_loss(y_true, y_pred, X_protected, metric)
 
 def subgroup_FPR(estimator, X, y_true, **kwargs):
@@ -374,3 +383,16 @@ def subgroup_MSE(estimator, X, y_true, **kwargs):
 #         X_protected,
 #         grouping
 #     )
+=======
+    return subgroup_loss(y_true, y_pred, X_protected, metric, weights=weights)
+
+def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
+    return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)
+
+def subgroup_FNR_scorer(estimator, X, y_true, **kwargs):
+    return subgroup_scorer( estimator, X, y_true, 'FNR', **kwargs)
+
+def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
+    return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
+
+>>>>>>> 719342a9addb9abeebea767fa94498268216c6eb
