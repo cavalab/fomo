@@ -50,7 +50,6 @@ est = FomoClassifier(
     # fairness_metrics=[metrics.subgroup_audit_FPR_loss],
     fairness_metrics=[metrics.subgroup_FNR],
     verbose=True,
-    batch_size=0,
     problem_type=MLPProblem,
     # problem_type=BasicProblem,
     n_jobs=1

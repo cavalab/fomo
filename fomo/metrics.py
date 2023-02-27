@@ -8,12 +8,11 @@ import warnings
 import ipdb
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 import logging
 import itertools as it
 from fomo.utils import categorize 
 from sklearn.metrics import mean_squared_error
-import gerryfair
+# import gerryfair
 
 logger = logging.getLogger(__name__)
 
@@ -300,78 +299,78 @@ def subgroup_MSE(estimator, X, y_true, **kwargs):
     return subgroup_fairness( estimator, X, y_true, mean_squared_error, **kwargs)
 
 
-def auditor_loss(y_true, y_pred, X_protected, metric):
-    auditor = gerryfair.model.Auditor(X_protected, y_true, metric)
-    _,violation = auditor.audit(y_pred)
-    return violation
+# def auditor_loss(y_true, y_pred, X_protected, metric):
+#     auditor = gerryfair.model.Auditor(X_protected, y_true, metric)
+#     _,violation = auditor.audit(y_pred)
+#     return violation
 
-def auditor_FPR(y_true, y_pred, X_protected):
-    return auditor_loss(y_true, y_pred, X_protected, 'FP')
+# def auditor_FPR(y_true, y_pred, X_protected):
+#     return auditor_loss(y_true, y_pred, X_protected, 'FP')
 
-def auditor_FNR(y_true, y_pred, X_protected):
-    return auditor_loss(y_true, y_pred, X_protected, 'FN')
+# def auditor_FNR(y_true, y_pred, X_protected):
+#     return auditor_loss(y_true, y_pred, X_protected, 'FN')
 
-def audit(
-    estimator,
-    X,
-    y_true,
-    metric:str,
-    groups=None,
-    X_protected=None,
-    grouping='intersectional'
-):
-    assert isinstance(X, pd.DataFrame), "X should be a dataframe"
-    assert groups is not None or X_protected is not None, "groups or X_protected must be defined."
-    if isinstance(y_true, pd.Series):
-       y_true = y_true.values
+# def audit(
+#     estimator,
+#     X,
+#     y_true,
+#     metric:str,
+#     groups=None,
+#     X_protected=None,
+#     grouping='intersectional'
+# ):
+#     assert isinstance(X, pd.DataFrame), "X should be a dataframe"
+#     assert groups is not None or X_protected is not None, "groups or X_protected must be defined."
+#     if isinstance(y_true, pd.Series):
+#        y_true = y_true.values
 
-    y_pred = estimator.predict(X)
-    # y_pred = pd.Series(y_pred, index=y_true.index)
+#     y_pred = estimator.predict(X)
+#     # y_pred = pd.Series(y_pred, index=y_true.index)
 
-    assert metric in ('FP','FN'), f'metric must be "FP" or "FN", not {metric}'
-    # assert isinstance(y_true, pd.Series)
-    # assert isinstance(y_pred, pd.Series)
+#     assert metric in ('FP','FN'), f'metric must be "FP" or "FN", not {metric}'
+#     # assert isinstance(y_true, pd.Series)
+#     # assert isinstance(y_pred, pd.Series)
 
-    if groups is not None:
-        assert X_protected is None, "cannot define both groups and X_protected"
-        X_protected = X[groups]
+#     if groups is not None:
+#         assert X_protected is None, "cannot define both groups and X_protected"
+#         X_protected = X[groups]
 
-    with warnings.catch_warnings():
-        warnings.simplefilter('ignore')
-        return auditor_loss(y_true, y_pred, X_protected, metric)
+#     with warnings.catch_warnings():
+#         warnings.simplefilter('ignore')
+#         return auditor_loss(y_true, y_pred, X_protected, metric)
 
-def audit_FPR_loss(
-    estimator,
-    X,
-    y_true,
-    groups=None,
-    X_protected=None,
-    grouping='intersectional'
-):
-    return audit(
-        estimator,
-        X,
-        y_true,
-        'FP',
-        groups,
-        X_protected,
-        grouping
-    )
+# def audit_FPR_loss(
+#     estimator,
+#     X,
+#     y_true,
+#     groups=None,
+#     X_protected=None,
+#     grouping='intersectional'
+# ):
+#     return audit(
+#         estimator,
+#         X,
+#         y_true,
+#         'FP',
+#         groups,
+#         X_protected,
+#         grouping
+#     )
 
-def audit_FNR_loss(
-    estimator,
-    X,
-    y_true,
-    groups=None,
-    X_protected=None,
-    grouping='intersectional'
-):
-    return audit(
-        estimator,
-        X,
-        y_true,
-        'FN',
-        groups,
-        X_protected,
-        grouping
-    )
+# def audit_FNR_loss(
+#     estimator,
+#     X,
+#     y_true,
+#     groups=None,
+#     X_protected=None,
+#     grouping='intersectional'
+# ):
+#     return audit(
+#         estimator,
+#         X,
+#         y_true,
+#         'FN',
+#         groups,
+#         X_protected,
+#         grouping
+#     )

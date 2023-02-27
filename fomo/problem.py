@@ -37,17 +37,6 @@ class BasicProblem(ElementwiseProblem):
 
         X = self.fomo_estimator.X_
         y = self.fomo_estimator.y_
-        # batch sampling
-        if self.fomo_estimator.batch_size > 0:
-            stratify = y if isinstance(self.fomo_estimator, ClassifierMixin) else None
-            X, y, sample_weight = resample(
-                X, 
-                y,
-                sample_weight, 
-                n_samples=self.fomo_estimator.batch_size,
-                random_state=self.fomo_estimator.random_state, 
-                stratify=stratify
-            )
 
         est = clone(self.fomo_estimator.estimator)
         with warnings.catch_warnings():
