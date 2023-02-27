@@ -26,10 +26,7 @@ jobs:
         name: Install
         run: | 
           micromamba env list
-          export CMAKE_BUILD_PARALLEL_LEVEL=4
-          # python setup.py debug
-          # pip install . -v
-          python setup.py install
+          pip install . -v
 ########################################
 # tests
 ########################################
@@ -60,14 +57,6 @@ jobs:
 ########################################
 # docs
 ########################################
-      - 
-        name: Install Doxygen
-        run: sudo apt-get install doxygen
-      - 
-        name: add docs environment
-        run: |
-          micromamba info
-          micromamba list
       - 
         name: make sphinx docs
         run: |

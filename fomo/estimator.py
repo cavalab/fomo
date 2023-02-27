@@ -273,8 +273,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         - :class:`MLPProblem`
         - :class:`LinearProblem`
 
-    Example
-    -------
+    Examples
+    --------
     >>> from fomo import FomoClassifier
     >>> from pmlb import pmlb
     >>> X,y = pmlb.fetch_data('adult', return_X_y=True)
