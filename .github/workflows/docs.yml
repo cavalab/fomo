@@ -5,7 +5,7 @@ env:
   CACHE_NUMBER: 0
 
 jobs:
-  build_and_test_and_docs:
+  docs:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -68,7 +68,7 @@ jobs:
       - 
         name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
