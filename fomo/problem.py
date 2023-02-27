@@ -38,10 +38,6 @@ class BasicProblem(ElementwiseProblem):
 
         X = self.fomo_estimator.X_
         y = self.fomo_estimator.y_
-<<<<<<< HEAD
-
-=======
->>>>>>> 719342a9addb9abeebea767fa94498268216c6eb
         est = clone(self.fomo_estimator.estimator)
 
         with warnings.catch_warnings():
