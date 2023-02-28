@@ -91,3 +91,11 @@ def categorize(X, y, groups, grouping,
                 categories[group + (interval,)] = j
     return categories
 
+from pymoo.decomposition.asf import ASF
+class Compromise:
+    def __init__(self, weights):
+        self.weights=weights
+    def do(self,F):
+        decomp = ASF()
+        I = decomp(F, self.weights).argmin()
+        return I

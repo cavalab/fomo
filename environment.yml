@@ -6,7 +6,6 @@ dependencies:
   - python
   - scikit-learn
   - jupyter
-  - xgboost
   - seaborn
   - numpy
   - pytest
@@ -15,4 +14,4 @@ dependencies:
   - pip:
     - pymoo
     - pmlb
-
+  - Cython

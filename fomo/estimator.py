@@ -33,12 +33,15 @@ from pymoo.core.algorithm import Algorithm
 from pymoo.core.problem import StarmapParallelization
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
-from .problem import BasicProblem
-import fomo.metrics as metrics
-# from pymoo.decomposition.asf import ASF
+# MCDM imports
 from pymoo.mcdm.high_tradeoff import HighTradeoffPoints
-from pymoo.visualization.scatter import Scatter
+from pymoo.mcdm.pseudo_weights import PseudoWeights
+# fomo
+from fomo.utils import Compromise
+import fomo.metrics as metrics
+from .problem import BasicProblem
 # plotting
+from pymoo.visualization.scatter import Scatter
 import matplotlib.pyplot as plt
 from collections.abc import Callable
 
@@ -152,7 +155,7 @@ class FomoEstimator(BaseEstimator):
             pool.close()
         ########################################
         # choose "best" estimator
-        self.best_estimator_ = self._pick_best() 
+        self.best_estimator_ = self.pick_best() 
         self.is_fitted_ = True
         # store archive of estimators
         if self.store_final_models:
@@ -188,20 +191,41 @@ class FomoEstimator(BaseEstimator):
 
         return self._output_archive('predict', X=X)
 
+        
+    def pick_best(self, strategy='HighTradeoffPoints', weights=None):
+        """Picks the best solution based on on a multi-criteria decision-making
+        (MCDM) strategy. 
 
-    def _pick_best(self):
-        """Picks the best solution based on high tradeoff point. """
-        # weights = np.array([0.5 for n in range(self.n_obj_)])
-        # decomp = ASF()
-        # I = decomp(F, weights).argmin()
-        F = self.res_.F
+        A description of MCDM strategies is given in the `pymoo docs <https://pymoo.org/mcdm/index.html>`_. 
+
+        Parameters
+        ----------
+        strategy : str|Callable
+            A function implementing an MCDM strategy. Built-in support for the following:
+
+            - 'HighTradeOffPoints' 
+            - 'Compromise' 
+            - 'PseudoWeights' 
+
+        """
+
+        if weights is None and strategy in ['PsuedoWeights','Compromise']:
+            weights = np.array([float(1.0/self.n_obj_) for n in range(self.n_obj_)])
+
+        if strategy == 'PseudoWeights':
+            picking_fn = PseudoWeights(weights).do
+        elif strategy == 'Compromise':
+            picking_fn = Compromise(weights).do
+        else:
+            picking_fn = HighTradeoffPoints()
+
+        F = self._minimized_F()
 
         if len(F) <= 1:
             I = 0
         else:
-            dm = HighTradeoffPoints()
-            I = dm(F)
-            if I is not None: 
+            I = picking_fn(F)
+            if hasattr(I,'len'):
                 if len(I) > 1:
                     I = I[math.floor(len(I)/2)]
                 else:
@@ -223,7 +247,7 @@ class FomoEstimator(BaseEstimator):
         return best_est
 
     def predict(self, X):
-        """ A reference implementation of a predicting function.
+        """Predict from X.
 
         Parameters
         ----------
@@ -233,25 +257,27 @@ class FomoEstimator(BaseEstimator):
         Returns
         -------
         y : ndarray, shape (n_samples,)
-            Returns an array of ones.
         """
         # X = check_array(X, accept_sparse=True)
         check_is_fitted(self, 'is_fitted_')
         return self.best_estimator_.predict(X)
 
     def plot(self):
+        """Plots the Pareto set of models with a dot indicating the selected 
+        model.
+        Returns
+        -------
+        plot : matplotlib figure
+            The figure object.
+        """
         check_is_fitted(self, 'is_fitted_')
-        F = copy.copy(self.res_.F)
         I = self.I_
+        F = self._minimized_F()
         axis_labels = (
             [ am._score_func.__name__ for am in self.accuracy_metrics_ ] 
             + [ fn.__name__ for fn in self.fairness_metrics_ ]
         )
         axis_labels = [al.replace('_',' ') for al in axis_labels]
-        # reverse F for metrics where higher is better
-        for i,m in enumerate(self.accuracy_metrics_ + self.fairness_metrics_): 
-            if hasattr(m, '_sign'):
-                F[:,i] = F[:,i]*m._sign
         plot = (
             Scatter()
             .add(F, alpha=0.2)
@@ -265,6 +291,15 @@ class FomoEstimator(BaseEstimator):
             self.estimator.random_state = self.random_state
         if hasattr(self.estimator, 'n_jobs'):
             self.estimator.n_jobs = 1
+    
+    def _minimized_F(self, F=None):
+        if F is None:
+            F = copy.copy(self.res_.F)
+        # reverse F for metrics where higher is better
+        for i,m in enumerate(self.accuracy_metrics_ + self.fairness_metrics_): 
+            if hasattr(m, '_sign'):
+                F[:,i] = F[:,i]*m._sign
+        return F
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """FOMO Classifier. 
