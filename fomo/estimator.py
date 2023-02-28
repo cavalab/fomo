@@ -1,5 +1,19 @@
 """
-This is a module to be used as a reference for building other modules
+Fairness Oriented Multiobjective Optimization (Fomo)
+Copyright (C) {2023}  William La Cava
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import copy
 import math
@@ -26,40 +40,48 @@ import fomo.metrics as metrics
 # from pymoo.decomposition.asf import ASF
 from pymoo.mcdm.high_tradeoff import HighTradeoffPoints
 from pymoo.visualization.scatter import Scatter
-# plotting
-# import matplotlib.pyplot as plt
-
+# types
+from collections.abc import Callable
 
 class FomoEstimator(BaseEstimator):
     """ The base estimator for training fair models.  
-    This class should not be called directly. Use `FomoRegressor` or
-    `FomoClassifier` instead. 
+    This class should not be called directly. Use :class:`FomoRegressor` or
+    :class:`FomoClassifier` instead. 
 
     Parameters
     ----------
-    estimator : sklearn-like estimator, default=None
+    estimator : sklearn-like estimator
         The underlying ML model to be trained. 
         The ML model must accept `sample_weight` as an argument to :meth:`fit`. 
-    fairness_metrics : list, default=None
+    fairness_metrics : list[Callable]
         The fairness metrics to try to optimize during fitting. 
-    accuracy_metrics : list, default=None
+    accuracy_metrics : list[Callable]
         The accuracy metrics to try to optimize during fitting. 
-    algorithm: pymoo Algorithm, default=None
+    algorithm: pymoo Algorithm
         The multi-objective optimizer to use. Should be compatible with 
         `pymoo.core.algorithm.Algorithm`. 
     random_state: int | None
         Random seed. 
-
+    verbose: bool
+        Whether to print progress.
+    n_jobs: int
+        Number of parallel processes to use. Parallelizes evaluation.
+    store_final_models: bool
+        If True, the final set of models will be stored in the estimator.
+    problem_type: ElementwiseProblem
+        Determines the evaluation class to be used. Options:
+        - :class:`BasicProblem`
+        - :class:`MLPProblem`
+        - :class:`LinearProblem`
     """
     def __init__(self, 
                  estimator: BaseEstimator,
-                 fairness_metrics: list[str],
-                 accuracy_metrics: list[str],
+                 fairness_metrics: list[Callable],
+                 accuracy_metrics: list[Callable],
                  algorithm: Algorithm,
                  random_state: int,
                  verbose:bool,
                  n_jobs:int,
-                 batch_size:int,
                  store_final_models:bool,
                  problem_type:ElementwiseProblem,
                  checkpoint:bool
@@ -71,7 +93,6 @@ class FomoEstimator(BaseEstimator):
          self.random_state=random_state
          self.verbose=verbose
          self.n_jobs=n_jobs
-         self.batch_size=batch_size
          self.store_final_models=store_final_models
          self.problem_type=problem_type
          self.checkpoint=checkpoint
@@ -79,13 +100,10 @@ class FomoEstimator(BaseEstimator):
     def fit(self, X, y, protected_features=None, Xp=None, starting_point=None, **kwargs):
         """Train the model.
 
-        1. Train a population of self.estimator models with random weights. 
-        2. Update sample weights using self.algorithm. 
-        3. Select a given model as best, but also save the set of models. 
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape (n_samples, n_features)
+        X : array-like, shape (n_samples, n_features)
             The training input samples.
         y : array-like, shape (n_samples,) or (n_samples, n_outputs)
             The target values (class labels in classification, real numbers in
@@ -278,24 +296,46 @@ class FomoEstimator(BaseEstimator):
             self.estimator.n_jobs = 1
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
-    """ An example classifier which implements a 1-NN algorithm.
+    """FOMO Classifier. 
 
-    For more information regarding how to build your own classifier, read more
-    in the :ref:`User Guide <user_guide>`.
+        1. Train a population of self.estimator models with random weights. 
+        2. Update sample weights using self.algorithm. 
+        3. Select a given model as best, but also save the set of models. 
 
     Parameters
     ----------
-    demo_param : str, default='demo'
-        A parameter used for demonstation of how to pass and store paramters.
+    estimator : sklearn-like estimator
+        The underlying ML model to be trained. 
+        The ML model must accept `sample_weight` as an argument to :meth:`fit`. 
+    fairness_metrics : list[Callable]
+        The fairness metrics to try to optimize during fitting. 
+    accuracy_metrics : list[Callable]
+        The accuracy metrics to try to optimize during fitting. 
+    algorithm: pymoo Algorithm
+        The multi-objective optimizer to use. Should be compatible with 
+        `pymoo.core.algorithm.Algorithm`. 
+    random_state: int | None
+        Random seed. 
+    verbose: bool
+        Whether to print progress.
+    n_jobs: int
+        Number of parallel processes to use. Parallelizes evaluation.
+    store_final_models: bool
+        If True, the final set of models will be stored in the estimator.
+    problem_type: ElementwiseProblem
+        Determines the evaluation class to be used. Options:
+        - :class:`BasicProblem`
+        - :class:`MLPProblem`
+        - :class:`LinearProblem`
 
-    Attributes
-    ----------
-    X_ : ndarray, shape (n_samples, n_features)
-        The input passed during :meth:`fit`.
-    y_ : ndarray, shape (n_samples,)
-        The labels passed during :meth:`fit`.
-    classes_ : ndarray, shape (n_classes,)
-        The classes seen at :meth:`fit`.
+    Examples
+    --------
+    >>> from fomo import FomoClassifier
+    >>> from pmlb import pmlb
+    >>> X,y = pmlb.fetch_data('adult', return_X_y=True)
+    >>> groups = ['race','sex']
+    >>> est = FomoClassifier()
+    >>> est.fit(X,y, protected_features=groups)
     """
     def __init__(self, 
                  estimator: ClassifierMixin=SGDClassifier(),
@@ -305,7 +345,6 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  random_state: int=None,
                  verbose: bool = False,
                  n_jobs: int = -1,
-                 batch_size: int = 0,
                  store_final_models: bool = False,
                  problem_type = BasicProblem,
                  checkpoint = False
@@ -318,14 +357,17 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             random_state,
             verbose,
             n_jobs,
-            batch_size,
             store_final_models,
             problem_type,
             checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
-        """A reference implementation of a fitting function for a classifier.
+        """Train the model.
+
+        1. Train a population of self.estimator models with random weights. 
+        2. Update sample weights using self.algorithm. 
+        3. Select a given model as best, but also save the set of models. 
 
         Parameters
         ----------
@@ -333,6 +375,13 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             The training input samples.
         y : array-like, shape (n_samples,)
             The target values. An array of int.
+        protected_features: list[str]|None, default = None
+            The columns of X to calculate fairness over. If specifying columns,
+            do not also specify `Xp`.
+        Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None
+            The protected feature values used to calculate fairness. If `Xp` is 
+            specified, `protected_features` must be None. 
+        **kwargs : passed to `pymo.optimize.minimize`. 
 
         Returns
         -------
@@ -355,7 +404,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         return self
 
     def predict(self, X):
-        """ A reference implementation of a prediction for a classifier.
+        """ Predict labels from X.
 
         Parameters
         ----------
@@ -399,15 +448,34 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
 
 class FomoRegressor(RegressorMixin, BaseEstimator):
-    """ An example transformer that returns the element-wise square root.
-
-    For more information regarding how to build your own transformer, read more
-    in the :ref:`User Guide <user_guide>`.
+    """Fomo class for regression models. 
 
     Parameters
     ----------
-    demo_param : str, default='demo'
-        A parameter used for demonstation of how to pass and store paramters.
+    estimator : sklearn-like estimator
+        The underlying ML model to be trained. 
+        The ML model must accept `sample_weight` as an argument to :meth:`fit`. 
+    fairness_metrics : list[Callable]
+        The fairness metrics to try to optimize during fitting. 
+    accuracy_metrics : list[Callable]
+        The accuracy metrics to try to optimize during fitting. 
+    algorithm: pymoo Algorithm
+        The multi-objective optimizer to use. Should be compatible with 
+        `pymoo.core.algorithm.Algorithm`. 
+    random_state: int | None
+        Random seed. 
+    verbose: bool
+        Whether to print progress.
+    n_jobs: int
+        Number of parallel processes to use. Parallelizes evaluation.
+    store_final_models: bool
+        If True, the final set of models will be stored in the estimator.
+    problem_type: ElementwiseProblem
+        Determines the evaluation class to be used. Options:
+
+        - :class:`BasicProblem`: loss function weights are directly optimized.
+        - :class:`MLPProblem`: weights of a multilayer perceptron are optimized to estimate loss function weights. 
+        - :class:`LinearProblem`: weights of a logistic model are optimized to estimate loss function weights.
 
     Attributes
     ----------
@@ -416,13 +484,12 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
 
     Examples
     --------
-    >>> from fomo import FomoEstimator
-    >>> import numpy as np
-    >>> X = np.arange(100).reshape(100, 1)
-    >>> y = np.zeros((100, ))
-    >>> estimator = FomoEstimator()
-    >>> estimator.fit(X, y)
-    FomoEstimator()
+    >>> from fomo import FomoRegressor
+    >>> from pmlb import pmlb
+    >>> X,y = pmlb.fetch_data('adult', return_X_y=True)
+    >>> groups = ['race','sex']
+    >>> est = FomoRegressor()
+    >>> est.fit(X,y, protected_features=groups)
     """
     def __init__(self, 
                  estimator: RegressorMixin=SGDRegressor(),
@@ -432,7 +499,6 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  random_state: int=None,
                  verbose: bool = False,
                  n_jobs: int = -1,
-                 batch_size: int = 0,
                  store_final_models: bool = False,
                  problem_type = BasicProblem,
                  checkpoint = False
@@ -445,14 +511,13 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             random_state,
             verbose,
             n_jobs,
-            batch_size,
             store_final_models,
             problem_type,
             checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
-        """A reference implementation of a fitting function for a classifier.
+        """Train a set of regressors. 
 
         Parameters
         ----------
@@ -460,6 +525,12 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             The training input samples.
         y : array-like, shape (n_samples,)
             The target values. An array of int.
+        protected_features: list|None, default = None
+            The columns of X to calculate fairness over. If specifying columns,
+            do not also specify `Xp`.
+        Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None
+            The protected feature values used to calculate fairness. If `Xp` is 
+            specified, `protected_features` must be None. 
 
         Returns
         -------
@@ -479,7 +550,7 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
         return self
 
     def predict(self, X):
-        """ A reference implementation of a prediction for a classifier.
+        """Predict outcome. 
 
         Parameters
         ----------

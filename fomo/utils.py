@@ -1,3 +1,20 @@
+"""
+Fairness Oriented Multiobjective Optimization (Fomo)
+Copyright (C) {2023}  William La Cava
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import numpy as np
 import pandas as pd
 
@@ -32,19 +49,6 @@ def category_diff(cat1, cat2):
         return True
     else:
         return False
-
-# def group(X, y, groups, grouping):
-#     """Map data to an existing set of categories."""
-#     if grouping=='intersectional':
-#         group_ids = df.groupby(groups).groups
-#     elif grouping=='marginal':
-#         group_ids = df[groups].groupby(groups).groups
-#         group_ids = {}
-#         for g in groups:
-#             grp = df.groupby(g).groups
-#             for k,v in grp.items():
-#                 group_ids[(g,k)] = v
-#     return group_ids
 
 def categorize(X, y, groups, grouping,
                n_bins=10,
