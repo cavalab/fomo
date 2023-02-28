@@ -159,6 +159,7 @@
 <li class="toctree-l1"><a class="reference internal" href="readme_wrapper.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="readme_wrapper.html#installation">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="readme_wrapper.html#quick-start">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme_wrapper.html#license">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="readme_wrapper.html#contact">Contact</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">API</a></li>
 </ul>
@@ -201,6 +202,13 @@
 <dt class="sig sig-object py" id="fomo.FomoClassifier">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fomo.</span></span><span class="sig-name descname"><span class="pre">FomoClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator:</span> <span class="pre">~sklearn.base.ClassifierMixin</span> <span class="pre">=</span> <span class="pre">SGDClassifier()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fairness_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm:</span> <span class="pre">~pymoo.core.algorithm.Algorithm</span> <span class="pre">=</span> <span class="pre">&lt;pymoo.algorithms.moo.nsga2.NSGA2</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_final_models:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_type=&lt;class</span> <span class="pre">'fomo.problem.BasicProblem'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fomo.FomoClassifier" title="Permalink to this definition">#</a></dt>
 <dd><p>FOMO Classifier.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Train a population of self.estimator models with random weights.</p></li>
+<li><p>Update sample weights using self.algorithm.</p></li>
+<li><p>Select a given model as best, but also save the set of models.</p></li>
+</ol>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
