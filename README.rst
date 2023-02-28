@@ -48,6 +48,11 @@ Quick Start
     est = FomoClassifier()
     est.fit(X,y, protected_features=groups)
 
+License
+=======
+
+Fomo is licensed under GNU Public License v. 3.0.  See `LICENSE <https://github.com/cavalab/fomo/LICENSE>`_`.
+
 Contact
 ============
 

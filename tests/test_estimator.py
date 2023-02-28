@@ -1,3 +1,20 @@
+"""
+Fairness Oriented Multiobjective Optimization (Fomo)
+Copyright (C) {2023}  William La Cava
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import copy
 import pytest
 import pandas as pd
@@ -10,9 +27,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score
 from pmlb import pmlb   
 import fomo.metrics as metrics
 
-dataset = pmlb.fetch_data('adult', 
-                          local_cache_dir='/home/bill/projects/pmlb'
-)
+dataset = pmlb.fetch_data('adult')
 dataset = dataset.sample(n=2000)
 X = dataset.drop('target',axis=1)
 y = dataset['target']

@@ -1,5 +1,19 @@
 """
-This is a module to be used as a reference for building other modules
+Fairness Oriented Multiobjective Optimization (Fomo)
+Copyright (C) {2023}  William La Cava
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import copy
 import math
@@ -83,9 +97,6 @@ class FomoEstimator(BaseEstimator):
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
         """Train the model.
 
-        1. Train a population of self.estimator models with random weights. 
-        2. Update sample weights using self.algorithm. 
-        3. Select a given model as best, but also save the set of models. 
 
         Parameters
         ----------
@@ -257,6 +268,10 @@ class FomoEstimator(BaseEstimator):
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """FOMO Classifier. 
+
+        1. Train a population of self.estimator models with random weights. 
+        2. Update sample weights using self.algorithm. 
+        3. Select a given model as best, but also save the set of models. 
 
     Parameters
     ----------
