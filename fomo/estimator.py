@@ -3,6 +3,7 @@ This is a module to be used as a reference for building other modules
 """
 import copy
 import math
+import uuid 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
@@ -16,16 +17,17 @@ from multiprocessing.pool import ThreadPool
 
 # pymoo
 from pymoo.core.algorithm import Algorithm
-from pymoo.core.problem import StarmapParallelization
+from pymoo.core.problem import StarmapParallelization, ElementwiseProblem
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 from .problem import BasicProblem
+import dill
 import fomo.metrics as metrics
 # from pymoo.decomposition.asf import ASF
 from pymoo.mcdm.high_tradeoff import HighTradeoffPoints
 from pymoo.visualization.scatter import Scatter
 # plotting
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class FomoEstimator(BaseEstimator):
@@ -59,7 +61,8 @@ class FomoEstimator(BaseEstimator):
                  n_jobs:int,
                  batch_size:int,
                  store_final_models:bool,
-                 problem_type
+                 problem_type:ElementwiseProblem,
+                 checkpoint:bool
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -71,8 +74,9 @@ class FomoEstimator(BaseEstimator):
          self.batch_size=batch_size
          self.store_final_models=store_final_models
          self.problem_type=problem_type
+         self.checkpoint=checkpoint
 
-    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
+    def fit(self, X, y, protected_features=None, Xp=None, starting_point=None, **kwargs):
         """Train the model.
 
         1. Train a population of self.estimator models with random weights. 
@@ -90,6 +94,10 @@ class FomoEstimator(BaseEstimator):
             The columns in DataFrame X used to assign fairness. 
         Xp : {array-like, sparse matrix}, shape (n_samples, n_protected_features)
             The input samples for measuring/optimizing fairness during training.
+        starting_point : str | None
+            Optionally start from a checkpoint file with this name
+        **kwargs : keyword arguments that are passed to `pymoo.optimize.minimize`.
+
         Returns
         -------
         self : object
@@ -118,14 +126,39 @@ class FomoEstimator(BaseEstimator):
         print('number of variables:',self.problem_.n_var)
         print('number of objectives:',self.problem_.n_obj)
 
+        # define algorithm
+        if starting_point is not None:
+            with open(starting_point, 'rb') as f:
+                self.algorithm_ = dill.load(f)
+                print("Loaded Checkpoint:", self.algorithm_)
+        else:
+            self.algorithm_ = self.algorithm
         ########################################
         # minimize
-        self.res_ = minimize(self.problem_,
-                             self.algorithm,
-                             seed=self.random_state,
-                             verbose=self.verbose,
-                             **kwargs
-                            )
+        if self.checkpoint:
+            run_id = uuid.uuid4()
+            checkpoint_file = f"checkpoint.{run_id}.pkl"
+            print('checkpoint file:',checkpoint_file)
+            self.algorithm_.setup(
+                self.problem_,
+                seed=self.random_state,
+                verbose=self.verbose,
+                **kwargs
+            )
+            while self.algorithm_.has_next():
+                self.algorithm_.next()
+                with open(checkpoint_file, "wb") as f:
+                    dill.dump(self.algorithm_, f)
+            self.res_ = self.algorithm_.result()
+        else:
+            self.res_ = minimize(
+                self.problem_,
+                self.algorithm_,
+                seed=self.random_state,
+                verbose=self.verbose,
+                **kwargs
+            )
+
         if n_processes > 1:
             pool.close()
         ########################################
@@ -274,7 +307,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  n_jobs: int = -1,
                  batch_size: int = 0,
                  store_final_models: bool = False,
-                 problem_type = BasicProblem
+                 problem_type = BasicProblem,
+                 checkpoint = False
                 ):
         super().__init__(
             estimator, 
@@ -286,7 +320,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             n_jobs,
             batch_size,
             store_final_models,
-            problem_type
+            problem_type,
+            checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -399,7 +434,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  n_jobs: int = -1,
                  batch_size: int = 0,
                  store_final_models: bool = False,
-                 problem_type = BasicProblem
+                 problem_type = BasicProblem,
+                 checkpoint = False
                 ):
         super().__init__(
             estimator, 
@@ -411,7 +447,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             n_jobs,
             batch_size,
             store_final_models,
-            problem_type
+            problem_type,
+            checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
