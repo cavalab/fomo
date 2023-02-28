@@ -1,4 +1,4 @@
-Fomo is a **F**airness **O**riented **M**ultiobjective **O**ptimization toolbox for training regression and classification models. 
+Fomo is a **F**\airness **O**\riented **M**\ultiobjective **O**\ptimization toolbox for training regression and classification models. 
 Fomo focuses on optimizing the trade-offs between various metrics in ML fairness that are often in direct conflict. 
 The goal is to assist decision makers in weighing multiple criteria by generating good solution *sets*, rather than singular models. 
 
