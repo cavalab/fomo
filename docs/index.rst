@@ -6,13 +6,13 @@
 Fairness Oriented Multiobjective Optimization
 =============================================
 
-.. mdinclude:: ../README.md
+.. include:: ../README.rst
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+   readme_wrapper
    api
 
 Indices and tables
