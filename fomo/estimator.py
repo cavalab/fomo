@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import copy
 import math
+import uuid 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
@@ -27,10 +28,11 @@ from sklearn.base import clone
 from sklearn.pipeline import Pipeline
 import multiprocessing
 from multiprocessing.pool import ThreadPool
+import dill
 
 # pymoo
 from pymoo.core.algorithm import Algorithm
-from pymoo.core.problem import StarmapParallelization
+from pymoo.core.problem import StarmapParallelization, ElementwiseProblem
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 # MCDM imports
@@ -42,7 +44,7 @@ import fomo.metrics as metrics
 from .problem import BasicProblem
 # plotting
 from pymoo.visualization.scatter import Scatter
-import matplotlib.pyplot as plt
+# types
 from collections.abc import Callable
 
 class FomoEstimator(BaseEstimator):
@@ -85,7 +87,8 @@ class FomoEstimator(BaseEstimator):
                  verbose:bool,
                  n_jobs:int,
                  store_final_models:bool,
-                 problem_type
+                 problem_type:ElementwiseProblem,
+                 checkpoint:bool
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -96,8 +99,9 @@ class FomoEstimator(BaseEstimator):
          self.n_jobs=n_jobs
          self.store_final_models=store_final_models
          self.problem_type=problem_type
+         self.checkpoint=checkpoint
 
-    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
+    def fit(self, X, y, protected_features=None, Xp=None, starting_point=None, **kwargs):
         """Train the model.
 
 
@@ -105,15 +109,16 @@ class FomoEstimator(BaseEstimator):
         ----------
         X : array-like, shape (n_samples, n_features)
             The training input samples.
-        y : array-like, shape (n_samples,)
-            The target values. An array of int.
-        protected_features: list[str]|None, default = None
-            The columns of X to calculate fairness over. If specifying columns,
-            do not also specify `Xp`.
-        Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None
-            The protected feature values used to calculate fairness. If `Xp` is 
-            specified, `protected_features` must be None. 
-        **kwargs : passed to `pymo.optimize.minimize`. 
+        y : array-like, shape (n_samples,) or (n_samples, n_outputs)
+            The target values (class labels in classification, real numbers in
+            regression).
+        protected_columns: list[str] | None
+            The columns in DataFrame X used to assign fairness. 
+        Xp : {array-like, sparse matrix}, shape (n_samples, n_protected_features)
+            The input samples for measuring/optimizing fairness during training.
+        starting_point : str | None
+            Optionally start from a checkpoint file with this name
+        **kwargs : keyword arguments that are passed to `pymoo.optimize.minimize`.
 
         Returns
         -------
@@ -143,14 +148,39 @@ class FomoEstimator(BaseEstimator):
         print('number of variables:',self.problem_.n_var)
         print('number of objectives:',self.problem_.n_obj)
 
+        # define algorithm
+        if starting_point is not None:
+            with open(starting_point, 'rb') as f:
+                self.algorithm_ = dill.load(f)
+                print("Loaded Checkpoint:", self.algorithm_)
+        else:
+            self.algorithm_ = self.algorithm
         ########################################
         # minimize
-        self.res_ = minimize(self.problem_,
-                             self.algorithm,
-                             seed=self.random_state,
-                             verbose=self.verbose,
-                             **kwargs
-                            )
+        if self.checkpoint:
+            run_id = uuid.uuid4()
+            checkpoint_file = f"checkpoint.{run_id}.pkl"
+            print('checkpoint file:',checkpoint_file)
+            self.algorithm_.setup(
+                self.problem_,
+                seed=self.random_state,
+                verbose=self.verbose,
+                **kwargs
+            )
+            while self.algorithm_.has_next():
+                self.algorithm_.next()
+                with open(checkpoint_file, "wb") as f:
+                    dill.dump(self.algorithm_, f)
+            self.res_ = self.algorithm_.result()
+        else:
+            self.res_ = minimize(
+                self.problem_,
+                self.algorithm_,
+                seed=self.random_state,
+                verbose=self.verbose,
+                **kwargs
+            )
+
         if n_processes > 1:
             pool.close()
         ########################################
@@ -352,7 +382,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  verbose: bool = False,
                  n_jobs: int = -1,
                  store_final_models: bool = False,
-                 problem_type = BasicProblem
+                 problem_type = BasicProblem,
+                 checkpoint = False
                 ):
         super().__init__(
             estimator, 
@@ -363,7 +394,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             verbose,
             n_jobs,
             store_final_models,
-            problem_type
+            problem_type,
+            checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -504,7 +536,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  verbose: bool = False,
                  n_jobs: int = -1,
                  store_final_models: bool = False,
-                 problem_type = BasicProblem
+                 problem_type = BasicProblem,
+                 checkpoint = False
                 ):
         super().__init__(
             estimator, 
@@ -515,7 +548,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             verbose,
             n_jobs,
             store_final_models,
-            problem_type
+            problem_type,
+            checkpoint
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):

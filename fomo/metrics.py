@@ -234,7 +234,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric, weights=None):
+def subgroup_loss(y_true, y_pred, X_protected, metric):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -254,9 +254,16 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, weights=None):
         raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
 
     base_loss = loss_fn(y_true, y_pred)
+    base_positivity = np.sum(y_true)/len(y_true)
     max_loss = 0.0
     for c, idx in categories.items():
         gamma = len(idx) / len(X_protected)
+        # for FPR and FNR, gamma is also conditioned on the outcome probability
+        if metric=='FPR' or loss_fn == FPR: 
+            gamma *= 1-base_positivity 
+        elif metric=='FNR' or loss_fn == FNR: 
+            gamma *= base_positivity 
+
         category_loss = gamma*loss_fn(
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
@@ -267,14 +274,14 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, weights=None):
 
     return np.abs(max_loss - base_loss)
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected, weights=None):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', weights=weights)
+def subgroup_FPR_loss(y_true, y_pred, X_protected):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR')
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected, weights):
-    return subgroup_loss(y_true, y_pred, X_protected, weights, 'FNR', weights=weights)
+def subgroup_FNR_loss(y_true, y_pred, X_protected):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FNR')
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected, weights):
-    return subgroup_loss(y_true, y_pred, X_protected, weights, mean_squared_error, weights=weights)
+def subgroup_MSE_loss(y_true, y_pred, X_protected):
+    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error)
 
 def subgroup_scorer(
     estimator,
@@ -302,7 +309,7 @@ def subgroup_scorer(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
-    return subgroup_loss(y_true, y_pred, X_protected, metric, weights=weights)
+    return subgroup_loss(y_true, y_pred, X_protected, metric)
 
 def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)
