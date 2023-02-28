@@ -51,7 +51,7 @@ Quick Start
 License
 =======
 
-Fomo is licensed under GNU Public License v. 3.0.  See `LICENSE <https://github.com/cavalab/fomo/LICENSE>`_`.
+Fomo is licensed under GNU Public License v. 3.0.  See `LICENSE <https://github.com/cavalab/fomo/blob/main/LICENSE>`_.
 
 Contact
 ============
