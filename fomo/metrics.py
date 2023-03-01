@@ -86,7 +86,8 @@ def multicalibration_loss(
     rho=0.1
 ):
     """custom scoring function for multicalibration.
-       calculate current loss in terms of (proportional) multicalibration"""
+       calculate current loss in terms of (proportional) multicalibration
+    """
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true)
 

@@ -15,14 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from distutils.core import setup
+from setuptools import setup
 
-setup(
-      name='fomo',
-      version='0.0',
-      description='Fairness oriented Multi-objective Optimization',
-      author='William La Cava',
-      author_email='williamlacava@gmail.com',
-      url='https://github.com/cavalab/fomo',
-      packages=['fomo']
-)
+setup()

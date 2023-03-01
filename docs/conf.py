@@ -6,19 +6,30 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'FOMO'
+project = 'Fomo'
 copyright = '2023, William La Cava'
 author = 'William La Cava'
-release = '0.0'
+import fomo
+release = fomo.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-  "sphinx.ext.autodoc",
-  "sphinx.ext.autosummary",
-  'numpydoc',
-  'm2r2'
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    'numpydoc',
+    # Sphinx's own extensions
+    "sphinx.ext.extlinks",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    # External stuff
+    "myst_parser",
+    "sphinx_copybutton",
+    "sphinx_design",
+    "sphinx_inline_tabs",
+    'nbsphinx'
 ]
 
 autosummary_generate = True
@@ -27,6 +38,11 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
+myst_enable_extensions = [
+    "colon_fence",
+    "deflist",
+]
+myst_heading_anchors = 3
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -51,4 +67,7 @@ html_theme_options = {
             "class": "",
         },
     ],
+    "source_repository": "https://github.com/cavalab/fomo/",
+    "source_branch": "main",
+    "source_directory": "docs/",
 }

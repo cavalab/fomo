@@ -8,3 +8,7 @@ sphinx-copybutton
 numpydoc
 m2r2
 furo
+sphinx-design
+sphinx-inline-tabs
+myst-parser
+nbsphinx

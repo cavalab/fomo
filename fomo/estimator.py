@@ -23,7 +23,7 @@ from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
 from sklearn.metrics import make_scorer, roc_auc_score, r2_score, mean_squared_error
-from sklearn.linear_model import SGDClassifier, SGDRegressor
+from sklearn.linear_model import LogisticRegression, SGDRegressor
 from sklearn.base import clone
 from sklearn.pipeline import Pipeline
 import multiprocessing
@@ -45,7 +45,9 @@ from .problem import BasicProblem
 # plotting
 from pymoo.visualization.scatter import Scatter
 # types
+from types import NoneType
 from collections.abc import Callable
+
 
 class FomoEstimator(BaseEstimator):
     """ The base estimator for training fair models.  
@@ -88,7 +90,8 @@ class FomoEstimator(BaseEstimator):
                  n_jobs:int,
                  store_final_models:bool,
                  problem_type:ElementwiseProblem,
-                 checkpoint:bool
+                 checkpoint:bool,
+                 picking_strategy: str = 'PseudoWeights'
                 ):
          self.estimator=estimator
          self.fairness_metrics=fairness_metrics
@@ -100,6 +103,7 @@ class FomoEstimator(BaseEstimator):
          self.store_final_models=store_final_models
          self.problem_type=problem_type
          self.checkpoint=checkpoint
+         self.picking_strategy=picking_strategy
 
     def fit(self, X, y, protected_features=None, Xp=None, starting_point=None, **kwargs):
         """Train the model.
@@ -185,7 +189,7 @@ class FomoEstimator(BaseEstimator):
             pool.close()
         ########################################
         # choose "best" estimator
-        self.best_estimator_ = self.pick_best() 
+        self.best_estimator_ = self.pick_best(strategy=self.picking_strategy) 
         self.is_fitted_ = True
         # store archive of estimators
         if self.store_final_models:
@@ -222,7 +226,7 @@ class FomoEstimator(BaseEstimator):
         return self._output_archive('predict', X=X)
 
         
-    def pick_best(self, strategy='HighTradeoffPoints', weights=None):
+    def pick_best(self, strategy='PseudoWeights', weights=None):
         """Picks the best solution based on on a multi-criteria decision-making
         (MCDM) strategy. 
 
@@ -230,17 +234,21 @@ class FomoEstimator(BaseEstimator):
 
         Parameters
         ----------
-        strategy : str|Callable
-            A function implementing an MCDM strategy. Built-in support for the following:
+        strategy : str
+            Name of an MCDM strategy. Built-in support for the following:
 
-            - 'HighTradeOffPoints' 
-            - 'Compromise' 
-            - 'PseudoWeights' 
+            - 'HighTradeOffPoints' : return a point near a cutoff.
+            - 'Compromise': equally weight both objectives.  
+            - 'PseudoWeights' : normalized weighting of both objectives. 
 
+        weights: np.ndarray|None
+            Weights for each objective. Used for Compromise and PseudoWeights methods.
+            Default is equal weighting.
         """
 
-        if weights is None and strategy in ['PsuedoWeights','Compromise']:
-            weights = np.array([float(1.0/self.n_obj_) for n in range(self.n_obj_)])
+        if isinstance(weights, NoneType):
+            if strategy in ['PseudoWeights','Compromise']:
+                weights = np.array([float(1.0/self.n_obj_) for n in range(self.n_obj_)])
 
         if strategy == 'PseudoWeights':
             picking_fn = PseudoWeights(weights).do
@@ -249,18 +257,20 @@ class FomoEstimator(BaseEstimator):
         else:
             picking_fn = HighTradeoffPoints()
 
-        F = self._minimized_F()
+        F = self.res_.F.copy() 
 
         if len(F) <= 1:
+            print('Warning: only one point on pareto front')
             I = 0
         else:
             I = picking_fn(F)
-            if hasattr(I,'len'):
+            if isinstance(I, np.ndarray):
                 if len(I) > 1:
                     I = I[math.floor(len(I)/2)]
                 else:
                     I = I[0]
-            else:
+            elif I is None:
+                print('warning: picking returned None')
                 I = np.random.randint(len(F))
         self.best_weights_ = self.res_.X[I]
         self.I_ = I
@@ -302,7 +312,7 @@ class FomoEstimator(BaseEstimator):
         """
         check_is_fitted(self, 'is_fitted_')
         I = self.I_
-        F = self._minimized_F()
+        F = self._get_signed_F()
         axis_labels = (
             [ am._score_func.__name__ for am in self.accuracy_metrics_ ] 
             + [ fn.__name__ for fn in self.fairness_metrics_ ]
@@ -310,8 +320,8 @@ class FomoEstimator(BaseEstimator):
         axis_labels = [al.replace('_',' ') for al in axis_labels]
         plot = (
             Scatter()
-            .add(F, alpha=0.2)
-            .add(F[I], color="red", s=100)
+            .add(F, alpha=0.2, label='Candidate models')
+            .add(F[I], color="red", s=100, label='Chosen model')
         )
         plot.axis_labels = axis_labels
         return plot
@@ -322,7 +332,7 @@ class FomoEstimator(BaseEstimator):
         if hasattr(self.estimator, 'n_jobs'):
             self.estimator.n_jobs = 1
     
-    def _minimized_F(self, F=None):
+    def _get_signed_F(self, F=None):
         if F is None:
             F = copy.copy(self.res_.F)
         # reverse F for metrics where higher is better
@@ -374,7 +384,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     >>> est.fit(X,y, protected_features=groups)
     """
     def __init__(self, 
-                 estimator: ClassifierMixin=SGDClassifier(),
+                 estimator: ClassifierMixin=LogisticRegression(),
                  fairness_metrics=None,
                  accuracy_metrics=None,
                  algorithm: Algorithm = NSGA2(),
@@ -383,7 +393,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
                  n_jobs: int = -1,
                  store_final_models: bool = False,
                  problem_type = BasicProblem,
-                 checkpoint = False
+                 checkpoint = False,
+                 picking_strategy='PseudoWeights'
                 ):
         super().__init__(
             estimator, 
@@ -395,7 +406,8 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             n_jobs,
             store_final_models,
             problem_type,
-            checkpoint
+            checkpoint,
+            picking_strategy
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
@@ -537,7 +549,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
                  n_jobs: int = -1,
                  store_final_models: bool = False,
                  problem_type = BasicProblem,
-                 checkpoint = False
+                 checkpoint:bool = False,
+                 picking_strategy: str = 'PseudoWeights'
                 ):
         super().__init__(
             estimator, 
@@ -549,7 +562,8 @@ class FomoRegressor(RegressorMixin, BaseEstimator):
             n_jobs,
             store_final_models,
             problem_type,
-            checkpoint
+            checkpoint,
+            picking_strategy
         )
 
     def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
