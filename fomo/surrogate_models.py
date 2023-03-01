@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from sklearn.neural_network import MLPClassifier
 from sklearn.utils import check_random_state
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
 # from itertools import chain
 import numpy as np
 import pandas as pd
@@ -39,7 +41,28 @@ class MLP(MLPClassifier):
     def predict(self, X):
         # one-hot encode X
         # X = pd.get_dummies(X.astype('category'))
-        return self.predict_proba(X)[:,1]
+        return self.predict_proba(self._one_hot_encode(X))[:,1]
+
+    def _one_hot_encode(self, X):
+        if hasattr(self, 'ohc'):
+            return self.ohc.transform(X)
+        else:
+            categorical_features = [c for c in X.columns if X[c].nunique() < 8]
+            self.ohc = ColumnTransformer(
+                [
+                    (
+                        "cat",
+                        OneHotEncoder(
+                            handle_unknown="ignore", 
+                            sparse_output=False
+                        ),
+                        categorical_features,
+                    ),
+                ],
+                verbose_feature_names_out=False,
+                remainder='passthrough'
+            )
+            return self.ohc.fit_transform(X)
 
     def init(self, X, incremental=False):
         """Overload of MLP training. Just determines the dimensions of 
@@ -48,10 +71,7 @@ class MLP(MLPClassifier):
 
         """
         # one-hot encode X
-        # X = pd.get_dummies(X.astype('category'))
-        # print('Xohc shape:',X.shape)
-        # import pdb
-        # pdb.set_trace()
+        X = self._one_hot_encode(X)
         # make a random y
         y = np.random.randint(0,1,size=len(X))
         # Make sure self.hidden_layer_sizes is a list
@@ -127,7 +147,8 @@ class Linear:
     def __init__(self, Xp):
         # Xohc = pd.get_dummies(Xp.astype('category'))
         # print('Xohc shape:',Xohc.shape)
-        self.coefs_ = np.empty(Xp.shape[1] + 1) 
+        X = self._one_hot_encode(Xp)
+        self.coefs_ = np.empty(X.shape[1] + 1) 
 
     def get_n_weights(self):
         """Sets coefs_ and intercepts_ to x."""
@@ -143,6 +164,28 @@ class Linear:
 
     def predict(self, X):
         # Xohc = pd.get_dummies(X.astype('category'))
+        X = self._one_hot_encode(X)
         intercept = np.ones(X.shape[0])
         Xintercept = np.column_stack((intercept, X))
         return expit(np.dot(Xintercept,self.coefs_))
+
+    def _one_hot_encode(self, X):
+        if hasattr(self, 'ohc'):
+            return self.ohc.transform(X)
+        else:
+            categorical_features = [c for c in X.columns if X[c].nunique() < 8]
+            self.ohc = ColumnTransformer(
+                [
+                    (
+                        "cat",
+                        OneHotEncoder(
+                            handle_unknown="ignore", 
+                            sparse_output=False
+                        ),
+                        categorical_features,
+                    ),
+                ],
+                verbose_feature_names_out=False,
+                remainder='passthrough'
+            )
+            return self.ohc.fit_transform(X)
