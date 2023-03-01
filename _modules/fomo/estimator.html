@@ -1,0 +1,891 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+        <title>fomo.estimator - Fomo 0.0.13 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Fomo 0.0.13 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">Fomo 0.0.13 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contact.html">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/Adult.html">Fair Classification on Adult Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/Adult.html#visualize-model-set">visualize model set</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for fomo.estimator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Fairness Oriented Multiobjective Optimization (Fomo)</span>
+<span class="sd">Copyright (C) {2023}  William La Cava</span>
+
+<span class="sd">This program is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">uuid</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">RegressorMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_X_y</span><span class="p">,</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.multiclass</span> <span class="kn">import</span> <span class="n">unique_labels</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">SGDRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">multiprocessing.pool</span> <span class="kn">import</span> <span class="n">ThreadPool</span>
+<span class="kn">import</span> <span class="nn">dill</span>
+
+<span class="c1"># pymoo</span>
+<span class="kn">from</span> <span class="nn">pymoo.core.algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
+<span class="kn">from</span> <span class="nn">pymoo.core.problem</span> <span class="kn">import</span> <span class="n">StarmapParallelization</span><span class="p">,</span> <span class="n">ElementwiseProblem</span>
+<span class="kn">from</span> <span class="nn">pymoo.algorithms.moo.nsga2</span> <span class="kn">import</span> <span class="n">NSGA2</span>
+<span class="kn">from</span> <span class="nn">pymoo.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="c1"># MCDM imports</span>
+<span class="kn">from</span> <span class="nn">pymoo.mcdm.high_tradeoff</span> <span class="kn">import</span> <span class="n">HighTradeoffPoints</span>
+<span class="kn">from</span> <span class="nn">pymoo.mcdm.pseudo_weights</span> <span class="kn">import</span> <span class="n">PseudoWeights</span>
+<span class="c1"># fomo</span>
+<span class="kn">from</span> <span class="nn">fomo.utils</span> <span class="kn">import</span> <span class="n">Compromise</span>
+<span class="kn">import</span> <span class="nn">fomo.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
+<span class="kn">from</span> <span class="nn">.problem</span> <span class="kn">import</span> <span class="n">BasicProblem</span>
+<span class="c1"># plotting</span>
+<span class="kn">from</span> <span class="nn">pymoo.visualization.scatter</span> <span class="kn">import</span> <span class="n">Scatter</span>
+<span class="c1"># types</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">NoneType</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+
+<span class="k">class</span> <span class="nc">FomoEstimator</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; The base estimator for training fair models.  </span>
+<span class="sd">    This class should not be called directly. Use :class:`FomoRegressor` or</span>
+<span class="sd">    :class:`FomoClassifier` instead. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimator : sklearn-like estimator</span>
+<span class="sd">        The underlying ML model to be trained. </span>
+<span class="sd">        The ML model must accept `sample_weight` as an argument to :meth:`fit`. </span>
+<span class="sd">    fairness_metrics : list[Callable]</span>
+<span class="sd">        The fairness metrics to try to optimize during fitting. </span>
+<span class="sd">    accuracy_metrics : list[Callable]</span>
+<span class="sd">        The accuracy metrics to try to optimize during fitting. </span>
+<span class="sd">    algorithm: pymoo Algorithm</span>
+<span class="sd">        The multi-objective optimizer to use. Should be compatible with </span>
+<span class="sd">        `pymoo.core.algorithm.Algorithm`. </span>
+<span class="sd">    random_state: int | None</span>
+<span class="sd">        Random seed. </span>
+<span class="sd">    verbose: bool</span>
+<span class="sd">        Whether to print progress.</span>
+<span class="sd">    n_jobs: int</span>
+<span class="sd">        Number of parallel processes to use. Parallelizes evaluation.</span>
+<span class="sd">    store_final_models: bool</span>
+<span class="sd">        If True, the final set of models will be stored in the estimator.</span>
+<span class="sd">    problem_type: ElementwiseProblem</span>
+<span class="sd">        Determines the evaluation class to be used. Options:</span>
+<span class="sd">        - :class:`BasicProblem`</span>
+<span class="sd">        - :class:`MLPProblem`</span>
+<span class="sd">        - :class:`LinearProblem`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">estimator</span><span class="p">:</span> <span class="n">BaseEstimator</span><span class="p">,</span>
+                 <span class="n">fairness_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">],</span>
+                 <span class="n">accuracy_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">],</span>
+                 <span class="n">algorithm</span><span class="p">:</span> <span class="n">Algorithm</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span>
+                 <span class="n">store_final_models</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">problem_type</span><span class="p">:</span><span class="n">ElementwiseProblem</span><span class="p">,</span>
+                 <span class="n">checkpoint</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">picking_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;PseudoWeights&#39;</span>
+                <span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span><span class="o">=</span><span class="n">fairness_metrics</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics</span><span class="o">=</span><span class="n">accuracy_metrics</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">store_final_models</span><span class="o">=</span><span class="n">store_final_models</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">problem_type</span><span class="o">=</span><span class="n">problem_type</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">=</span><span class="n">checkpoint</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">picking_strategy</span><span class="o">=</span><span class="n">picking_strategy</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">starting_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train the model.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+<span class="sd">        y : array-like, shape (n_samples,) or (n_samples, n_outputs)</span>
+<span class="sd">            The target values (class labels in classification, real numbers in</span>
+<span class="sd">            regression).</span>
+<span class="sd">        protected_columns: list[str] | None</span>
+<span class="sd">            The columns in DataFrame X used to assign fairness. </span>
+<span class="sd">        Xp : {array-like, sparse matrix}, shape (n_samples, n_protected_features)</span>
+<span class="sd">            The input samples for measuring/optimizing fairness during training.</span>
+<span class="sd">        starting_point : str | None</span>
+<span class="sd">            Optionally start from a checkpoint file with this name</span>
+<span class="sd">        **kwargs : keyword arguments that are passed to `pymoo.optimize.minimize`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Returns self.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_model</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_obj_</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">)</span>
+
+        <span class="c1">########################################</span>
+        <span class="c1"># define problem</span>
+        <span class="c1"># metric arguments</span>
+        <span class="n">metric_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">groups</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> 
+            <span class="n">X_protected</span><span class="o">=</span><span class="n">Xp</span>
+        <span class="p">)</span>
+        <span class="n">problem_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">fomo_estimator</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_kwargs</span><span class="o">=</span><span class="n">metric_kwargs</span><span class="p">)</span>
+        <span class="c1"># parallelization</span>
+        <span class="n">n_processes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;running&#39;</span><span class="p">,</span><span class="n">n_processes</span><span class="p">,</span><span class="s1">&#39;processes&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_processes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">n_processes</span><span class="p">)</span>
+            <span class="n">runner</span> <span class="o">=</span> <span class="n">StarmapParallelization</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">starmap</span><span class="p">)</span>
+            <span class="n">problem_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">elementwise_runner</span><span class="o">=</span><span class="n">runner</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_type</span><span class="p">(</span><span class="o">**</span><span class="n">problem_kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of variables:&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="o">.</span><span class="n">n_var</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of objectives:&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="o">.</span><span class="n">n_obj</span><span class="p">)</span>
+
+        <span class="c1"># define algorithm</span>
+        <span class="k">if</span> <span class="n">starting_point</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">starting_point</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span> <span class="o">=</span> <span class="n">dill</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loaded Checkpoint:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span>
+        <span class="c1">########################################</span>
+        <span class="c1"># minimize</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">:</span>
+            <span class="n">run_id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+            <span class="n">checkpoint_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;checkpoint.</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">.pkl&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;checkpoint file:&#39;</span><span class="p">,</span><span class="n">checkpoint_file</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="o">.</span><span class="n">has_next</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">checkpoint_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">dill</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res_</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">n_processes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1">########################################</span>
+        <span class="c1"># choose &quot;best&quot; estimator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">picking_strategy</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted_</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># store archive of estimators</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_final_models</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator_archive_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_final_models</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_store_final_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store archive of fitted estimators using final weights.&quot;&quot;&quot;</span>
+        <span class="n">estimator_archive_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">res_</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="n">sample_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="o">.</span><span class="n">get_sample_weight</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">est</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">Pipeline</span><span class="p">):</span>
+                <span class="n">stepname</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">param_name</span> <span class="o">=</span> <span class="n">stepname</span> <span class="o">+</span> <span class="s1">&#39;__sample_weight&#39;</span>
+                <span class="n">kwarg</span> <span class="o">=</span> <span class="p">{</span><span class="n">param_name</span><span class="p">:</span><span class="n">sample_weight</span><span class="p">}</span>
+                <span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+            <span class="n">estimator_archive_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">est</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">estimator_archive_</span>
+
+    <span class="k">def</span> <span class="nf">_output_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call a function on every estimator in the archive and return output.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">fn</span><span class="p">)(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator_archive_</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">predict_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of predictions from the archive models. &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;is_fitted_&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;estimator_archive_&#39;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Need to fit archive models. You can set `store_final_models` to True to avoid this step.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator_archive_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_final_models</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_archive</span><span class="p">(</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">pick_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;PseudoWeights&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Picks the best solution based on on a multi-criteria decision-making</span>
+<span class="sd">        (MCDM) strategy. </span>
+
+<span class="sd">        A description of MCDM strategies is given in the `pymoo docs &lt;https://pymoo.org/mcdm/index.html&gt;`_. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        strategy : str</span>
+<span class="sd">            Name of an MCDM strategy. Built-in support for the following:</span>
+
+<span class="sd">            - &#39;HighTradeOffPoints&#39; : return a point near a cutoff.</span>
+<span class="sd">            - &#39;Compromise&#39;: equally weight both objectives.  </span>
+<span class="sd">            - &#39;PseudoWeights&#39; : normalized weighting of both objectives. </span>
+
+<span class="sd">        weights: np.ndarray|None</span>
+<span class="sd">            Weights for each objective. Used for Compromise and PseudoWeights methods.</span>
+<span class="sd">            Default is equal weighting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">strategy</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;PseudoWeights&#39;</span><span class="p">,</span><span class="s1">&#39;Compromise&#39;</span><span class="p">]:</span>
+                <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obj_</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obj_</span><span class="p">)])</span>
+
+        <span class="k">if</span> <span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;PseudoWeights&#39;</span><span class="p">:</span>
+            <span class="n">picking_fn</span> <span class="o">=</span> <span class="n">PseudoWeights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">do</span>
+        <span class="k">elif</span> <span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;Compromise&#39;</span><span class="p">:</span>
+            <span class="n">picking_fn</span> <span class="o">=</span> <span class="n">Compromise</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">do</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">picking_fn</span> <span class="o">=</span> <span class="n">HighTradeoffPoints</span><span class="p">()</span>
+
+        <span class="n">F</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res_</span><span class="o">.</span><span class="n">F</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> 
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">F</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Warning: only one point on pareto front&#39;</span><span class="p">)</span>
+            <span class="n">I</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">I</span> <span class="o">=</span> <span class="n">picking_fn</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">I</span> <span class="o">=</span> <span class="n">I</span><span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">I</span> <span class="o">=</span> <span class="n">I</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">I</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;warning: picking returned None&#39;</span><span class="p">)</span>
+                <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">F</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_weights_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res_</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">I</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">I_</span> <span class="o">=</span> <span class="n">I</span>
+        <span class="n">best_est</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">)</span>
+        <span class="n">sample_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_</span><span class="o">.</span><span class="n">get_sample_weight</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_weights_</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">best_est</span><span class="p">,</span> <span class="n">Pipeline</span><span class="p">):</span>
+            <span class="n">stepname</span> <span class="o">=</span> <span class="n">best_est</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">param_name</span> <span class="o">=</span> <span class="n">stepname</span> <span class="o">+</span> <span class="s1">&#39;__sample_weight&#39;</span>
+            <span class="n">kwarg</span> <span class="o">=</span> <span class="p">{</span><span class="n">param_name</span><span class="p">:</span><span class="n">sample_weight</span><span class="p">}</span>
+            <span class="n">best_est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="o">**</span><span class="n">kwarg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">best_est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">best_est</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict from X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix}, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        y : ndarray, shape (n_samples,)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># X = check_array(X, accept_sparse=True)</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;is_fitted_&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots the Pareto set of models with a dot indicating the selected </span>
+<span class="sd">        model.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        plot : matplotlib figure</span>
+<span class="sd">            The figure object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;is_fitted_&#39;</span><span class="p">)</span>
+        <span class="n">I</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">I_</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_signed_F</span><span class="p">()</span>
+        <span class="n">axis_labels</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span> <span class="n">am</span><span class="o">.</span><span class="n">_score_func</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">am</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="p">]</span> 
+            <span class="o">+</span> <span class="p">[</span> <span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span> <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">axis_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">al</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">al</span> <span class="ow">in</span> <span class="n">axis_labels</span><span class="p">]</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Scatter</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Candidate models&#39;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">I</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Chosen model&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">axis_labels</span> <span class="o">=</span> <span class="n">axis_labels</span>
+        <span class="k">return</span> <span class="n">plot</span>
+
+    <span class="k">def</span> <span class="nf">_init_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">,</span> <span class="s1">&#39;random_state&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="p">,</span> <span class="s1">&#39;n_jobs&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="k">def</span> <span class="nf">_get_signed_F</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">F</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res_</span><span class="o">.</span><span class="n">F</span><span class="p">)</span>
+        <span class="c1"># reverse F for metrics where higher is better</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">):</span> 
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;_sign&#39;</span><span class="p">):</span>
+                <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">_sign</span>
+        <span class="k">return</span> <span class="n">F</span>
+
+<div class="viewcode-block" id="FomoClassifier"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier">[docs]</a><span class="k">class</span> <span class="nc">FomoClassifier</span><span class="p">(</span><span class="n">FomoEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;FOMO Classifier. </span>
+
+<span class="sd">        1. Train a population of self.estimator models with random weights. </span>
+<span class="sd">        2. Update sample weights using self.algorithm. </span>
+<span class="sd">        3. Select a given model as best, but also save the set of models. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimator : sklearn-like estimator</span>
+<span class="sd">        The underlying ML model to be trained. </span>
+<span class="sd">        The ML model must accept `sample_weight` as an argument to :meth:`fit`. </span>
+<span class="sd">    fairness_metrics : list[Callable]</span>
+<span class="sd">        The fairness metrics to try to optimize during fitting. </span>
+<span class="sd">    accuracy_metrics : list[Callable]</span>
+<span class="sd">        The accuracy metrics to try to optimize during fitting. </span>
+<span class="sd">    algorithm: pymoo Algorithm</span>
+<span class="sd">        The multi-objective optimizer to use. Should be compatible with </span>
+<span class="sd">        `pymoo.core.algorithm.Algorithm`. </span>
+<span class="sd">    random_state: int | None</span>
+<span class="sd">        Random seed. </span>
+<span class="sd">    verbose: bool</span>
+<span class="sd">        Whether to print progress.</span>
+<span class="sd">    n_jobs: int</span>
+<span class="sd">        Number of parallel processes to use. Parallelizes evaluation.</span>
+<span class="sd">    store_final_models: bool</span>
+<span class="sd">        If True, the final set of models will be stored in the estimator.</span>
+<span class="sd">    problem_type: ElementwiseProblem</span>
+<span class="sd">        Determines the evaluation class to be used. Options:</span>
+<span class="sd">        - :class:`BasicProblem`</span>
+<span class="sd">        - :class:`MLPProblem`</span>
+<span class="sd">        - :class:`LinearProblem`</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from fomo import FomoClassifier</span>
+<span class="sd">    &gt;&gt;&gt; from pmlb import pmlb</span>
+<span class="sd">    &gt;&gt;&gt; X,y = pmlb.fetch_data(&#39;adult&#39;, return_X_y=True)</span>
+<span class="sd">    &gt;&gt;&gt; groups = [&#39;race&#39;,&#39;sex&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; est = FomoClassifier()</span>
+<span class="sd">    &gt;&gt;&gt; est.fit(X,y, protected_features=groups)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">estimator</span><span class="p">:</span> <span class="n">ClassifierMixin</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">(),</span>
+                 <span class="n">fairness_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">accuracy_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">algorithm</span><span class="p">:</span> <span class="n">Algorithm</span> <span class="o">=</span> <span class="n">NSGA2</span><span class="p">(),</span>
+                 <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">store_final_models</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">problem_type</span> <span class="o">=</span> <span class="n">BasicProblem</span><span class="p">,</span>
+                 <span class="n">checkpoint</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">picking_strategy</span><span class="o">=</span><span class="s1">&#39;PseudoWeights&#39;</span>
+                <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">estimator</span><span class="p">,</span> 
+            <span class="n">fairness_metrics</span><span class="p">,</span> 
+            <span class="n">accuracy_metrics</span><span class="p">,</span>
+            <span class="n">algorithm</span><span class="p">,</span> 
+            <span class="n">random_state</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="p">,</span>
+            <span class="n">store_final_models</span><span class="p">,</span>
+            <span class="n">problem_type</span><span class="p">,</span>
+            <span class="n">checkpoint</span><span class="p">,</span>
+            <span class="n">picking_strategy</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="FomoClassifier.fit"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train the model.</span>
+
+<span class="sd">        1. Train a population of self.estimator models with random weights. </span>
+<span class="sd">        2. Update sample weights using self.algorithm. </span>
+<span class="sd">        3. Select a given model as best, but also save the set of models. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
+<span class="sd">            The target values. An array of int.</span>
+<span class="sd">        protected_features: list[str]|None, default = None</span>
+<span class="sd">            The columns of X to calculate fairness over. If specifying columns,</span>
+<span class="sd">            do not also specify `Xp`.</span>
+<span class="sd">        Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None</span>
+<span class="sd">            The protected feature values used to calculate fairness. If `Xp` is </span>
+<span class="sd">            specified, `protected_features` must be None. </span>
+<span class="sd">        **kwargs : passed to `pymo.optimize.minimize`. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Returns self.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check that X and y have correct shape</span>
+        <span class="c1"># X, y = check_X_y(X, y)</span>
+        <span class="c1"># Store the classes seen during fit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">unique_labels</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">=</span> <span class="n">y</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_metrics</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="n">Xp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Return the classifier</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="FomoClassifier.predict"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Predict labels from X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        y : ndarray, shape (n_samples,)</span>
+<span class="sd">            The label for each sample is the label of the closest sample</span>
+<span class="sd">            seen during fit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check is fit had been called</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;X_&#39;</span><span class="p">,</span> <span class="s1">&#39;y_&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Input validation</span>
+        <span class="c1"># X = check_array(X)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FomoClassifier.predict_proba"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Return prediction probabilities.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_init_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Check metric definitions and/or define when necessary. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_scorer</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span> <span class="o">=</span> <span class="p">[</span><span class="n">metrics</span><span class="o">.</span><span class="n">multicalibration_loss</span><span class="p">]</span>
+
+<div class="viewcode-block" id="FomoClassifier.predict_proba_archive"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba_archive">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of predictions from the archive models. &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;is_fitted_&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;estimator_archive_&#39;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Need to fit archive models. You can set `store_final_models` to True to avoid this step.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator_archive_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_final_models</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_archive</span><span class="p">(</span><span class="s1">&#39;predict_proba&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="FomoRegressor"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor">[docs]</a><span class="k">class</span> <span class="nc">FomoRegressor</span><span class="p">(</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fomo class for regression models. </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimator : sklearn-like estimator</span>
+<span class="sd">        The underlying ML model to be trained. </span>
+<span class="sd">        The ML model must accept `sample_weight` as an argument to :meth:`fit`. </span>
+<span class="sd">    fairness_metrics : list[Callable]</span>
+<span class="sd">        The fairness metrics to try to optimize during fitting. </span>
+<span class="sd">    accuracy_metrics : list[Callable]</span>
+<span class="sd">        The accuracy metrics to try to optimize during fitting. </span>
+<span class="sd">    algorithm: pymoo Algorithm</span>
+<span class="sd">        The multi-objective optimizer to use. Should be compatible with </span>
+<span class="sd">        `pymoo.core.algorithm.Algorithm`. </span>
+<span class="sd">    random_state: int | None</span>
+<span class="sd">        Random seed. </span>
+<span class="sd">    verbose: bool</span>
+<span class="sd">        Whether to print progress.</span>
+<span class="sd">    n_jobs: int</span>
+<span class="sd">        Number of parallel processes to use. Parallelizes evaluation.</span>
+<span class="sd">    store_final_models: bool</span>
+<span class="sd">        If True, the final set of models will be stored in the estimator.</span>
+<span class="sd">    problem_type: ElementwiseProblem</span>
+<span class="sd">        Determines the evaluation class to be used. Options:</span>
+
+<span class="sd">        - :class:`BasicProblem`: loss function weights are directly optimized.</span>
+<span class="sd">        - :class:`MLPProblem`: weights of a multilayer perceptron are optimized to estimate loss function weights. </span>
+<span class="sd">        - :class:`LinearProblem`: weights of a logistic model are optimized to estimate loss function weights.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_features_ : int</span>
+<span class="sd">        The number of features of the data passed to :meth:`fit`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from fomo import FomoRegressor</span>
+<span class="sd">    &gt;&gt;&gt; from pmlb import pmlb</span>
+<span class="sd">    &gt;&gt;&gt; X,y = pmlb.fetch_data(&#39;adult&#39;, return_X_y=True)</span>
+<span class="sd">    &gt;&gt;&gt; groups = [&#39;race&#39;,&#39;sex&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; est = FomoRegressor()</span>
+<span class="sd">    &gt;&gt;&gt; est.fit(X,y, protected_features=groups)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">estimator</span><span class="p">:</span> <span class="n">RegressorMixin</span><span class="o">=</span><span class="n">SGDRegressor</span><span class="p">(),</span>
+                 <span class="n">fairness_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">accuracy_metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span>
+                 <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">store_final_models</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">problem_type</span> <span class="o">=</span> <span class="n">BasicProblem</span><span class="p">,</span>
+                 <span class="n">checkpoint</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">picking_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;PseudoWeights&#39;</span>
+                <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">estimator</span><span class="p">,</span> 
+            <span class="n">fairness_metrics</span><span class="p">,</span> 
+            <span class="n">accuracy_metrics</span><span class="p">,</span>
+            <span class="n">algorithm</span><span class="p">,</span> 
+            <span class="n">random_state</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="p">,</span>
+            <span class="n">store_final_models</span><span class="p">,</span>
+            <span class="n">problem_type</span><span class="p">,</span>
+            <span class="n">checkpoint</span><span class="p">,</span>
+            <span class="n">picking_strategy</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="FomoRegressor.fit"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train a set of regressors. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
+<span class="sd">            The target values. An array of int.</span>
+<span class="sd">        protected_features: list|None, default = None</span>
+<span class="sd">            The columns of X to calculate fairness over. If specifying columns,</span>
+<span class="sd">            do not also specify `Xp`.</span>
+<span class="sd">        Xp: pandas DataFrame, shape (n_samples, n_protected_features), default=None</span>
+<span class="sd">            The protected feature values used to calculate fairness. If `Xp` is </span>
+<span class="sd">            specified, `protected_features` must be None. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Returns self.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check that X and y have correct shape</span>
+        <span class="c1"># X, y = check_X_y(X, y)</span>
+        <span class="c1"># Store the classes seen during fit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">unique_labels</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="n">Xp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Return the regressor</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="FomoRegressor.predict"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict outcome. </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        y : ndarray, shape (n_samples,)</span>
+<span class="sd">            The label for each sample is the label of the closest sample</span>
+<span class="sd">            seen during fit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check is fit had been called</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;X_&#39;</span><span class="p">,</span> <span class="s1">&#39;y_&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Input validation</span>
+        <span class="c1"># X = check_array(X)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_init_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Check metric definitions and/or define when necessary. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># self.accuracy_metrics_.append(make_scorer(r2_score, greater_is_better=False))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_scorer</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">subgroup_MSE</span><span class="p">)</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, William La Cava
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/cavalab/fomo" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>
