@@ -255,25 +255,28 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
         raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
 
     base_loss = loss_fn(y_true, y_pred)
-    base_positivity = np.sum(y_true)/len(y_true)
     max_loss = 0.0
     for c, idx in categories.items():
-        gamma = len(idx) / len(X_protected)
         # for FPR and FNR, gamma is also conditioned on the outcome probability
         if metric=='FPR' or loss_fn == FPR: 
-            gamma *= 1-base_positivity 
+            gamma = 1 - np.sum(y_true.loc[idx])/len(y_true.loc[idx])
         elif metric=='FNR' or loss_fn == FNR: 
-            gamma *= base_positivity 
+            gamma = np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+        else:
+            gamma = len(idx) / len(X_protected)
 
-        category_loss = gamma*loss_fn(
+        category_loss = loss_fn(
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
         )
+        deviation = category_loss - base_loss
+        deviation *= gamma
+        abs_deviation = np.abs(category_loss - base_loss)
 
-        if  category_loss > max_loss:
-            max_loss = category_loss
+        if deviation > max_loss:
+            max_loss = deviation
 
-    return np.abs(max_loss - base_loss)
+    return max_loss
 
 def subgroup_FPR_loss(y_true, y_pred, X_protected):
     return subgroup_loss(y_true, y_pred, X_protected, 'FPR')

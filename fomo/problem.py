@@ -66,6 +66,7 @@ class BasicProblem(ElementwiseProblem):
                 est.fit(X, y, **kwarg)
             else:
                 est.fit(X,y,sample_weight=sample_weight)
+
         f = np.empty(self.n_obj)
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
@@ -74,7 +75,7 @@ class BasicProblem(ElementwiseProblem):
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-        len(inspect.signature(metric).parameters)
+
         out['F'] = np.asarray(f)
 
 
