@@ -41,11 +41,15 @@ Finally, Fomo works with many different *optimization* methods available from [p
 
 <!-- start installation -->
 
+```text
+pip install pyfomo
+```
+
 ### Dependencies
 
 The requirements for `fomo` are listed in `environment.yml`.
 
-If you are working in linux and get a warning about pymoo, is recommended that you manually install it from the github repo rather than pip:
+**Note on pymoo** If you are working in linux and get a warning about pymoo, is recommended that you manually install it from the github repo rather than pip:
 
 ```bash
 
@@ -54,12 +58,6 @@ cd pymoo
 make compile
 pip install .
 
-```
-
-### Installing Fomo
-
-```text
-pip install pyfomo
 ```
 
 #### Development 
