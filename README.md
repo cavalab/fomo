@@ -23,6 +23,7 @@ It currently supports:
 - Subgroup Fairness (False Positive, False Negative, and Demographic Parity)
 - Differential Fairness (Demographic Parity and Calibration)
 - Multicalibration
+- Proportional Multicalibration
 
 In addition, users can specify any callable function they would like to be optimized, as long as it matches the call signature of these functions. 
 Users can specify the combination of performance metrics and fairness metrics that best suit the task they are studying. 
