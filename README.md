@@ -95,7 +95,7 @@ est.fit(X,y, protected_features=groups)
 
 <!-- start license -->
 
-Fomo is licensed under GNU Public License v. 3.0.  See [LICENSE](https://github.com/cavalab/fomo/blob/main/LICENSE).
+See [LICENSE](https://github.com/cavalab/fomo/blob/main/LICENSE).
 
 <!-- end license -->
 
