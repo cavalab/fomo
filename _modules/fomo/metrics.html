@@ -461,25 +461,28 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;metric=</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> must be &quot;FPR&quot;, &quot;FNR&quot;, or a callable&#39;</span><span class="p">)</span>
 
     <span class="n">base_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">base_positivity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
     <span class="n">max_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">gamma</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
         <span class="c1"># for FPR and FNR, gamma is also conditioned on the outcome probability</span>
         <span class="k">if</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FPR&#39;</span> <span class="ow">or</span> <span class="n">loss_fn</span> <span class="o">==</span> <span class="n">FPR</span><span class="p">:</span> 
-            <span class="n">gamma</span> <span class="o">*=</span> <span class="mi">1</span><span class="o">-</span><span class="n">base_positivity</span> 
+            <span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FNR&#39;</span> <span class="ow">or</span> <span class="n">loss_fn</span> <span class="o">==</span> <span class="n">FNR</span><span class="p">:</span> 
-            <span class="n">gamma</span> <span class="o">*=</span> <span class="n">base_positivity</span> 
+            <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
 
-        <span class="n">category_loss</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">*</span><span class="n">loss_fn</span><span class="p">(</span>
+        <span class="n">category_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span>
             <span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
             <span class="n">y_pred</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="p">)</span>
+        <span class="n">deviation</span> <span class="o">=</span> <span class="n">category_loss</span> <span class="o">-</span> <span class="n">base_loss</span>
+        <span class="n">deviation</span> <span class="o">*=</span> <span class="n">gamma</span>
+        <span class="n">abs_deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">category_loss</span> <span class="o">-</span> <span class="n">base_loss</span><span class="p">)</span>
 
-        <span class="k">if</span>  <span class="n">category_loss</span> <span class="o">&gt;</span> <span class="n">max_loss</span><span class="p">:</span>
-            <span class="n">max_loss</span> <span class="o">=</span> <span class="n">category_loss</span>
+        <span class="k">if</span> <span class="n">deviation</span> <span class="o">&gt;</span> <span class="n">max_loss</span><span class="p">:</span>
+            <span class="n">max_loss</span> <span class="o">=</span> <span class="n">deviation</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">max_loss</span> <span class="o">-</span> <span class="n">base_loss</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">max_loss</span>
 
 <span class="k">def</span> <span class="nf">subgroup_FPR_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">)</span>
