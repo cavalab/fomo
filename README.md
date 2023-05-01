@@ -10,7 +10,7 @@ The goal is to assist decision makers in weighing multiple criteria by generatin
 
 If you use Fomo please cite the following: 
 
-- W.G. La Cava (2023). Optimizing fairness tradeoffs in machine learning with multiobjective meta-models. GECCO '23. [arxiv:2304.12190](https://arxiv.org/abs/2304.12190)
+- W.G. La Cava (2023). Optimizing fairness tradeoffs in machine learning with multiobjective meta-models. GECCO '23. [arXiv:2304.12190](https://arxiv.org/abs/2304.12190)
 
 <!-- end overview -->
 
