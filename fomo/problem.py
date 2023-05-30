@@ -23,6 +23,8 @@ from sklearn.pipeline import Pipeline
 import warnings
 import inspect
 from .surrogate_models import MLP, Linear
+import random
+import fomo.metrics as metrics
 
 class BasicProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
@@ -37,8 +39,9 @@ class BasicProblem(ElementwiseProblem):
         self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)
         n_obj = (len(self.fomo_estimator.accuracy_metrics_)
-                 +len(self.fomo_estimator.fairness_metrics_)
+                  +len(self.fomo_estimator.fairness_metrics_)
         )
+        
         super().__init__(
             n_var = n_var,
             n_obj = n_obj,
@@ -66,17 +69,22 @@ class BasicProblem(ElementwiseProblem):
                 est.fit(X, y, **kwarg)
             else:
                 est.fit(X,y,sample_weight=sample_weight)
+                
         f = np.empty(self.n_obj)
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
+            fn = f[0]
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
         len(inspect.signature(metric).parameters)
+        
         out['F'] = np.asarray(f)
-
+        out['fn'] = fn
+        #out['fng'] = metrics.fng(est, X, y, self.metric_kwargs['groups'], 'FPR')
+        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
