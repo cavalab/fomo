@@ -79,7 +79,6 @@ class BasicProblem(ElementwiseProblem):
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-        len(inspect.signature(metric).parameters)
         
         out['F'] = np.asarray(f)
         out['fn'] = fn
