@@ -6,6 +6,12 @@ Fomo is a **F**airness **O**riented **M**ultiobjective **O**ptimization toolbox 
 Fomo focuses on optimizing the trade-offs between various metrics in ML fairness that are often in direct conflict. 
 The goal is to assist decision makers in weighing multiple criteria by generating good solution *sets*, rather than singular models. 
 
+## Cite
+
+If you use Fomo please cite the following: 
+
+- W.G. La Cava (2023). Optimizing fairness tradeoffs in machine learning with multiobjective meta-models. GECCO '23. [arXiv:2304.12190](https://arxiv.org/abs/2304.12190)
+
 <!-- end overview -->
 
 ## Introduction 
@@ -23,6 +29,7 @@ It currently supports:
 - Subgroup Fairness (False Positive, False Negative, and Demographic Parity)
 - Differential Fairness (Demographic Parity and Calibration)
 - Multicalibration
+- Proportional Multicalibration
 
 In addition, users can specify any callable function they would like to be optimized, as long as it matches the call signature of these functions. 
 Users can specify the combination of performance metrics and fairness metrics that best suit the task they are studying. 
@@ -40,11 +47,15 @@ Finally, Fomo works with many different *optimization* methods available from [p
 
 <!-- start installation -->
 
+```text
+pip install pyfomo
+```
+
 ### Dependencies
 
 The requirements for `fomo` are listed in `environment.yml`.
 
-If you are working in linux and get a warning about pymoo, is recommended that you manually install it from the github repo rather than pip:
+**Note on pymoo** If you are working in linux and get a warning about pymoo, is recommended that you manually install it from the github repo rather than pip:
 
 ```bash
 
@@ -53,12 +64,6 @@ cd pymoo
 make compile
 pip install .
 
-```
-
-### Installing Fomo
-
-```text
-pip install pyfomo
 ```
 
 #### Development 
@@ -96,7 +101,7 @@ est.fit(X,y, protected_features=groups)
 
 <!-- start license -->
 
-Fomo is licensed under GNU Public License v. 3.0.  See [LICENSE](https://github.com/cavalab/fomo/blob/main/LICENSE).
+See [LICENSE](https://github.com/cavalab/fomo/blob/main/LICENSE).
 
 <!-- end license -->
 
