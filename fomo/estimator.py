@@ -146,7 +146,6 @@ class FomoEstimator(BaseEstimator):
         """
         self._init_model()
         self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
-
         ########################################
         # define problem
         # metric arguments
