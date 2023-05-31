@@ -88,7 +88,9 @@ Here is an example of training a fair classifier on the adult income prediction 
 
 from fomo import FomoClassifier
 from pmlb import pmlb
-X,y = pmlb.fetch_data('adult', return_X_y=True)
+dataset = pmlb.fetch_data('adult')
+X = dataset.drop('target',axis=1)
+y = dataset['target']
 groups = ['race','sex']
 est = FomoClassifier()
 est.fit(X,y, protected_features=groups)
