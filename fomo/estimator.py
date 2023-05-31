@@ -60,7 +60,6 @@ from .problem import BasicProblem
 # plotting
 from pymoo.visualization.scatter import Scatter
 # types
-from types import NoneType
 from collections.abc import Callable
 
 
@@ -261,7 +260,7 @@ class FomoEstimator(BaseEstimator):
             Default is equal weighting.
         """
 
-        if isinstance(weights, NoneType):
+        if type(weights) == type(None):
             if strategy in ['PseudoWeights','Compromise']:
                 weights = np.array([float(1.0/self.n_obj_) for n in range(self.n_obj_)])
 
