@@ -279,9 +279,9 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping):
     for c, idx in categories.items():
         # for FPR and FNR, gamma is also conditioned on the outcome probability
         if metric=='FPR' or loss_fn == FPR: 
-            gamma = 1 - np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            gamma = 1 - np.sum(y_true.loc[idx])/len(X_protected)
         elif metric=='FNR' or loss_fn == FNR: 
-            gamma = np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            gamma = np.sum(y_true.loc[idx])/len(X_protected)
         else:
             gamma = len(idx) / len(X_protected)
 
