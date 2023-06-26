@@ -290,11 +290,10 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val):
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
         )
-
-        if (abs_val == False):
-            deviation = category_loss - base_loss
-        else:
-            deviation = np.abs(category_loss - base_loss)
+        
+        deviation = category_loss - base_loss
+        if abs_val:
+            deviation = np.abs(deviation)
 
         deviation *= gamma
 
