@@ -265,7 +265,8 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val):
     else:
         categories = {}
         groups = list(X_protected.columns)
-        for i in groups: categories.update(X_protected.groupby(i).groups)    
+        for i in groups: 
+            categories.update(X_protected.groupby(i).groups)    
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -290,10 +291,12 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val):
             y_pred.loc[idx].values
         )
 
-        if abs_val == False:
-            deviation *= gamma
+        if (abs_val == False):
+            deviation = category_loss - base_loss
         else:
             deviation = np.abs(category_loss - base_loss)
+
+        deviation *= gamma
 
         if deviation > max_loss:
             max_loss = deviation
