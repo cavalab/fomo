@@ -250,7 +250,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val):
+def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -292,24 +292,26 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val):
         )
         
         deviation = category_loss - base_loss
+
         if abs_val:
             deviation = np.abs(deviation)
-
-        deviation *= gamma
+        
+        if gamma:
+            deviation *= gamma
 
         if deviation > max_loss:
             max_loss = deviation
 
     return max_loss
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping, abs_val):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val)
+def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val, gamma)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping, abs_val):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val)
+def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val, gamma)
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping, abs_val):
-    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val)
+def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val, gamma)
 
 def subgroup_scorer(
     estimator,
@@ -317,6 +319,7 @@ def subgroup_scorer(
     y_true,
     metric,
     grouping,
+    gamma,
     groups=None,
     X_protected=None,
     weights=None, 
@@ -338,7 +341,7 @@ def subgroup_scorer(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
-    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val)
+    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, gamma, abs_val)
 
 def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)
