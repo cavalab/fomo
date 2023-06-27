@@ -280,11 +280,11 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
     for c, idx in categories.items():
         # for FPR and FNR, gamma is also conditioned on the outcome probability
         if metric=='FPR' or loss_fn == FPR: 
-            gamma = 1 - np.sum(y_true.loc[idx])/len(X_protected)
+            g = 1 - np.sum(y_true.loc[idx])/len(X_protected)
         elif metric=='FNR' or loss_fn == FNR: 
-            gamma = np.sum(y_true.loc[idx])/len(X_protected)
+            g = np.sum(y_true.loc[idx])/len(X_protected)
         else:
-            gamma = len(idx) / len(X_protected)
+            g = len(idx) / len(X_protected)
 
         category_loss = loss_fn(
             y_true.loc[idx].values, 
@@ -297,7 +297,7 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
             deviation = np.abs(deviation)
         
         if gamma:
-            deviation *= gamma
+            deviation *= g
 
         if deviation > max_loss:
             max_loss = deviation
@@ -341,7 +341,7 @@ def subgroup_scorer(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
-    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, gamma, abs_val)
+    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
 
 def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)

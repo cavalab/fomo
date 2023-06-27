@@ -146,7 +146,6 @@ class FomoEstimator(BaseEstimator):
         """
         self._init_model()
         self.n_obj_ = len(self.accuracy_metrics_)+len(self.fairness_metrics_)
-
         ########################################
         # define problem
         # metric arguments
@@ -463,7 +462,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
         self._init_metrics()
 
-        super().fit(X, y, grouping, protected_features=protected_features, Xp=Xp, **kwargs)
+        super().fit(X, y, gamma, grouping, protected_features=protected_features, Xp=Xp, **kwargs)
 
         # Return the classifier
         return self
