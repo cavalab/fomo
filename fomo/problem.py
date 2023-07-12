@@ -191,4 +191,4 @@ class InterLinearProblem(SurrogateProblem):
 
     """
     def _get_surrogate(self):
-        return Linear(self.X_protected)
+        return InterLinear(self.X_protected)
