@@ -37,7 +37,7 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
-from .surrogate_models import MLP, Linear
+from .surrogate_models import MLP, Linear, InterLinear
 
 class BasicProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
@@ -180,6 +180,13 @@ class MLPProblem(SurrogateProblem):
         return MLP(hidden_layer_sizes=(10,)).init(self.X_protected)
 
 class LinearProblem(SurrogateProblem):
+    """ The evaluation function for each candidate weights. 
+
+    """
+    def _get_surrogate(self):
+        return Linear(self.X_protected)
+
+class InterLinearProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
 
     """
