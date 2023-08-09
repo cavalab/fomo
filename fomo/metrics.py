@@ -343,7 +343,7 @@ def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
 def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
     #returns loss over group for every group in the training set
     
-    groups = kwargs['groups'] #Why doesn't kwargs et unpacked itself??
+    groups = kwargs['groups'] #Why doesn't kwargs get unpacked itself??
     X_protected = X[groups]
     categories = {}
     group_losses = []
@@ -359,9 +359,9 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
         raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
 
     
-    if (flag == 1):
+    if (flag == 1): #marginal grouping
         for i in groups: categories.update(X_protected.groupby(i).groups)
-    else:
+    else: #intersectional grouping (flag is not 0 for now according to paper)
         categories = X_protected.groupby(groups).groups
          
     for c, idx in categories.items():
