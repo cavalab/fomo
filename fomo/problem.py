@@ -37,6 +37,8 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
+import random
+import fomo.metrics as metrics
 from .surrogate_models import MLP, Linear, InterLinear
 
 class BasicProblem(ElementwiseProblem):
@@ -52,8 +54,9 @@ class BasicProblem(ElementwiseProblem):
         self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)
         n_obj = (len(self.fomo_estimator.accuracy_metrics_)
-                 +len(self.fomo_estimator.fairness_metrics_)
+                  +len(self.fomo_estimator.fairness_metrics_)
         )
+        
         super().__init__(
             n_var = n_var,
             n_obj = n_obj,
@@ -86,13 +89,16 @@ class BasicProblem(ElementwiseProblem):
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
+            fn = f[0]
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-
+            
         out['F'] = np.asarray(f)
-
+        out['fn'] = fn
+        #out['fng'] = metrics.fng(est, X, y, self.metric_kwargs['groups'], 'FPR')
+        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
@@ -165,12 +171,15 @@ class SurrogateProblem(ElementwiseProblem):
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
+            fn = f[0]
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
 
         out['F'] = np.asarray(f)
+        out['fn'] = fn
+        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 

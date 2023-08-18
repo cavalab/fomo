@@ -352,3 +352,50 @@ def subgroup_FNR_scorer(estimator, X, y_true, **kwargs):
 def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
 
+
+def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
+    #returns loss over group for every group in the training set
+    
+    groups = kwargs['groups'] #Why doesn't kwargs get unpacked itself??
+    X_protected = X[groups]
+    categories = {}
+    group_losses = []
+    
+    y_pred = estimator.predict_proba(X)[:,1]
+    y_pred = pd.Series(y_pred, index=X_protected.index)
+
+    if isinstance(metric,str):
+        loss_fn = FPR if metric=='FPR' else FNR
+    elif callable(metric):
+        loss_fn = metric
+    else:
+        raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
+
+    
+    if (flag == 1): #marginal grouping
+        for i in groups: categories.update(X_protected.groupby(i).groups)
+    else: #intersectional grouping (flag is not 0 for now according to paper)
+        categories = X_protected.groupby(groups).groups
+         
+    for c, idx in categories.items():
+
+        category_loss = loss_fn(
+            y_true.loc[idx].values, 
+            y_pred.loc[idx].values
+        )
+        group_losses.append(category_loss)
+        
+    return group_losses
+
+
+def mce(y_true, X, estimator, num_bins=10):
+
+    y_pred = estimator.predict_proba(X)[:,1]
+
+    mce = 0
+    for i in range(1, num_bins + 1):
+
+        calibration_error = np.abs(y_true.mean() - y_pred.mean())
+        mce = max(mce, calibration_error)
+
+    return mce
