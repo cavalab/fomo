@@ -37,9 +37,9 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
-from .surrogate_models import MLP, Linear
 import random
 import fomo.metrics as metrics
+from .surrogate_models import MLP, Linear, InterLinear
 
 class BasicProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
@@ -194,3 +194,10 @@ class LinearProblem(SurrogateProblem):
     """
     def _get_surrogate(self):
         return Linear(self.X_protected)
+
+class InterLinearProblem(SurrogateProblem):
+    """ The evaluation function for each candidate weights. 
+
+    """
+    def _get_surrogate(self):
+        return InterLinear(self.X_protected)

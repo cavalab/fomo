@@ -250,7 +250,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric):
+def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -259,8 +259,14 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
 
     y_pred = pd.Series(y_pred, index=X_protected.index)
 
-    groups = list(X_protected.columns)
-    categories = X_protected.groupby(groups).groups
+    if (grouping == 'intersectional'):
+        groups = list(X_protected.columns)
+        categories = X_protected.groupby(groups).groups  
+    else:
+        categories = {}
+        groups = list(X_protected.columns)
+        for i in groups: 
+            categories.update(X_protected.groupby(i).groups)    
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -274,43 +280,50 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
     for c, idx in categories.items():
         # for FPR and FNR, gamma is also conditioned on the outcome probability
         if metric=='FPR' or loss_fn == FPR: 
-            gamma = 1 - np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            g = 1 - np.sum(y_true.loc[idx])/len(X_protected)
         elif metric=='FNR' or loss_fn == FNR: 
-            gamma = np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            g = np.sum(y_true.loc[idx])/len(X_protected)
         else:
-            gamma = len(idx) / len(X_protected)
+            g = len(idx) / len(X_protected)
 
         category_loss = loss_fn(
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
         )
+        
         deviation = category_loss - base_loss
-        deviation *= gamma
-        abs_deviation = np.abs(category_loss - base_loss)
+
+        if abs_val:
+            deviation = np.abs(deviation)
+        
+        if gamma:
+            deviation *= g
 
         if deviation > max_loss:
             max_loss = deviation
 
     return max_loss
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FPR')
+def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val, gamma)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FNR')
+def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val, gamma)
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error)
+def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val, gamma)
 
 def subgroup_scorer(
     estimator,
     X,
     y_true,
     metric,
+    grouping,
+    gamma,
     groups=None,
     X_protected=None,
-    grouping='intersectional',
-    weights=None
+    weights=None, 
+    abs_val = False
 ):
     """Calculate the subgroup fairness of estimator on X according to `metric'.
     TODO: handle use case when Xp is passed
@@ -328,7 +341,7 @@ def subgroup_scorer(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
-    return subgroup_loss(y_true, y_pred, X_protected, metric)
+    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
 
 def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)

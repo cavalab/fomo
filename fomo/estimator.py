@@ -120,7 +120,7 @@ class FomoEstimator(BaseEstimator):
          self.checkpoint=checkpoint
          self.picking_strategy=picking_strategy
 
-    def fit(self, X, y, protected_features=None, Xp=None, starting_point=None, **kwargs):
+    def fit(self, X, y, gamma, grouping, protected_features=None, Xp=None, starting_point=None, **kwargs):
         """Train the model.
 
 
@@ -151,7 +151,9 @@ class FomoEstimator(BaseEstimator):
         # metric arguments
         metric_kwargs = dict(
             groups=protected_features, 
-            X_protected=Xp
+            X_protected=Xp,
+            grouping = grouping, 
+            gamma = gamma
         )
         problem_kwargs=dict(fomo_estimator=self, metric_kwargs=metric_kwargs)
         # parallelization
@@ -424,7 +426,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
             picking_strategy
         )
 
-    def fit(self, X, y, protected_features=None, Xp=None, **kwargs):
+    def fit(self, X, y, gamma, grouping, protected_features=None, Xp=None, **kwargs):
         """Train the model.
 
         1. Train a population of self.estimator models with random weights. 
@@ -460,7 +462,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
 
         self._init_metrics()
 
-        super().fit(X, y, protected_features=protected_features, Xp=Xp, **kwargs)
+        super().fit(X, y, gamma, grouping, protected_features=protected_features, Xp=Xp, **kwargs)
 
         # Return the classifier
         return self
