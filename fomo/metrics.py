@@ -320,10 +320,10 @@ def subgroup_scorer(
     metric,
     grouping,
     gamma,
+    abs_val,
     groups=None,
     X_protected=None,
     weights=None, 
-    abs_val = False
 ):
     """Calculate the subgroup fairness of estimator on X according to `metric'.
     TODO: handle use case when Xp is passed
@@ -354,9 +354,24 @@ def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
 
 
 def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
-    #returns loss over group for every group in the training set
+    """
+        returns loss over group for every group in the training data
+        
+        Parameters
+        ----------
+        estimator : sklearn-like estimator
+            The underlying ML model to be trained.
+        X : array-like, shape (n_samples, n_features)
+            The training input samples.
+        y_true: array-like, bool 
+            True labels.
+        metric: string or function
+            The loss function. Could be FPR or FNR.
+        flag: bool
+            flag = 1 means marginal grouping and flag = 0 means intersectional grouping
+    """
     
-    groups = kwargs['groups'] #Why doesn't kwargs get unpacked itself??
+    groups = kwargs['groups']
     X_protected = X[groups]
     categories = {}
     group_losses = []
@@ -388,8 +403,22 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
     return group_losses
 
 
-def mce(y_true, X, estimator, num_bins=10):
-
+def mce(estimator, X, y_true, num_bins=10):
+    """
+        The metric to use if fairness is calibration-based.
+        Returns maximum calibration error among the bins. 
+        
+        Parameters
+        ----------
+        estimator : sklearn-like estimator
+            The underlying ML model to be trained.
+        X : array-like, shape (n_samples, n_features)
+            The training input samples.
+        y_true: array-like, bool 
+            True labels.
+        num_bins: int
+            Number of bins that the predictions are sorted and partitioned into. 
+    """
     y_pred = estimator.predict_proba(X)[:,1]
 
     mce = 0
