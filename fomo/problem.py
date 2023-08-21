@@ -37,7 +37,6 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
-import random
 import fomo.metrics as metrics
 from .surrogate_models import MLP, Linear, InterLinear
 
