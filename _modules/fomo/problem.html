@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.2 and Furo 2023.08.19 -->
         <title>fomo.problem - Fomo 0.0.14 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -243,9 +243,12 @@
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">.surrogate_models</span> <span class="kn">import</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">Linear</span>
+<span class="kn">import</span> <span class="nn">fomo.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
+<span class="kn">from</span> <span class="nn">.surrogate_models</span> <span class="kn">import</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">Linear</span><span class="p">,</span> <span class="n">InterLinear</span>
 
-<div class="viewcode-block" id="BasicProblem"><a class="viewcode-back" href="../../api.html#fomo.problem.BasicProblem">[docs]</a><span class="k">class</span> <span class="nc">BasicProblem</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
+<div class="viewcode-block" id="BasicProblem">
+<a class="viewcode-back" href="../../api.html#fomo.problem.BasicProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">BasicProblem</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; The evaluation function for each candidate sample weights. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -258,8 +261,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="o">=</span><span class="n">metric_kwargs</span>
         <span class="n">n_var</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">X_</span><span class="p">)</span>
         <span class="n">n_obj</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="p">)</span>
-                 <span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">)</span>
+                  <span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">)</span>
         <span class="p">)</span>
+        
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">n_var</span> <span class="o">=</span> <span class="n">n_var</span><span class="p">,</span>
             <span class="n">n_obj</span> <span class="o">=</span> <span class="n">n_obj</span><span class="p">,</span>
@@ -292,15 +296,21 @@
         <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="p">):</span>
             <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">:</span>
             <span class="n">f</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="c1">#out[&#39;fng&#39;] = metrics.fng(est, X, y, self.metric_kwargs[&#39;groups&#39;], &#39;FPR&#39;)</span>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fng&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">fng</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span></div>
 
-        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="SurrogateProblem"><a class="viewcode-back" href="../../api.html#fomo.problem.SurrogateProblem">[docs]</a><span class="k">class</span> <span class="nc">SurrogateProblem</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
+<div class="viewcode-block" id="SurrogateProblem">
+<a class="viewcode-back" href="../../api.html#fomo.problem.SurrogateProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">SurrogateProblem</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; The evaluation function for each candidate weights. </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -371,26 +381,46 @@
         <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="p">):</span>
             <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">:</span>
             <span class="n">f</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fng&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">fng</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MLPProblem"><a class="viewcode-back" href="../../api.html#fomo.problem.MLPProblem">[docs]</a><span class="k">class</span> <span class="nc">MLPProblem</span><span class="p">(</span><span class="n">SurrogateProblem</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MLPProblem">
+<a class="viewcode-back" href="../../api.html#fomo.problem.MLPProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">MLPProblem</span><span class="p">(</span><span class="n">SurrogateProblem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; The evaluation function for each candidate weights. </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_get_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">MLP</span><span class="p">(</span><span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,))</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_protected</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LinearProblem"><a class="viewcode-back" href="../../api.html#fomo.problem.LinearProblem">[docs]</a><span class="k">class</span> <span class="nc">LinearProblem</span><span class="p">(</span><span class="n">SurrogateProblem</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LinearProblem">
+<a class="viewcode-back" href="../../api.html#fomo.problem.LinearProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">LinearProblem</span><span class="p">(</span><span class="n">SurrogateProblem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; The evaluation function for each candidate weights. </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_get_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_protected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="InterLinearProblem">
+<a class="viewcode-back" href="../../api.html#fomo.problem.InterLinearProblem">[docs]</a>
+<span class="k">class</span> <span class="nc">InterLinearProblem</span><span class="p">(</span><span class="n">SurrogateProblem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; The evaluation function for each candidate weights. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_get_surrogate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">InterLinear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_protected</span><span class="p">)</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -430,14 +460,14 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/tabs.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+</div><script src="../../_static/documentation_options.js?v=544df88d"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>

@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.2 and Furo 2023.08.19 -->
         <title>fomo.estimator - Fomo 0.0.14 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -325,7 +325,7 @@
          <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">=</span><span class="n">checkpoint</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">picking_strategy</span><span class="o">=</span><span class="n">picking_strategy</span>
 
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">starting_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;intersectional&#39;</span><span class="p">,</span> <span class="n">abs_val</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">starting_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Train the model.</span>
 
 
@@ -351,13 +351,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_model</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_obj_</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="p">)</span>
-
         <span class="c1">########################################</span>
         <span class="c1"># define problem</span>
         <span class="c1"># metric arguments</span>
         <span class="n">metric_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
             <span class="n">groups</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> 
-            <span class="n">X_protected</span><span class="o">=</span><span class="n">Xp</span>
+            <span class="n">X_protected</span><span class="o">=</span><span class="n">Xp</span><span class="p">,</span>
+            <span class="n">grouping</span> <span class="o">=</span> <span class="n">grouping</span><span class="p">,</span> 
+            <span class="n">abs_val</span> <span class="o">=</span> <span class="n">abs_val</span><span class="p">,</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span>
         <span class="p">)</span>
         <span class="n">problem_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">fomo_estimator</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_kwargs</span><span class="o">=</span><span class="n">metric_kwargs</span><span class="p">)</span>
         <span class="c1"># parallelization</span>
@@ -561,7 +563,9 @@
                 <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">_sign</span>
         <span class="k">return</span> <span class="n">F</span>
 
-<div class="viewcode-block" id="FomoClassifier"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier">[docs]</a><span class="k">class</span> <span class="nc">FomoClassifier</span><span class="p">(</span><span class="n">FomoEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="FomoClassifier">
+<a class="viewcode-back" href="../../api.html#fomo.FomoClassifier">[docs]</a>
+<span class="k">class</span> <span class="nc">FomoClassifier</span><span class="p">(</span><span class="n">FomoEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;FOMO Classifier. </span>
 
 <span class="sd">        1. Train a population of self.estimator models with random weights. </span>
@@ -630,7 +634,9 @@
             <span class="n">picking_strategy</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="FomoClassifier.fit"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="FomoClassifier.fit">
+<a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;intersectional&#39;</span><span class="p">,</span> <span class="n">abs_val</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Train the model.</span>
 
 <span class="sd">        1. Train a population of self.estimator models with random weights. </span>
@@ -666,12 +672,15 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_init_metrics</span><span class="p">()</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="n">Xp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">grouping</span> <span class="o">=</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span> <span class="o">=</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="n">protected_features</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="n">Xp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Return the classifier</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="FomoClassifier.predict"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FomoClassifier.predict">
+<a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Predict labels from X.</span>
 
 <span class="sd">        Parameters</span>
@@ -693,9 +702,13 @@
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FomoClassifier.predict_proba"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FomoClassifier.predict_proba">
+<a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Return prediction probabilities.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
 
     <span class="k">def</span> <span class="nf">_init_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Check metric definitions and/or define when necessary. &quot;&quot;&quot;</span>
@@ -706,16 +719,22 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span> <span class="o">=</span> <span class="p">[</span><span class="n">metrics</span><span class="o">.</span><span class="n">multicalibration_loss</span><span class="p">]</span>
 
-<div class="viewcode-block" id="FomoClassifier.predict_proba_archive"><a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba_archive">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="viewcode-block" id="FomoClassifier.predict_proba_archive">
+<a class="viewcode-back" href="../../api.html#fomo.FomoClassifier.predict_proba_archive">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict_proba_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of predictions from the archive models. &quot;&quot;&quot;</span>
         <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;is_fitted_&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;estimator_archive_&#39;</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Need to fit archive models. You can set `store_final_models` to True to avoid this step.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">estimator_archive_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_final_models</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_archive</span><span class="p">(</span><span class="s1">&#39;predict_proba&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_archive</span><span class="p">(</span><span class="s1">&#39;predict_proba&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="FomoRegressor"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor">[docs]</a><span class="k">class</span> <span class="nc">FomoRegressor</span><span class="p">(</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FomoRegressor">
+<a class="viewcode-back" href="../../api.html#fomo.FomoRegressor">[docs]</a>
+<span class="k">class</span> <span class="nc">FomoRegressor</span><span class="p">(</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fomo class for regression models. </span>
 
 <span class="sd">    Parameters</span>
@@ -786,7 +805,9 @@
             <span class="n">picking_strategy</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="FomoRegressor.fit"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="FomoRegressor.fit">
+<a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Train a set of regressors. </span>
 
 <span class="sd">        Parameters</span>
@@ -819,7 +840,10 @@
         <span class="c1"># Return the regressor</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="FomoRegressor.predict"><a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FomoRegressor.predict">
+<a class="viewcode-back" href="../../api.html#fomo.FomoRegressor.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict outcome. </span>
 
 <span class="sd">        Parameters</span>
@@ -841,6 +865,7 @@
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
 
+
     <span class="k">def</span> <span class="nf">_init_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Check metric definitions and/or define when necessary. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">=</span> <span class="p">[]</span>
@@ -850,6 +875,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_scorer</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">subgroup_MSE</span><span class="p">)</span></div>
+
 </pre></div>
         </article>
       </div>
@@ -889,14 +915,14 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/tabs.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+</div><script src="../../_static/documentation_options.js?v=544df88d"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>

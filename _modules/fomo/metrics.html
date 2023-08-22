@@ -1,17 +1,17 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
+    <!-- Generated with Sphinx 7.2.2 and Furo 2023.08.19 -->
         <title>fomo.metrics - Fomo 0.0.14 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -247,13 +247,18 @@
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="pairwise"><a class="viewcode-back" href="../../api.html#fomo.metrics.pairwise">[docs]</a><span class="k">def</span> <span class="nf">pairwise</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<div class="viewcode-block" id="pairwise">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.pairwise">[docs]</a>
+<span class="k">def</span> <span class="nf">pairwise</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
     <span class="s2">&quot;s -&gt; (s0,s1), (s1,s2), (s2, s3), ...&quot;</span>
     <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">tee</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
     <span class="nb">next</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="stratify_groups"><a class="viewcode-back" href="../../api.html#fomo.metrics.stratify_groups">[docs]</a><span class="k">def</span> <span class="nf">stratify_groups</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span>
+
+<div class="viewcode-block" id="stratify_groups">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.stratify_groups">[docs]</a>
+<span class="k">def</span> <span class="nf">stratify_groups</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span>
                <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                <span class="n">bins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
@@ -291,7 +296,10 @@
     <span class="c1"># now we have categories where, for each interval, there is a dict of groups.</span>
     <span class="k">return</span> <span class="n">stratified_categories</span></div>
 
-<div class="viewcode-block" id="multicalibration_loss"><a class="viewcode-back" href="../../api.html#fomo.metrics.multicalibration_loss">[docs]</a><span class="k">def</span> <span class="nf">multicalibration_loss</span><span class="p">(</span>
+
+<div class="viewcode-block" id="multicalibration_loss">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.multicalibration_loss">[docs]</a>
+<span class="k">def</span> <span class="nf">multicalibration_loss</span><span class="p">(</span>
     <span class="n">estimator</span><span class="p">,</span>
     <span class="n">X</span><span class="p">,</span>
     <span class="n">y_true</span><span class="p">,</span>
@@ -342,6 +350,7 @@
 
     <span class="k">return</span> <span class="n">loss</span></div>
 
+
 <span class="k">def</span> <span class="nf">multicalibration_score</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">multicalibration_loss</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -352,7 +361,9 @@
 <span class="k">def</span> <span class="nf">proportional_multicalibration_score</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">proportional_multicalibration_loss</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="differential_calibration_loss"><a class="viewcode-back" href="../../api.html#fomo.metrics.differential_calibration_loss">[docs]</a><span class="k">def</span> <span class="nf">differential_calibration_loss</span><span class="p">(</span>
+<div class="viewcode-block" id="differential_calibration_loss">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.differential_calibration_loss">[docs]</a>
+<span class="k">def</span> <span class="nf">differential_calibration_loss</span><span class="p">(</span>
     <span class="n">estimator</span><span class="p">,</span> 
     <span class="n">X</span><span class="p">,</span> 
     <span class="n">y_true</span><span class="p">,</span>
@@ -399,10 +410,13 @@
 
     <span class="k">return</span> <span class="n">dc_max</span></div>
 
+
 <span class="k">def</span> <span class="nf">differential_calibration_score</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">differential_calibration_loss</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TPR"><a class="viewcode-back" href="../../api.html#fomo.metrics.TPR">[docs]</a><span class="k">def</span> <span class="nf">TPR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<div class="viewcode-block" id="TPR">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.TPR">[docs]</a>
+<span class="k">def</span> <span class="nf">TPR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True Positive Rate.</span>
 
 <span class="sd">    Parameters</span>
@@ -417,7 +431,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[(</span><span class="n">y_true</span><span class="o">==</span><span class="mi">1</span><span class="p">)])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FPR"><a class="viewcode-back" href="../../api.html#fomo.metrics.FPR">[docs]</a><span class="k">def</span> <span class="nf">FPR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FPR">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.FPR">[docs]</a>
+<span class="k">def</span> <span class="nf">FPR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns False Positive Rate.</span>
 
 <span class="sd">    Parameters</span>
@@ -436,7 +453,10 @@
     <span class="n">yt</span> <span class="o">=</span> <span class="n">y_true</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[</span><span class="o">~</span><span class="n">yt</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">yt</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FNR"><a class="viewcode-back" href="../../api.html#fomo.metrics.FNR">[docs]</a><span class="k">def</span> <span class="nf">FNR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FNR">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.FNR">[docs]</a>
+<span class="k">def</span> <span class="nf">FNR</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns False Negative Rate.</span>
 
 <span class="sd">    Parameters</span>
@@ -456,7 +476,8 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y_pred</span><span class="p">[</span><span class="n">yt</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">yt</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X_protected</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">),</span> <span class="s2">&quot;X should be a dataframe&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
         <span class="n">y_true</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_protected</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -465,8 +486,14 @@
 
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_protected</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-    <span class="n">groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_protected</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">grouping</span> <span class="o">==</span> <span class="s1">&#39;intersectional&#39;</span><span class="p">):</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_protected</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>  
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X_protected</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span> 
+            <span class="n">categories</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>    
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
         <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">FPR</span> <span class="k">if</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FPR&#39;</span> <span class="k">else</span> <span class="n">FNR</span>
@@ -480,43 +507,52 @@
     <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="c1"># for FPR and FNR, gamma is also conditioned on the outcome probability</span>
         <span class="k">if</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FPR&#39;</span> <span class="ow">or</span> <span class="n">loss_fn</span> <span class="o">==</span> <span class="n">FPR</span><span class="p">:</span> 
-            <span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FNR&#39;</span> <span class="ow">or</span> <span class="n">loss_fn</span> <span class="o">==</span> <span class="n">FNR</span><span class="p">:</span> 
-            <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">gamma</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_protected</span><span class="p">)</span>
 
         <span class="n">category_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span>
             <span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
             <span class="n">y_pred</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="p">)</span>
+        
         <span class="n">deviation</span> <span class="o">=</span> <span class="n">category_loss</span> <span class="o">-</span> <span class="n">base_loss</span>
-        <span class="n">deviation</span> <span class="o">*=</span> <span class="n">gamma</span>
-        <span class="n">abs_deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">category_loss</span> <span class="o">-</span> <span class="n">base_loss</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">abs_val</span><span class="p">:</span>
+            <span class="n">deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">deviation</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">gamma</span><span class="p">:</span>
+            <span class="n">deviation</span> <span class="o">*=</span> <span class="n">g</span>
 
         <span class="k">if</span> <span class="n">deviation</span> <span class="o">&gt;</span> <span class="n">max_loss</span><span class="p">:</span>
             <span class="n">max_loss</span> <span class="o">=</span> <span class="n">deviation</span>
 
     <span class="k">return</span> <span class="n">max_loss</span>
 
-<span class="k">def</span> <span class="nf">subgroup_FPR_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">subgroup_FPR_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">subgroup_FNR_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">subgroup_FNR_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">subgroup_MSE_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">subgroup_MSE_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 
-<div class="viewcode-block" id="subgroup_scorer"><a class="viewcode-back" href="../../api.html#fomo.metrics.subgroup_scorer">[docs]</a><span class="k">def</span> <span class="nf">subgroup_scorer</span><span class="p">(</span>
+<div class="viewcode-block" id="subgroup_scorer">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.subgroup_scorer">[docs]</a>
+<span class="k">def</span> <span class="nf">subgroup_scorer</span><span class="p">(</span>
     <span class="n">estimator</span><span class="p">,</span>
     <span class="n">X</span><span class="p">,</span>
     <span class="n">y_true</span><span class="p">,</span>
     <span class="n">metric</span><span class="p">,</span>
+    <span class="n">grouping</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="p">,</span>
+    <span class="n">abs_val</span><span class="p">,</span>
     <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">X_protected</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">grouping</span><span class="o">=</span><span class="s1">&#39;intersectional&#39;</span><span class="p">,</span>
-    <span class="n">weights</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the subgroup fairness of estimator on X according to `metric&#39;.</span>
 <span class="sd">    TODO: handle use case when Xp is passed</span>
@@ -534,7 +570,8 @@
         <span class="k">assert</span> <span class="n">X_protected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;cannot define both groups and X_protected&quot;</span>
         <span class="n">X_protected</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">groups</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">subgroup_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">X_protected</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">abs_val</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span></div>
+
 
 <span class="k">def</span> <span class="nf">subgroup_FPR_scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">subgroup_scorer</span><span class="p">(</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;FPR&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -544,6 +581,88 @@
 
 <span class="k">def</span> <span class="nf">subgroup_MSE_scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">subgroup_scorer</span><span class="p">(</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="fng">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.fng">[docs]</a>
+<span class="k">def</span> <span class="nf">fng</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns loss over group for every group in the training data</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        estimator : sklearn-like estimator</span>
+<span class="sd">            The underlying ML model to be trained.</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+<span class="sd">        y_true: array-like, bool </span>
+<span class="sd">            True labels.</span>
+<span class="sd">        metric: string or function</span>
+<span class="sd">            The loss function. Could be FPR or FNR.</span>
+<span class="sd">        flag: bool</span>
+<span class="sd">            flag = 1 means marginal grouping and flag = 0 means intersectional grouping</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span>
+    <span class="n">X_protected</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">groups</span><span class="p">]</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">group_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_protected</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">FPR</span> <span class="k">if</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FPR&#39;</span> <span class="k">else</span> <span class="n">FNR</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">metric</span><span class="p">):</span>
+        <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">metric</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;metric=</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> must be &quot;FPR&quot;, &quot;FNR&quot;, or a callable&#39;</span><span class="p">)</span>
+
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span> <span class="c1">#marginal grouping</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span> <span class="n">categories</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1">#intersectional grouping (flag is not 0 for now according to paper)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+         
+    <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="n">category_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+            <span class="n">y_pred</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">)</span>
+        <span class="n">group_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category_loss</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">group_losses</span></div>
+
+
+
+<div class="viewcode-block" id="mce">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.mce">[docs]</a>
+<span class="k">def</span> <span class="nf">mce</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The metric to use if fairness is calibration-based.</span>
+<span class="sd">        Returns maximum calibration error among the bins. </span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        estimator : sklearn-like estimator</span>
+<span class="sd">            The underlying ML model to be trained.</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            The training input samples.</span>
+<span class="sd">        y_true: array-like, bool </span>
+<span class="sd">            True labels.</span>
+<span class="sd">        num_bins: int</span>
+<span class="sd">            Number of bins that the predictions are sorted and partitioned into. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">mce</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="n">calibration_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">mce</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mce</span><span class="p">,</span> <span class="n">calibration_error</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mce</span></div>
 
 </pre></div>
         </article>
@@ -584,14 +703,14 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/tabs.js"></script>
-    <script src="../../_static/design-tabs.js"></script>
+</div><script src="../../_static/documentation_options.js?v=544df88d"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
