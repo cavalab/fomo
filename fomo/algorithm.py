@@ -43,7 +43,6 @@ def get_parent(pop):
     G = np.arange(fng.shape[1])
     S = np.arange(len(pop))
     loss = []
-    epsilon = 2
 
     while (len(G) > 0 and len(S) > 1):
 

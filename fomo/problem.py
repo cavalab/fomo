@@ -96,8 +96,7 @@ class BasicProblem(ElementwiseProblem):
             
         out['F'] = np.asarray(f)
         out['fn'] = fn
-        #out['fng'] = metrics.fng(est, X, y, self.metric_kwargs['groups'], 'FPR')
-        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
+        out['fng'] = metrics.fng(est, X, y, 'FNR', **self.metric_kwargs)
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
