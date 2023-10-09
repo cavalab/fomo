@@ -250,7 +250,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma):
+def subgroup_loss(y_true, y_pred, X_protected, metric, grouping = 'intersectional', abs_val = False, gamma = True):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -304,13 +304,13 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
 
     return max_loss
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val, gamma)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val, gamma)
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val, gamma)
 
 def subgroup_scorer(
@@ -319,8 +319,8 @@ def subgroup_scorer(
     y_true,
     metric,
     grouping,
-    gamma,
     abs_val,
+    gamma,
     groups=None,
     X_protected=None,
     weights=None, 
