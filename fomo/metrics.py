@@ -264,9 +264,13 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping = 'intersectiona
         categories = X_protected.groupby(groups).groups  
     else:
         categories = {}
-        groups = list(X_protected.columns)
-        for i in groups: 
-            categories.update(X_protected.groupby(i).groups)    
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -388,7 +392,14 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
 
     
     if (flag == 1): #marginal grouping
-        for i in groups: categories.update(X_protected.groupby(i).groups)
+        categories = {}
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
     else: #intersectional grouping (flag is not 0 for now according to paper)
         categories = X_protected.groupby(groups).groups
          
