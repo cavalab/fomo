@@ -357,9 +357,12 @@ def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
 
 
-def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
+def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
     """
-        returns loss over group for every group in the training data
+        returns 
+        ----------
+        fn: overall loss of all samples
+        fng: loss over group for every group in the training data
         
         Parameters
         ----------
@@ -410,8 +413,10 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
             y_pred.loc[idx].values
         )
         group_losses.append(category_loss)
-        
-    return group_losses
+
+    fn = loss_fn(y_true, y_pred)    
+    fng = group_losses
+    return fn, fng
 
 
 def mce(estimator, X, y_true, num_bins=10):
