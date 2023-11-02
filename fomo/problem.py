@@ -95,8 +95,8 @@ class BasicProblem(ElementwiseProblem):
             
         out['F'] = np.asarray(f)
         fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
-        out['fn'] = -fn #FNR of all samples
-        out['fng'] = [-x for x in fng] #FNR of every group
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of each group
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
@@ -176,8 +176,8 @@ class SurrogateProblem(ElementwiseProblem):
 
         out['F'] = np.asarray(f)
         fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
-        out['fn'] = -fn #FNR of all samples
-        out['fng'] = [-x for x in fng] #FNR of every group
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of every group
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
