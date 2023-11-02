@@ -70,7 +70,7 @@ def get_parent(pop):
                 
 class FLEX(Selection):
     
-    def __init__(self, 
+    def __init__(self,
                  **kwargs):
 
         #self.X_protected_ = X_protected
@@ -94,9 +94,16 @@ class FLEX(Selection):
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
-    
 
-class Lexicase(GeneticAlgorithm):
+class LexSurvival(Survival):
+    def __init__(self) -> None:
+        super().__init__(filter_infeasible=False)
+
+    def _do(self, problem, pop, n_survive=None, **kwargs):
+        return pop[-n_survive:]
+
+
+class Lexicase_NSGA2(GeneticAlgorithm):
 
     def __init__(self,
                  pop_size=100,
@@ -108,8 +115,6 @@ class Lexicase(GeneticAlgorithm):
                  output=MultiObjectiveOutput(),
                  **kwargs):
         
-        #self.X_protected = X_protected
-        #self.selection = FLEX()
         super().__init__(
             pop_size=pop_size,
             sampling=sampling,
@@ -129,10 +134,26 @@ class Lexicase(GeneticAlgorithm):
             self.opt = self.pop[[np.argmin(self.pop.get("CV"))]]
         else:
             self.opt = self.pop[self.pop.get("rank") == 0]
-            
 
-   
-    
+class Lexicase(GeneticAlgorithm):
 
-
-
+    def __init__(self,
+                 pop_size=100,
+                 sampling=FloatRandomSampling(),
+                 selection=FLEX(),
+                 crossover=SBX(eta=15, prob=0.9),
+                 mutation=PM(eta=20),
+                 survival=LexSurvival(),
+                 output=MultiObjectiveOutput(),
+                 **kwargs):
+        
+        super().__init__(
+            pop_size=pop_size,
+            sampling=sampling,
+            selection=selection,
+            crossover=crossover,
+            mutation=mutation,
+            survival=survival,
+            output=output,
+            advance_after_initial_infill=True,
+            **kwargs)
