@@ -58,16 +58,49 @@ def get_parent(pop):
 
         L = min(loss) 
         epsilon = np.median(np.abs(loss - np.median(loss)))
-        
-        S = S[np.where(loss <= L + epsilon)]
-        fng = fng[np.where(loss <= L + epsilon)]
-        fn = fn[np.where(loss <= L + epsilon)]
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
         G = G[np.where(G != g)]
             
     S = S[:, None].astype(int, copy=False)     
     return random.choice(S)
                 
-                
+def get_parent_noCoinFlip(pop):
+
+    fng = pop.get("fng")
+    fng = np.tile(fng, 2)
+    fn = pop.get("fn")
+    G = np.arange(fng.shape[1])
+    S = np.arange(len(pop))
+    loss = []
+
+    while (len(G) > 0 and len(S) > 1):
+
+        g = random.choice(G)
+        loss = []
+        
+        if g < max(G)/2:
+            #look at accuracy
+            loss = fng[:, g]
+        else:
+            #look at fairness
+            loss = np.abs(fng[:, g] - fn)
+
+        L = min(loss) 
+        epsilon = np.median(np.abs(loss - np.median(loss)))
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
+        G = G[np.where(G != g)]
+
+            
+    S = S[:, None].astype(int, copy=False)     
+    return random.choice(S)
+
+
 class FLEX(Selection):
     
     def __init__(self,
@@ -90,7 +123,7 @@ class FLEX(Selection):
         
         for i in range(n_select * n_parents): 
             #get pop_size parents
-            p = get_parent(pop)
+            p = get_parent_noCoinFlip(pop)
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
