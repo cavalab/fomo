@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Fair Classification on Adult Dataset" href="examples/Adult.html" />
 
-    <!-- Generated with Sphinx 7.2.2 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>API - Fomo 0.0.14 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -215,9 +215,9 @@
         <article role="main">
           <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Link to this heading">#</a></h1>
-<section id="estimators">
-<h2>Estimators<a class="headerlink" href="#estimators" title="Link to this heading">#</a></h2>
-<span class="target" id="module-fomo"></span><dl class="py class">
+<section id="module-fomo">
+<span id="estimators"></span><h2>Estimators<a class="headerlink" href="#module-fomo" title="Link to this heading">#</a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="fomo.FomoClassifier">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fomo.</span></span><span class="sig-name descname"><span class="pre">FomoClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator:</span> <span class="pre">~sklearn.base.ClassifierMixin</span> <span class="pre">=</span> <span class="pre">LogisticRegression()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fairness_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_metrics=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm:</span> <span class="pre">~pymoo.core.algorithm.Algorithm</span> <span class="pre">=</span> <span class="pre">&lt;pymoo.algorithms.moo.nsga2.NSGA2</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_final_models:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_type=&lt;class</span> <span class="pre">'fomo.problem.BasicProblem'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picking_strategy='PseudoWeights'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/estimator.html#FomoClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.FomoClassifier" title="Link to this definition">#</a></dt>
 <dd><p>FOMO Classifier.</p>
@@ -358,7 +358,7 @@ parameters and not others.</p>
 <p class="admonition-title">Note</p>
 <p>This method is only relevant if this estimator is used as a
 sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -409,7 +409,7 @@ parameters and not others.</p>
 <p class="admonition-title">Note</p>
 <p>This method is only relevant if this estimator is used as a
 sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -555,7 +555,7 @@ parameters and not others.</p>
 <p class="admonition-title">Note</p>
 <p>This method is only relevant if this estimator is used as a
 sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -600,7 +600,7 @@ parameters and not others.</p>
 <p class="admonition-title">Note</p>
 <p>This method is only relevant if this estimator is used as a
 sub-estimator of a meta-estimator, e.g. used inside a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">pipeline.Pipeline</span></code>. Otherwise it has no effect.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code>. Otherwise it has no effect.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -621,9 +621,9 @@ sub-estimator of a meta-estimator, e.g. used inside a
 </dd></dl>
 
 </section>
-<section id="problems">
-<h2>Problems<a class="headerlink" href="#problems" title="Link to this heading">#</a></h2>
-<p id="module-fomo.problem">Fairness Oriented Multiobjective Optimization (Fomo)</p>
+<section id="module-fomo.problem">
+<span id="problems"></span><h2>Problems<a class="headerlink" href="#module-fomo.problem" title="Link to this heading">#</a></h2>
+<p>Fairness Oriented Multiobjective Optimization (Fomo)</p>
 <p>BSD 3-Clause License</p>
 <p>Copyright (c) 2023, William La Cava</p>
 <p>Redistribution and use in source and binary forms, with or without
@@ -914,9 +914,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </dd></dl>
 
 </section>
-<section id="metrics">
-<h2>Metrics<a class="headerlink" href="#metrics" title="Link to this heading">#</a></h2>
-<p id="module-fomo.metrics">Fairness Oriented Multiobjective Optimization (Fomo)</p>
+<section id="module-fomo.metrics">
+<span id="metrics"></span><h2>Metrics<a class="headerlink" href="#module-fomo.metrics" title="Link to this heading">#</a></h2>
+<p>Fairness Oriented Multiobjective Optimization (Fomo)</p>
 <p>BSD 3-Clause License</p>
 <p>Copyright (c) 2023, William La Cava</p>
 <p>Redistribution and use in source and binary forms, with or without
@@ -1002,10 +1002,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="fomo.metrics.fng">
-<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">fng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#fng"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.fng" title="Link to this definition">#</a></dt>
-<dd><p>returns loss over group for every group in the training data</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="fomo.metrics.loss">
+<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.loss" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>estimator</strong><span class="classifier">sklearn-like estimator</span></dt><dd><p>The underlying ML model to be trained.</p>
@@ -1018,6 +1017,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </dd>
 <dt><strong>flag: bool</strong></dt><dd><p>flag = 1 means marginal grouping and flag = 0 means intersectional grouping</p>
 </dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>fn: overall loss of all samples</dt><dd></dd>
+<dt>fng: loss over group for every group in the training data</dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -1065,7 +1070,7 @@ calculate current loss in terms of (proportional) multicalibration</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="fomo.metrics.subgroup_scorer">
-<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">subgroup_scorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_protected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#subgroup_scorer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.subgroup_scorer" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">subgroup_scorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abs_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_protected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#subgroup_scorer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.subgroup_scorer" title="Link to this definition">#</a></dt>
 <dd><p>Calculate the subgroup fairness of estimator on X according to <a href="#id1"><span class="problematic" id="id2">`</span></a>metric’.
 TODO: handle use case when Xp is passed</p>
 </dd></dl>
@@ -1128,7 +1133,7 @@ TODO: handle use case when Xp is passed</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">API</a><ul>
-<li><a class="reference internal" href="#estimators">Estimators</a><ul>
+<li><a class="reference internal" href="#module-fomo">Estimators</a><ul>
 <li><a class="reference internal" href="#fomo.FomoClassifier"><code class="docutils literal notranslate"><span class="pre">FomoClassifier</span></code></a><ul>
 <li><a class="reference internal" href="#fomo.FomoClassifier.fit"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.fit()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.FomoClassifier.predict"><code class="docutils literal notranslate"><span class="pre">FomoClassifier.predict()</span></code></a></li>
@@ -1147,7 +1152,7 @@ TODO: handle use case when Xp is passed</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#problems">Problems</a><ul>
+<li><a class="reference internal" href="#module-fomo.problem">Problems</a><ul>
 <li><a class="reference internal" href="#fomo.problem.BasicProblem"><code class="docutils literal notranslate"><span class="pre">BasicProblem</span></code></a></li>
 <li><a class="reference internal" href="#fomo.problem.InterLinearProblem"><code class="docutils literal notranslate"><span class="pre">InterLinearProblem</span></code></a></li>
 <li><a class="reference internal" href="#fomo.problem.LinearProblem"><code class="docutils literal notranslate"><span class="pre">LinearProblem</span></code></a></li>
@@ -1155,12 +1160,12 @@ TODO: handle use case when Xp is passed</p>
 <li><a class="reference internal" href="#fomo.problem.SurrogateProblem"><code class="docutils literal notranslate"><span class="pre">SurrogateProblem</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#metrics">Metrics</a><ul>
+<li><a class="reference internal" href="#module-fomo.metrics">Metrics</a><ul>
 <li><a class="reference internal" href="#fomo.metrics.FNR"><code class="docutils literal notranslate"><span class="pre">FNR()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.FPR"><code class="docutils literal notranslate"><span class="pre">FPR()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.TPR"><code class="docutils literal notranslate"><span class="pre">TPR()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.differential_calibration_loss"><code class="docutils literal notranslate"><span class="pre">differential_calibration_loss()</span></code></a></li>
-<li><a class="reference internal" href="#fomo.metrics.fng"><code class="docutils literal notranslate"><span class="pre">fng()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.metrics.loss"><code class="docutils literal notranslate"><span class="pre">loss()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.mce"><code class="docutils literal notranslate"><span class="pre">mce()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.multicalibration_loss"><code class="docutils literal notranslate"><span class="pre">multicalibration_loss()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.pairwise"><code class="docutils literal notranslate"><span class="pre">pairwise()</span></code></a></li>
