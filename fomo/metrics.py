@@ -250,7 +250,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric):
+def subgroup_loss(y_true, y_pred, X_protected, metric, grouping = 'intersectional', abs_val = False, gamma = True):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -259,8 +259,18 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
 
     y_pred = pd.Series(y_pred, index=X_protected.index)
 
-    groups = list(X_protected.columns)
-    categories = X_protected.groupby(groups).groups
+    if (grouping == 'intersectional'):
+        groups = list(X_protected.columns)
+        categories = X_protected.groupby(groups).groups  
+    else:
+        categories = {}
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -274,43 +284,50 @@ def subgroup_loss(y_true, y_pred, X_protected, metric):
     for c, idx in categories.items():
         # for FPR and FNR, gamma is also conditioned on the outcome probability
         if metric=='FPR' or loss_fn == FPR: 
-            gamma = 1 - np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            g = 1 - np.sum(y_true.loc[idx])/len(X_protected)
         elif metric=='FNR' or loss_fn == FNR: 
-            gamma = np.sum(y_true.loc[idx])/len(y_true.loc[idx])
+            g = np.sum(y_true.loc[idx])/len(X_protected)
         else:
-            gamma = len(idx) / len(X_protected)
+            g = len(idx) / len(X_protected)
 
         category_loss = loss_fn(
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
         )
+        
         deviation = category_loss - base_loss
-        deviation *= gamma
-        abs_deviation = np.abs(category_loss - base_loss)
+
+        if abs_val:
+            deviation = np.abs(deviation)
+        
+        if gamma:
+            deviation *= g
 
         if deviation > max_loss:
             max_loss = deviation
 
     return max_loss
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FPR')
+def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val, gamma)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, 'FNR')
+def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
+    return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val, gamma)
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected):
-    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error)
+def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
+    return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val, gamma)
 
 def subgroup_scorer(
     estimator,
     X,
     y_true,
     metric,
+    grouping,
+    abs_val,
+    gamma,
     groups=None,
     X_protected=None,
-    grouping='intersectional',
-    weights=None
+    weights=None, 
 ):
     """Calculate the subgroup fairness of estimator on X according to `metric'.
     TODO: handle use case when Xp is passed
@@ -328,7 +345,7 @@ def subgroup_scorer(
         assert X_protected is None, "cannot define both groups and X_protected"
         X_protected = X[groups]
 
-    return subgroup_loss(y_true, y_pred, X_protected, metric)
+    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
 
 def subgroup_FPR_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, 'FPR', **kwargs)
@@ -339,3 +356,91 @@ def subgroup_FNR_scorer(estimator, X, y_true, **kwargs):
 def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
 
+
+def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
+    """
+        returns 
+        ----------
+        fn: overall loss of all samples
+        fng: loss over group for every group in the training data
+        
+        Parameters
+        ----------
+        estimator : sklearn-like estimator
+            The underlying ML model to be trained.
+        X : array-like, shape (n_samples, n_features)
+            The training input samples.
+        y_true: array-like, bool 
+            True labels.
+        metric: string or function
+            The loss function. Could be FPR or FNR.
+        flag: bool
+            flag = 1 means marginal grouping and flag = 0 means intersectional grouping
+    """
+    
+    groups = kwargs['groups']
+    X_protected = X[groups]
+    categories = {}
+    group_losses = []
+    
+    y_pred = estimator.predict_proba(X)[:,1]
+    y_pred = pd.Series(y_pred, index=X_protected.index)
+
+    if isinstance(metric,str):
+        loss_fn = FPR if metric=='FPR' else FNR
+    elif callable(metric):
+        loss_fn = metric
+    else:
+        raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
+
+    
+    if (flag == 1): #marginal grouping
+        categories = {}
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
+    else: #intersectional grouping (flag is not 0 for now according to paper)
+        categories = X_protected.groupby(groups).groups
+         
+    for c, idx in categories.items():
+
+        category_loss = loss_fn(
+            y_true.loc[idx].values, 
+            y_pred.loc[idx].values
+        )
+        group_losses.append(category_loss)
+
+    fn = loss_fn(y_true, y_pred)    
+    fng = group_losses
+    return fn, fng
+
+
+def mce(estimator, X, y_true, num_bins=10):
+    """
+        The metric to use if fairness is calibration-based.
+        Returns maximum calibration error among the bins. 
+        
+        Parameters
+        ----------
+        estimator : sklearn-like estimator
+            The underlying ML model to be trained.
+        X : array-like, shape (n_samples, n_features)
+            The training input samples.
+        y_true: array-like, bool 
+            True labels.
+        num_bins: int
+            Number of bins that the predictions are sorted and partitioned into. 
+    """
+    y_pred = estimator.predict_proba(X)[:,1]
+
+    mce = 0
+    for i in range(1, num_bins + 1):
+
+        calibration_error = np.abs(y_true.mean() - y_pred.mean())
+        mce = max(mce, calibration_error)
+
+    return mce

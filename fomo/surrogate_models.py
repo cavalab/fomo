@@ -188,7 +188,8 @@ class Linear:
         if hasattr(self, 'ohc'):
             return self.ohc.transform(X)
         else:
-            categorical_features = [c for c in X.columns if X[c].nunique() < 8]
+            binary_columns = [col for col in X.columns if X[col].isin([0, 1]).all()]
+            categorical_features = [c for c in X.columns if (X[c].nunique() < 8 and c not in binary_columns)] #Do not one-hot-encode binary columns and columns with more than 8 categories. 
             self.ohc = ColumnTransformer(
                 [
                     (

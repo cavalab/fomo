@@ -37,6 +37,7 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
+import fomo.metrics as metrics
 from .surrogate_models import MLP, Linear, InterLinear
 
 class BasicProblem(ElementwiseProblem):
@@ -52,8 +53,9 @@ class BasicProblem(ElementwiseProblem):
         self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)
         n_obj = (len(self.fomo_estimator.accuracy_metrics_)
-                 +len(self.fomo_estimator.fairness_metrics_)
+                  +len(self.fomo_estimator.fairness_metrics_)
         )
+        
         super().__init__(
             n_var = n_var,
             n_obj = n_obj,
@@ -90,9 +92,11 @@ class BasicProblem(ElementwiseProblem):
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-
+            
         out['F'] = np.asarray(f)
-
+        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of each group
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
@@ -171,6 +175,9 @@ class SurrogateProblem(ElementwiseProblem):
             j += 1
 
         out['F'] = np.asarray(f)
+        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of every group
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
