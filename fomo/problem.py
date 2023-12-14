@@ -88,16 +88,15 @@ class BasicProblem(ElementwiseProblem):
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
-            fn = f[0]
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
             
         out['F'] = np.asarray(f)
-        out['fn'] = fn
-        #out['fng'] = metrics.fng(est, X, y, self.metric_kwargs['groups'], 'FPR')
-        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
+        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of each group
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
@@ -170,15 +169,15 @@ class SurrogateProblem(ElementwiseProblem):
         j = 0
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
-            fn = f[0]
             j += 1
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
 
         out['F'] = np.asarray(f)
-        out['fn'] = fn
-        out['fng'] = metrics.fng(est, X, y, 'FPR', **self.metric_kwargs)
+        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples
+        out['fng'] = fng #FNR of every group
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 

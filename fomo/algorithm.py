@@ -43,7 +43,6 @@ def get_parent(pop):
     G = np.arange(fng.shape[1])
     S = np.arange(len(pop))
     loss = []
-    epsilon = 2
 
     while (len(G) > 0 and len(S) > 1):
 
@@ -59,19 +58,52 @@ def get_parent(pop):
 
         L = min(loss) 
         epsilon = np.median(np.abs(loss - np.median(loss)))
-        
-        S = S[np.where(loss <= L + epsilon)]
-        fng = fng[np.where(loss <= L + epsilon)]
-        fn = fn[np.where(loss <= L + epsilon)]
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
         G = G[np.where(G != g)]
             
     S = S[:, None].astype(int, copy=False)     
     return random.choice(S)
                 
-                
+def get_parent_noCoinFlip(pop):
+
+    fng = pop.get("fng")
+    fng = np.tile(fng, 2)
+    fn = pop.get("fn")
+    G = np.arange(fng.shape[1])
+    S = np.arange(len(pop))
+    loss = []
+
+    while (len(G) > 0 and len(S) > 1):
+
+        g = random.choice(G)
+        loss = []
+        
+        if g < max(G)/2:
+            #look at accuracy
+            loss = fng[:, g]
+        else:
+            #look at fairness
+            loss = np.abs(fng[:, g] - fn)
+
+        L = min(loss) 
+        epsilon = np.median(np.abs(loss - np.median(loss)))
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
+        G = G[np.where(G != g)]
+
+            
+    S = S[:, None].astype(int, copy=False)     
+    return random.choice(S)
+
+
 class FLEX(Selection):
     
-    def __init__(self, 
+    def __init__(self,
                  **kwargs):
 
         #self.X_protected_ = X_protected
@@ -91,13 +123,20 @@ class FLEX(Selection):
         
         for i in range(n_select * n_parents): 
             #get pop_size parents
-            p = get_parent(pop)
+            p = get_parent_noCoinFlip(pop)
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
-    
 
-class Lexicase(GeneticAlgorithm):
+class LexSurvival(Survival):
+    def __init__(self) -> None:
+        super().__init__(filter_infeasible=False)
+
+    def _do(self, problem, pop, n_survive=None, **kwargs):
+        return pop[-n_survive:]
+
+
+class Lexicase_NSGA2(GeneticAlgorithm):
 
     def __init__(self,
                  pop_size=100,
@@ -109,8 +148,6 @@ class Lexicase(GeneticAlgorithm):
                  output=MultiObjectiveOutput(),
                  **kwargs):
         
-        #self.X_protected = X_protected
-        #self.selection = FLEX()
         super().__init__(
             pop_size=pop_size,
             sampling=sampling,
@@ -130,10 +167,26 @@ class Lexicase(GeneticAlgorithm):
             self.opt = self.pop[[np.argmin(self.pop.get("CV"))]]
         else:
             self.opt = self.pop[self.pop.get("rank") == 0]
-            
 
-   
-    
+class Lexicase(GeneticAlgorithm):
 
-
-
+    def __init__(self,
+                 pop_size=100,
+                 sampling=FloatRandomSampling(),
+                 selection=FLEX(),
+                 crossover=SBX(eta=15, prob=0.9),
+                 mutation=PM(eta=20),
+                 survival=LexSurvival(),
+                 output=MultiObjectiveOutput(),
+                 **kwargs):
+        
+        super().__init__(
+            pop_size=pop_size,
+            sampling=sampling,
+            selection=selection,
+            crossover=crossover,
+            mutation=mutation,
+            survival=survival,
+            output=output,
+            advance_after_initial_infill=True,
+            **kwargs)

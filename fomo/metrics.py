@@ -250,7 +250,7 @@ def FNR(y_true, y_pred):
     return np.sum(1-y_pred[yt])/np.sum(yt)
 
 
-def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma):
+def subgroup_loss(y_true, y_pred, X_protected, metric, grouping = 'intersectional', abs_val = False, gamma = True):
     assert isinstance(X_protected, pd.DataFrame), "X should be a dataframe"
     if not isinstance(y_true, pd.Series):
         y_true = pd.Series(y_true, index=X_protected.index)
@@ -264,9 +264,13 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
         categories = X_protected.groupby(groups).groups  
     else:
         categories = {}
-        groups = list(X_protected.columns)
-        for i in groups: 
-            categories.update(X_protected.groupby(i).groups)    
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -304,13 +308,13 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
 
     return max_loss
 
-def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_FPR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, 'FPR', grouping, abs_val, gamma)
 
-def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_FNR_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, 'FNR', grouping, abs_val, gamma)
 
-def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping, abs_val, gamma):
+def subgroup_MSE_loss(y_true, y_pred, X_protected, grouping = 'intersectional', abs_val = False, gamma = True):
     return subgroup_loss(y_true, y_pred, X_protected, mean_squared_error, grouping, abs_val, gamma)
 
 def subgroup_scorer(
@@ -319,8 +323,8 @@ def subgroup_scorer(
     y_true,
     metric,
     grouping,
-    gamma,
     abs_val,
+    gamma,
     groups=None,
     X_protected=None,
     weights=None, 
@@ -353,9 +357,12 @@ def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
 
 
-def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
+def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
     """
-        returns loss over group for every group in the training data
+        returns 
+        ----------
+        fn: overall loss of all samples
+        fng: loss over group for every group in the training data
         
         Parameters
         ----------
@@ -388,7 +395,14 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
 
     
     if (flag == 1): #marginal grouping
-        for i in groups: categories.update(X_protected.groupby(i).groups)
+        categories = {}
+        for col in X_protected.columns:
+            unique_values = X_protected[col].unique()
+            for val in unique_values:
+                category_key = f'{col}_{val}'
+                mask = X_protected[col] == val
+                indices = X_protected[mask].index
+                categories[category_key] = indices
     else: #intersectional grouping (flag is not 0 for now according to paper)
         categories = X_protected.groupby(groups).groups
          
@@ -399,8 +413,10 @@ def fng(estimator, X, y_true, metric, flag = 1, **kwargs):
             y_pred.loc[idx].values
         )
         group_losses.append(category_loss)
-        
-    return group_losses
+
+    fn = loss_fn(y_true, y_pred)    
+    fng = group_losses
+    return fn, fng
 
 
 def mce(estimator, X, y_true, num_bins=10):
