@@ -204,3 +204,68 @@ class Linear:
                 remainder='passthrough'
             )
             return self.ohc.fit_transform(X)
+
+class InterLinear:
+    """Make an interaction version of a linear model
+    change one hot encode to capture all unique values of Xp
+    """
+
+    def __init__(self, Xp):
+        # Xohc = pd.get_dummies(Xp.astype('category'))
+        # print('Xohc shape:',Xohc.shape)
+        # Xpu = Xp.unique()
+        X = self._one_hot_encode(Xp)
+        self.coefs_ = np.empty(X.shape[1] + 1) 
+
+    def get_n_weights(self):
+        """Sets coefs_ and intercepts_ to x."""
+        return len(self.coefs_)
+
+    def set_weights(self, x):
+        """Sets coefs_ and intercepts_ to x."""
+        self.coefs_ = x
+
+    def fit(self, X, y):
+        raise NotImplementedError('Dont call fit on this class!')
+        return self
+
+    def predict(self, X):
+        # Xohc = pd.get_dummies(X.astype('category'))
+        X = self._one_hot_encode(X)
+        intercept = np.ones(X.shape[0])
+        Xintercept = np.column_stack((intercept, X))
+        return expit(np.dot(Xintercept,self.coefs_))
+
+    def _make_interaction(self, X):
+        """add an interaction variable"""
+        X = X.copy()
+        groups = list(X.columns)
+        categories = X.groupby(groups).groups
+        categories = {k:i for i,k in enumerate(categories.keys())}
+        def categorize(x):
+            return categories[tuple(x[c] for c in x.index)]
+        X['interaction'] = X.apply(lambda x: categorize(x), axis=1)
+        return X
+
+    def _one_hot_encode(self, X):
+
+        X = self._make_interaction(X)
+
+        if not hasattr(self, 'ohc'):
+            self.ohc = ColumnTransformer(
+                [
+                    (
+                        "cat",
+                        OneHotEncoder(
+                            handle_unknown="ignore", 
+                            sparse_output=False
+                        ),
+                        X.columns,
+                    ),
+                ],
+                verbose_feature_names_out=False,
+                remainder='passthrough'
+            )
+            self.ohc.fit(X)
+
+        return self.ohc.transform(X)
