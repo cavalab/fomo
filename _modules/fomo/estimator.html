@@ -325,7 +325,17 @@
          <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="o">=</span><span class="n">checkpoint</span>
          <span class="bp">self</span><span class="o">.</span><span class="n">picking_strategy</span><span class="o">=</span><span class="n">picking_strategy</span>
 
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;intersectional&#39;</span><span class="p">,</span> <span class="n">abs_val</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">starting_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+            <span class="n">X</span><span class="p">,</span> 
+            <span class="n">y</span><span class="p">,</span> 
+            <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;intersectional&#39;</span><span class="p">,</span> 
+            <span class="n">abs_val</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+            <span class="n">gamma</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
+            <span class="n">protected_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+            <span class="n">Xp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+            <span class="n">starting_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Train the model.</span>
 
 
@@ -562,6 +572,14 @@
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;_sign&#39;</span><span class="p">):</span>
                 <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">_sign</span>
         <span class="k">return</span> <span class="n">F</span>
+
+    <span class="k">def</span> <span class="nf">get_pareto_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a Pandas dataframe of the Pareto archive points&quot;&quot;&quot;</span>
+        <span class="n">archive</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_signed_F</span><span class="p">(),</span> 
+            <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy_metrics_</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fairness_metrics_</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">archive</span>
 
 <div class="viewcode-block" id="FomoClassifier">
 <a class="viewcode-back" href="../../api.html#fomo.FomoClassifier">[docs]</a>
