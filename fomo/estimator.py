@@ -119,7 +119,17 @@ class FomoEstimator(BaseEstimator):
          self.checkpoint=checkpoint
          self.picking_strategy=picking_strategy
 
-    def fit(self, X, y, grouping = 'intersectional', abs_val = False, gamma = True, protected_features=None, Xp=None, starting_point=None, **kwargs):
+    def fit(self, 
+            X, 
+            y, 
+            grouping = 'intersectional', 
+            abs_val = False, 
+            gamma = True, 
+            protected_features=None, 
+            Xp=None, 
+            starting_point=None, 
+            **kwargs
+        ):
         """Train the model.
 
 
@@ -356,6 +366,14 @@ class FomoEstimator(BaseEstimator):
             if hasattr(m, '_sign'):
                 F[:,i] = F[:,i]*m._sign
         return F
+
+    def get_pareto_points(self):
+        """Return a Pandas dataframe of the Pareto archive points"""
+        archive = pd.DataFrame(
+            self._get_signed_F(), 
+            columns=self.accuracy_metrics_ + self.fairness_metrics_
+        )
+        return archive
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """FOMO Classifier. 
