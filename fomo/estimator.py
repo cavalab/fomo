@@ -369,10 +369,14 @@ class FomoEstimator(BaseEstimator):
 
     def get_pareto_points(self):
         """Return a Pandas dataframe of the Pareto archive points"""
+        F = self._get_signed_F() 
+        I = self.I_
         archive = pd.DataFrame(
-            self._get_signed_F(), 
+            F,
             columns=self.accuracy_metrics_ + self.fairness_metrics_
         )
+        chosen = [f==F[I] for f in F]
+        archive['chosen'] = chosen
         return archive
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
