@@ -94,9 +94,11 @@ class BasicProblem(ElementwiseProblem):
             j += 1
             
         out['F'] = np.asarray(f)
-        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
-        out['fn'] = fn #FNR of all samples
-        out['fng'] = fng #FNR of each group
+        fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples to be used in Flex
+        out['fng'] = fng #FNR of every group to be used in Flex
+        out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
+        out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
 
 class SurrogateProblem(ElementwiseProblem):
     """ The evaluation function for each candidate weights. 
@@ -175,9 +177,11 @@ class SurrogateProblem(ElementwiseProblem):
             j += 1
 
         out['F'] = np.asarray(f)
-        fn, fng = metrics.loss(est, X, y, 'FNR', **self.metric_kwargs)
-        out['fn'] = fn #FNR of all samples
-        out['fng'] = fng #FNR of every group
+        fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
+        out['fn'] = fn #FNR of all samples to be used in Flex
+        out['fng'] = fng #FNR of every group to be used in Flex
+        out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
+        out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
