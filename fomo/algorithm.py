@@ -124,7 +124,13 @@ def get_parent_WeightedCoinFlip(pop):
             #look at accuracy
             num_rows, num_cols = np.shape(samples_fnr)
             indices = np.random.choice(num_cols, size = int(gp_lens[0, g]), replace = False)
-            loss = np.sum(samples_fnr[:, indices], axis=1)/np.sum(samples_fnr[:, indices].astype(bool), axis=1)
+            fnr_sum = np.sum(samples_fnr[:, indices], axis=1)
+            pos_count = np.sum(samples_fnr[:, indices].astype(bool), axis=1)
+            for i in range (len(pos_count)):
+                if pos_count[i]:
+                    loss.append(fnr_sum[i]/pos_count[i])
+                else:
+                    loss.append(0)
 
 
         L = min(loss) 
@@ -139,8 +145,6 @@ def get_parent_WeightedCoinFlip(pop):
             
     S = S[:, None].astype(int, copy=False)     
     return random.choice(S)
-
-
 
 class FLEX(Selection):
     
