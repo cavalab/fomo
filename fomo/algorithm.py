@@ -101,6 +101,47 @@ def get_parent_noCoinFlip(pop):
     return random.choice(S)
 
 
+def get_parent_WeightedCoinFlip(pop):
+
+    samples_fnr = pop.get("samples_fnr")
+    fng = pop.get("fng")
+    fn = pop.get("fn")
+    gp_lens = pop.get('gp_lens')
+    G = np.arange(fng.shape[1])
+    S = np.arange(len(pop))
+    loss = []
+
+    while (len(G) > 0 and len(S) > 1):
+
+        g = random.choice(G)
+        loss = []
+        weight = random.random()
+
+        if (random.random() > weight):
+            #look at fairness
+            loss = fng[:, g]
+        else:
+            #look at accuracy
+            num_rows, num_cols = np.shape(samples_fnr)
+            indices = np.random.choice(num_cols, size = int(gp_lens[0, g]), replace = False)
+            loss = np.sum(samples_fnr[:, indices], axis=1)/np.sum(samples_fnr[:, indices].astype(bool), axis=1)
+
+
+        L = min(loss) 
+        epsilon = np.median(np.abs(loss - np.median(loss)))
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
+        samples_fnr = samples_fnr[survivors]
+        gp_lens = gp_lens[survivors]
+        G = G[np.where(G != g)]
+            
+    S = S[:, None].astype(int, copy=False)     
+    return random.choice(S)
+
+
+
 class FLEX(Selection):
     
     def __init__(self,
@@ -123,7 +164,7 @@ class FLEX(Selection):
         
         for i in range(n_select * n_parents): 
             #get pop_size parents
-            p = get_parent_noCoinFlip(pop)
+            p = get_parent_WeightedCoinFlip(pop)
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
