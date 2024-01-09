@@ -120,6 +120,7 @@ def get_parent_WeightedCoinFlip(pop):
         if (random.random() > weight):
             #look at fairness
             loss = fng[:, g]
+            G = G[np.where(G != g)]
         else:
             #look at accuracy
             num_rows, num_cols = np.shape(samples_fnr)
@@ -141,7 +142,6 @@ def get_parent_WeightedCoinFlip(pop):
         fn = fn[survivors]
         samples_fnr = samples_fnr[survivors]
         gp_lens = gp_lens[survivors]
-        G = G[np.where(G != g)]
             
     S = S[:, None].astype(int, copy=False)     
     return random.choice(S)
