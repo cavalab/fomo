@@ -198,6 +198,7 @@ class FomoEstimator(BaseEstimator):
                 self.algorithm_,
                 seed=self.random_state,
                 verbose=self.verbose,
+                save_history=True,
                 **kwargs
             )
 
@@ -498,7 +499,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         self.accuracy_metrics_ = self.accuracy_metrics
         self.fairness_metrics_ = self.fairness_metrics
         if self.accuracy_metrics is None:
-            self.accuracy_metrics_ = [make_scorer(roc_auc_score, greater_is_better=False)]
+            self.accuracy_metrics_ = [make_scorer(roc_auc_score, greater_is_better=False, needs_proba=True)]
         if self.fairness_metrics is None:
             self.fairness_metrics_ = [metrics.multicalibration_loss]
 
