@@ -37,6 +37,10 @@ from pymoo.operators.mutation.pm import PM
 from pymoo.algorithms.base.genetic import GeneticAlgorithm
 
 def get_parent(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Default flex")
+        get_parent_WeightedCoinFlip._called = True
     
     fng = pop.get("fng")
     fn = pop.get("fn")
@@ -68,6 +72,10 @@ def get_parent(pop):
     return random.choice(S)
                 
 def get_parent_noCoinFlip(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Flex with no coin flip")
+        get_parent_WeightedCoinFlip._called = True
 
     fng = pop.get("fng")
     fng = np.tile(fng, 2)
@@ -102,6 +110,10 @@ def get_parent_noCoinFlip(pop):
 
 
 def get_parent_WeightedCoinFlip(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Flex with weighted coin flip")
+        get_parent_WeightedCoinFlip._called = True
 
     samples_fnr = pop.get("samples_fnr")
     fng = pop.get("fng")
