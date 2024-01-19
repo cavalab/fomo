@@ -122,12 +122,12 @@ def get_parent_WeightedCoinFlip(pop):
     G = np.arange(fng.shape[1])
     S = np.arange(len(pop))
     loss = []
+    weight = random.random()
 
     while (len(G) > 0 and len(S) > 1):
 
         g = random.choice(G)
         loss = []
-        weight = random.random()
 
         if (random.random() > weight):
             #look at fairness
@@ -180,7 +180,7 @@ class FLEX(Selection):
         
         for i in range(n_select * n_parents): 
             #get pop_size parents
-            p = get_parent_WeightedCoinFlip(pop)
+            p = get_parent(pop)
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
