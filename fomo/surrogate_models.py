@@ -205,7 +205,7 @@ class Linear:
                 remainder='passthrough'
             )
             return self.ohc.fit_transform(X)
-        
+
 class InterLinear:
     """Make an interaction version of a linear model
     change one hot encode to capture all unique values of Xp
@@ -253,7 +253,6 @@ class InterLinear:
         X = self._make_interaction(X)
 
         if not hasattr(self, 'ohc'):
-
             self.ohc = ColumnTransformer(
                 [
                     (

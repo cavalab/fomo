@@ -34,6 +34,7 @@ import copy
 import math
 import uuid 
 import numpy as np
+import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
 from sklearn.utils.multiclass import unique_labels
@@ -119,7 +120,17 @@ class FomoEstimator(BaseEstimator):
          self.checkpoint=checkpoint
          self.picking_strategy=picking_strategy
 
-    def fit(self, X, y, grouping = 'intersectional', abs_val = False, gamma = True, protected_features=None, Xp=None, starting_point=None, **kwargs):
+    def fit(self, 
+            X, 
+            y, 
+            grouping = 'intersectional', 
+            abs_val = False, 
+            gamma = True, 
+            protected_features=None, 
+            Xp=None, 
+            starting_point=None, 
+            **kwargs
+        ):
         """Train the model.
 
 
@@ -329,11 +340,7 @@ class FomoEstimator(BaseEstimator):
         check_is_fitted(self, 'is_fitted_')
         I = self.I_
         F = self._get_signed_F()
-        axis_labels = (
-            [ am._score_func.__name__ for am in self.accuracy_metrics_ ] 
-            + [ fn.__name__ for fn in self.fairness_metrics_ ]
-        )
-        axis_labels = [al.replace('_',' ') for al in axis_labels]
+        axis_labels = self._get_objective_names()
         plot = (
             Scatter()
             .add(F, alpha=0.2, label='Candidate models')
@@ -356,6 +363,23 @@ class FomoEstimator(BaseEstimator):
             if hasattr(m, '_sign'):
                 F[:,i] = F[:,i]*m._sign
         return F
+
+    def _get_objective_names(self):
+        """Returns names of functions defining the objectives"""
+        labels = (
+            [ m._score_func.__name__ for m in self.accuracy_metrics_ ] 
+            + [ fn.__name__ for fn in self.fairness_metrics_ ]
+        )
+        labels = [l.replace('_',' ') for l in labels]
+        return labels
+
+    def get_pareto_points(self):
+        """Return a Pandas dataframe of the Pareto archive points"""
+        F = self._get_signed_F() 
+        I = self.I_
+        archive = pd.DataFrame(F, columns=self._get_objective_names())
+        archive['chosen'] = [all(f==F[I]) for f in F]
+        return archive
 
 class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
     """FOMO Classifier. 
