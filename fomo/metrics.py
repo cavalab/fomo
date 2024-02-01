@@ -271,6 +271,11 @@ def subgroup_loss(y_true, y_pred, X_protected, metric, grouping = 'intersectiona
                 mask = X_protected[col] == val
                 indices = X_protected[mask].index
                 categories[category_key] = indices
+    # print('#intersectional groups: ', len(categories))
+    # singles = 0
+    # gp_lens = [len(lst) for lst in categories.values()]
+    # singles = gp_lens.count(1)
+    # avg_len = sum(gp_lens) / len(gp_lens) if gp_lens else 0
 
     if isinstance(metric,str):
         loss_fn = FPR if metric=='FPR' else FNR
@@ -357,12 +362,14 @@ def subgroup_MSE_scorer(estimator, X, y_true, **kwargs):
     return subgroup_scorer( estimator, X, y_true, mean_squared_error, **kwargs)
 
 
-def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
+def flex_loss(estimator, X, y_true, metric, **kwargs):
     """
         returns 
         ----------
         fn: overall loss of all samples
         fng: loss over group for every group in the training data
+        samples_fnr: False negative rate of every sample in the training data
+        gp_lens: length of each protected group
         
         Parameters
         ----------
@@ -381,7 +388,9 @@ def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
     groups = kwargs['groups']
     X_protected = X[groups]
     categories = {}
-    group_losses = []
+    fng = []
+    samples_fnr = []
+    gp_lens = []
     
     y_pred = estimator.predict_proba(X)[:,1]
     y_pred = pd.Series(y_pred, index=X_protected.index)
@@ -393,18 +402,14 @@ def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
     else:
         raise ValueError(f'metric={metric} must be "FPR", "FNR", or a callable')
 
-    
-    if (flag == 1): #marginal grouping
-        categories = {}
-        for col in X_protected.columns:
-            unique_values = X_protected[col].unique()
-            for val in unique_values:
-                category_key = f'{col}_{val}'
-                mask = X_protected[col] == val
-                indices = X_protected[mask].index
-                categories[category_key] = indices
-    else: #intersectional grouping (flag is not 0 for now according to paper)
-        categories = X_protected.groupby(groups).groups
+    categories = {}
+    for col in X_protected.columns:
+        unique_values = X_protected[col].unique()
+        for val in unique_values:
+            category_key = f'{col}_{val}'
+            mask = X_protected[col] == val
+            indices = X_protected[mask].index
+            categories[category_key] = indices
          
     for c, idx in categories.items():
 
@@ -412,11 +417,21 @@ def loss(estimator, X, y_true, metric, flag = 1, **kwargs):
             y_true.loc[idx].values, 
             y_pred.loc[idx].values
         )
-        group_losses.append(category_loss)
+        fng.append(category_loss)
+        gp_lens.append(len(y_true.loc[idx].values))
+
+    # print('#marginal groups: ', len(categories))
+    # singles = 0
+    # singles = gp_lens.count(1)
+    # avg_len = sum(gp_lens) / len(gp_lens) if gp_lens else 0
+
+    #Calculate FNR of each sample
+    for idx in y_true.index:
+        fnr = loss_fn(y_true[idx], y_pred[idx])
+        samples_fnr.append(fnr)
 
     fn = loss_fn(y_true, y_pred)    
-    fng = group_losses
-    return fn, fng
+    return fn, fng, samples_fnr, gp_lens
 
 
 def mce(estimator, X, y_true, num_bins=10):
