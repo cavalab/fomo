@@ -1002,8 +1002,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="fomo.metrics.loss">
-<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.loss" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="fomo.metrics.flex_loss">
+<span class="sig-prename descclassname"><span class="pre">fomo.metrics.</span></span><span class="sig-name descname"><span class="pre">flex_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fomo/metrics.html#flex_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fomo.metrics.flex_loss" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -1023,6 +1023,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 <dd class="field-even"><dl class="simple">
 <dt>fn: overall loss of all samples</dt><dd></dd>
 <dt>fng: loss over group for every group in the training data</dt><dd></dd>
+<dt>samples_fnr: False negative rate of every sample in the training data</dt><dd></dd>
+<dt>gp_lens: length of each protected group</dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -1165,7 +1167,7 @@ TODO: handle use case when Xp is passed</p>
 <li><a class="reference internal" href="#fomo.metrics.FPR"><code class="docutils literal notranslate"><span class="pre">FPR()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.TPR"><code class="docutils literal notranslate"><span class="pre">TPR()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.differential_calibration_loss"><code class="docutils literal notranslate"><span class="pre">differential_calibration_loss()</span></code></a></li>
-<li><a class="reference internal" href="#fomo.metrics.loss"><code class="docutils literal notranslate"><span class="pre">loss()</span></code></a></li>
+<li><a class="reference internal" href="#fomo.metrics.flex_loss"><code class="docutils literal notranslate"><span class="pre">flex_loss()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.mce"><code class="docutils literal notranslate"><span class="pre">mce()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.multicalibration_loss"><code class="docutils literal notranslate"><span class="pre">multicalibration_loss()</span></code></a></li>
 <li><a class="reference internal" href="#fomo.metrics.pairwise"><code class="docutils literal notranslate"><span class="pre">pairwise()</span></code></a></li>

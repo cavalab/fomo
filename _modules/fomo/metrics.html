@@ -498,6 +498,11 @@
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span>
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
                 <span class="n">categories</span><span class="p">[</span><span class="n">category_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span>
+    <span class="c1"># print(&#39;#intersectional groups: &#39;, len(categories))</span>
+    <span class="c1"># singles = 0</span>
+    <span class="c1"># gp_lens = [len(lst) for lst in categories.values()]</span>
+    <span class="c1"># singles = gp_lens.count(1)</span>
+    <span class="c1"># avg_len = sum(gp_lens) / len(gp_lens) if gp_lens else 0</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
         <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">FPR</span> <span class="k">if</span> <span class="n">metric</span><span class="o">==</span><span class="s1">&#39;FPR&#39;</span> <span class="k">else</span> <span class="n">FNR</span>
@@ -587,14 +592,16 @@
     <span class="k">return</span> <span class="n">subgroup_scorer</span><span class="p">(</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="loss">
-<a class="viewcode-back" href="../../api.html#fomo.metrics.loss">[docs]</a>
-<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="flex_loss">
+<a class="viewcode-back" href="../../api.html#fomo.metrics.flex_loss">[docs]</a>
+<span class="k">def</span> <span class="nf">flex_loss</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        returns </span>
 <span class="sd">        ----------</span>
 <span class="sd">        fn: overall loss of all samples</span>
 <span class="sd">        fng: loss over group for every group in the training data</span>
+<span class="sd">        samples_fnr: False negative rate of every sample in the training data</span>
+<span class="sd">        gp_lens: length of each protected group</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -613,7 +620,9 @@
     <span class="n">groups</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;groups&#39;</span><span class="p">]</span>
     <span class="n">X_protected</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">groups</span><span class="p">]</span>
     <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">group_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fng</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">samples_fnr</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">gp_lens</span> <span class="o">=</span> <span class="p">[]</span>
     
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_protected</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -625,18 +634,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;metric=</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> must be &quot;FPR&quot;, &quot;FNR&quot;, or a callable&#39;</span><span class="p">)</span>
 
-    
-    <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span> <span class="c1">#marginal grouping</span>
-        <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">unique_values</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_values</span><span class="p">:</span>
-                <span class="n">category_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="n">mask</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span>
-                <span class="n">indices</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-                <span class="n">categories</span><span class="p">[</span><span class="n">category_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span>
-    <span class="k">else</span><span class="p">:</span> <span class="c1">#intersectional grouping (flag is not 0 for now according to paper)</span>
-        <span class="n">categories</span> <span class="o">=</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_protected</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">unique_values</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">unique_values</span><span class="p">:</span>
+            <span class="n">category_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">X_protected</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+            <span class="n">categories</span><span class="p">[</span><span class="n">category_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span>
          
     <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">categories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
@@ -644,11 +649,21 @@
             <span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
             <span class="n">y_pred</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="p">)</span>
-        <span class="n">group_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category_loss</span><span class="p">)</span>
+        <span class="n">fng</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category_loss</span><span class="p">)</span>
+        <span class="n">gp_lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+
+    <span class="c1"># print(&#39;#marginal groups: &#39;, len(categories))</span>
+    <span class="c1"># singles = 0</span>
+    <span class="c1"># singles = gp_lens.count(1)</span>
+    <span class="c1"># avg_len = sum(gp_lens) / len(gp_lens) if gp_lens else 0</span>
+
+    <span class="c1">#Calculate FNR of each sample</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">y_true</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">fnr</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">y_true</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">samples_fnr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fnr</span><span class="p">)</span>
 
     <span class="n">fn</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>    
-    <span class="n">fng</span> <span class="o">=</span> <span class="n">group_losses</span>
-    <span class="k">return</span> <span class="n">fn</span><span class="p">,</span> <span class="n">fng</span></div>
+    <span class="k">return</span> <span class="n">fn</span><span class="p">,</span> <span class="n">fng</span><span class="p">,</span> <span class="n">samples_fnr</span><span class="p">,</span> <span class="n">gp_lens</span></div>
 
 
 

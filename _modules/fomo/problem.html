@@ -245,6 +245,7 @@
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">fomo.metrics</span> <span class="k">as</span> <span class="nn">metrics</span>
 <span class="kn">from</span> <span class="nn">.surrogate_models</span> <span class="kn">import</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">Linear</span><span class="p">,</span> <span class="n">InterLinear</span>
+<span class="kn">from</span> <span class="nn">fomo.algorithm</span> <span class="kn">import</span> <span class="n">Lexicase</span><span class="p">,</span> <span class="n">Lexicase_NSGA2</span>
 
 <div class="viewcode-block" id="BasicProblem">
 <a class="viewcode-back" href="../../api.html#fomo.problem.BasicProblem">[docs]</a>
@@ -301,7 +302,15 @@
             <span class="n">f</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
             
-        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="p">(</span><span class="n">Lexicase</span><span class="p">,</span> <span class="n">Lexicase_NSGA2</span><span class="p">)):</span>
+            <span class="n">fn</span><span class="p">,</span> <span class="n">fng</span><span class="p">,</span> <span class="n">samples_fnr</span><span class="p">,</span> <span class="n">gp_lens</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">flex_loss</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span> <span class="c1">#FNR of all samples to be used in Flex</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fng&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fng</span> <span class="c1">#FNR of every group to be used in Flex</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;samples_fnr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_fnr</span> <span class="c1">#FNR of each sample to be used in Flex with weighted coin flip</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;gp_lens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gp_lens</span> <span class="c1">#Length of each protected group to be used in Flex with weighted coin flip</span></div>
+
 
 
 <div class="viewcode-block" id="SurrogateProblem">
@@ -382,7 +391,14 @@
             <span class="n">f</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
             <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fomo_estimator</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="p">(</span><span class="n">Lexicase</span><span class="p">,</span> <span class="n">Lexicase_NSGA2</span><span class="p">)):</span>
+            <span class="n">fn</span><span class="p">,</span> <span class="n">fng</span><span class="p">,</span> <span class="n">samples_fnr</span><span class="p">,</span> <span class="n">gp_lens</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">flex_loss</span><span class="p">(</span><span class="n">est</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;FNR&#39;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_kwargs</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span> <span class="c1">#FNR of all samples to be used in Flex</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;fng&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fng</span> <span class="c1">#FNR of every group to be used in Flex</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;samples_fnr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_fnr</span> <span class="c1">#FNR of each sample to be used in Flex with weighted coin flip</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;gp_lens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gp_lens</span> <span class="c1">#Length of each protected group to be used in Flex with weighted coin flip</span></div>
 
 
 <div class="viewcode-block" id="MLPProblem">
