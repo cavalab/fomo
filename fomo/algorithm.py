@@ -52,6 +52,10 @@ from pymoo.operators.mutation.pm import PM
 from pymoo.algorithms.base.genetic import GeneticAlgorithm
 
 def get_parent(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Default flex")
+        get_parent_WeightedCoinFlip._called = True
     
     fng = pop.get("fng")
     fn = pop.get("fn")
@@ -83,6 +87,10 @@ def get_parent(pop):
     return random.choice(S)
                 
 def get_parent_noCoinFlip(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Flex with no coin flip")
+        get_parent_WeightedCoinFlip._called = True
 
     fng = pop.get("fng")
     fng = np.tile(fng, 2)
@@ -116,6 +124,55 @@ def get_parent_noCoinFlip(pop):
     return random.choice(S)
 
 
+def get_parent_WeightedCoinFlip(pop):
+
+    if not hasattr(get_parent_WeightedCoinFlip, "_called"):
+        print("Flex with weighted coin flip")
+        get_parent_WeightedCoinFlip._called = True
+
+    samples_fnr = pop.get("samples_fnr")
+    fng = pop.get("fng")
+    fn = pop.get("fn")
+    gp_lens = pop.get('gp_lens')
+    G = np.arange(fng.shape[1])
+    S = np.arange(len(pop))
+    loss = []
+    weight = random.random()
+
+    while (len(G) > 0 and len(S) > 1):
+
+        g = random.choice(G)
+        loss = []
+
+        if (random.random() > weight):
+            #look at fairness
+            loss = fng[:, g]
+            G = G[np.where(G != g)]
+        else:
+            #look at accuracy
+            num_rows, num_cols = np.shape(samples_fnr)
+            indices = np.random.choice(num_cols, size = int(gp_lens[0, g]), replace = False)
+            fnr_sum = np.sum(samples_fnr[:, indices], axis=1)
+            pos_count = np.sum(samples_fnr[:, indices].astype(bool), axis=1)
+            for i in range (len(pos_count)):
+                if pos_count[i]:
+                    loss.append(fnr_sum[i]/pos_count[i])
+                else:
+                    loss.append(0)
+
+
+        L = min(loss) 
+        epsilon = np.median(np.abs(loss - np.median(loss)))
+        survivors = np.where(loss <= L + epsilon)
+        S = S[survivors]
+        fng = fng[survivors] 
+        fn = fn[survivors]
+        samples_fnr = samples_fnr[survivors]
+        gp_lens = gp_lens[survivors]
+            
+    S = S[:, None].astype(int, copy=False)     
+    return random.choice(S)
+
 class FLEX(Selection):
     
     def __init__(self,
@@ -138,7 +195,7 @@ class FLEX(Selection):
         
         for i in range(n_select * n_parents): 
             #get pop_size parents
-            p = get_parent_noCoinFlip(pop)
+            p = get_parent(pop)
             parents.append(p)
             
         return np.reshape(parents, (n_select, n_parents))
