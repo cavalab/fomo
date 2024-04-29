@@ -37,7 +37,9 @@ from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
 import warnings
 import inspect
-from .surrogate_models import MLP, Linear
+import fomo.metrics as metrics
+from .surrogate_models import MLP, Linear, InterLinear
+from fomo.algorithm import Lexicase, Lexicase_NSGA2
 
 class BasicProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
@@ -52,8 +54,9 @@ class BasicProblem(ElementwiseProblem):
         self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)
         n_obj = (len(self.fomo_estimator.accuracy_metrics_)
-                 +len(self.fomo_estimator.fairness_metrics_)
+                  +len(self.fomo_estimator.fairness_metrics_)
         )
+        
         super().__init__(
             n_var = n_var,
             n_obj = n_obj,
@@ -90,8 +93,15 @@ class BasicProblem(ElementwiseProblem):
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
-
+            
         out['F'] = np.asarray(f)
+
+        if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
+            fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
+            out['fn'] = fn #FNR of all samples to be used in Flex
+            out['fng'] = fng #FNR of every group to be used in Flex
+            out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
+            out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
 
 
 class SurrogateProblem(ElementwiseProblem):
@@ -172,6 +182,13 @@ class SurrogateProblem(ElementwiseProblem):
 
         out['F'] = np.asarray(f)
 
+        if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
+            fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
+            out['fn'] = fn #FNR of all samples to be used in Flex
+            out['fng'] = fng #FNR of every group to be used in Flex
+            out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
+            out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
+
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
 
@@ -185,3 +202,10 @@ class LinearProblem(SurrogateProblem):
     """
     def _get_surrogate(self):
         return Linear(self.X_protected)
+
+class InterLinearProblem(SurrogateProblem):
+    """ The evaluation function for each candidate weights. 
+
+    """
+    def _get_surrogate(self):
+        return InterLinear(self.X_protected)
