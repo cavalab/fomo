@@ -5,13 +5,13 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="API" href="../api.html" /><link rel="prev" title="License" href="../license.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Fair Classification on Adult Dataset - Fomo 0.0.15 documentation</title>
+    <!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+        <title>Fair Classification on Adult Dataset - Fomo 0.0.17 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -72,7 +72,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -87,7 +87,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -95,7 +95,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -103,6 +103,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -116,6 +170,8 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
 
 
 <div class="page">
@@ -127,13 +183,14 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">Fomo 0.0.15 documentation</div></a>
+      <a href="../index.html"><div class="brand">Fomo 0.0.17 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -150,7 +207,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">Fomo 0.0.15 documentation</span>
+  <span class="sidebar-brand-text">Fomo 0.0.17 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -191,19 +248,21 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="edit-this-page">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/cavalab/fomo/blob/main/docs/examples/Adult.ipynb?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
   <a class="muted-link" href="https://github.com/cavalab/fomo/edit/main/docs/examples/Adult.ipynb" title="Edit this page">
-    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-    </svg>
+    <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
 </div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -213,11 +272,19 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="Fair-Classification-on-Adult-Dataset">
-<h1>Fair Classification on Adult Dataset<a class="headerlink" href="#Fair-Classification-on-Adult-Dataset" title="Link to this heading">#</a></h1>
+<h1>Fair Classification on Adult Dataset<a class="headerlink" href="#Fair-Classification-on-Adult-Dataset" title="Link to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymoo.core.parameters</span> <span class="kn">import</span> <span class="n">get_params</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
@@ -254,7 +321,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">accuracy_score</span>
@@ -266,9 +333,8 @@
     <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">problem_type</span><span class="o">=</span><span class="n">MLPProblem</span>
 <span class="p">)</span>
-
 <span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xtrain</span><span class="p">,</span><span class="n">ytrain</span><span class="p">,</span><span class="n">protected_features</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;n_gen&#39;</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -277,161 +343,684 @@
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 running 8 processes
-groups [&#39;race&#39;, &#39;sex&#39;]
-number of variables: 41
+number of variables: 24421
 number of objectives: 2
-==========================================================
-n_gen  |  n_eval  | n_nds  |      eps      |   indicator
-==========================================================
-     1 |      100 |      9 |             - |             -
-     2 |      200 |     12 |  0.0086206897 |         nadir
-     3 |      300 |     16 |  0.0430379747 |         ideal
-     4 |      400 |     17 |  0.0100250627 |         ideal
-     5 |      500 |     19 |  0.0252685288 |             f
-     6 |      600 |     23 |  0.0148486699 |             f
-     7 |      700 |     26 |  0.0362318841 |         ideal
-     8 |      800 |     31 |  0.0742437499 |         ideal
-     9 |      900 |     27 |  0.0029670378 |         ideal
-    10 |     1000 |     28 |  0.0083725444 |         nadir
-    11 |     1100 |     29 |  0.0054596395 |             f
-    12 |     1200 |     27 |  0.0115790712 |             f
-    13 |     1300 |     12 |  0.0061137237 |         ideal
-    14 |     1400 |     12 |  0.0256059324 |         ideal
-    15 |     1500 |     13 |  0.0141601592 |             f
-    16 |     1600 |      9 |  0.0672846903 |         ideal
-    17 |     1700 |      9 |  0.0044052863 |         ideal
-    18 |     1800 |      9 |  0.2017692557 |         ideal
-    19 |     1900 |      9 |  0.0320573933 |         ideal
-    20 |     2000 |     16 |  0.1071281050 |         ideal
-    21 |     2100 |     19 |  0.0345289621 |             f
-    22 |     2200 |     19 |  0.0344827586 |         ideal
-    23 |     2300 |     17 |  0.0267576688 |             f
-    24 |     2400 |     19 |  0.1830985915 |         ideal
-    25 |     2500 |     20 |  0.0076162522 |         ideal
-    26 |     2600 |     23 |  0.0270270270 |         ideal
-    27 |     2700 |     26 |  0.0208982020 |             f
-    28 |     2800 |     30 |  0.0170305719 |             f
-    29 |     2900 |     31 |  0.0099164611 |             f
-    30 |     3000 |     32 |  0.0263157895 |         ideal
-    31 |     3100 |     27 |  0.0085905751 |             f
-    32 |     3200 |     29 |  0.0617283951 |         ideal
-    33 |     3300 |     33 |  0.0879244139 |         nadir
-    34 |     3400 |     33 |  0.0039944699 |             f
-    35 |     3500 |     33 |  0.0031085730 |         ideal
-    36 |     3600 |     36 |  0.0065496687 |         ideal
-    37 |     3700 |     36 |  0.0125000000 |         ideal
-    38 |     3800 |     42 |  0.0044677143 |         ideal
-    39 |     3900 |     41 |  0.0716785359 |         nadir
-    40 |     4000 |     44 |  0.0212510840 |         ideal
-    41 |     4100 |     43 |  0.0004242495 |             f
-    42 |     4200 |     39 |  0.0024689286 |             f
-    43 |     4300 |     37 |  0.0050608934 |             f
-    44 |     4400 |     35 |  0.0046444144 |             f
-    45 |     4500 |     34 |  0.0051185824 |             f
-    46 |     4600 |     36 |  0.0088972251 |         nadir
-    47 |     4700 |     36 |  0.0036045448 |             f
-    48 |     4800 |     37 |  0.0120481928 |         ideal
-    49 |     4900 |     36 |  0.0035801984 |             f
-    50 |     5000 |     38 |  0.0006778112 |             f
-    51 |     5100 |     37 |  0.0025753737 |             f
-    52 |     5200 |     38 |  0.0017202883 |             f
-    53 |     5300 |     39 |  0.0032968550 |             f
-    54 |     5400 |     41 |  0.0013967411 |             f
-    55 |     5500 |     37 |  0.0032081457 |             f
-    56 |     5600 |     38 |  0.0020839350 |             f
-    57 |     5700 |     38 |  0.0023075155 |             f
-    58 |     5800 |     38 |  0.0031900769 |             f
-    59 |     5900 |     38 |  0.0017869446 |             f
-    60 |     6000 |     37 |  0.0031224872 |             f
-    61 |     6100 |     39 |  0.0008418260 |             f
-    62 |     6200 |     40 |  0.0018764649 |             f
-    63 |     6300 |     43 |  0.0044249899 |             f
-    64 |     6400 |     44 |  0.0013363433 |             f
-    65 |     6500 |     46 |  0.0119047619 |         ideal
-    66 |     6600 |     49 |  0.0018140707 |             f
-    67 |     6700 |     51 |  0.0028630187 |             f
-    68 |     6800 |     50 |  0.0006250951 |             f
-    69 |     6900 |     51 |  0.0017292317 |             f
-    70 |     7000 |     51 |  0.0117647059 |         ideal
-    71 |     7100 |     52 |  0.0026202418 |         ideal
-    72 |     7200 |     53 |  0.0007716678 |             f
-    73 |     7300 |     52 |  0.0010127901 |             f
-    74 |     7400 |     52 |  0.0016901939 |             f
-    75 |     7500 |     52 |  0.0020396039 |             f
-    76 |     7600 |     51 |  0.0032111054 |             f
-    77 |     7700 |     55 |  0.0011600015 |             f
-    78 |     7800 |     55 |  0.0012534057 |             f
-    79 |     7900 |     54 |  0.0055950243 |         ideal
-    80 |     8000 |     54 |  0.0004396763 |             f
-    81 |     8100 |     51 |  0.0009126921 |             f
-    82 |     8200 |     51 |  0.0016033684 |             f
-    83 |     8300 |     51 |  0.0018087677 |             f
-    84 |     8400 |     51 |  0.0021397974 |             f
-    85 |     8500 |     51 |  0.0024947540 |             f
-    86 |     8600 |     51 |  0.0026282147 |             f
-    87 |     8700 |     53 |  0.0029600432 |         ideal
-    88 |     8800 |     53 |  0.0001841545 |             f
-    89 |     8900 |     54 |  0.0004520615 |             f
-    90 |     9000 |     55 |  0.0007531997 |             f
-    91 |     9100 |     53 |  0.0017709106 |             f
-    92 |     9200 |     54 |  0.0019597996 |             f
-    93 |     9300 |     53 |  0.0025166488 |             f
-    94 |     9400 |     53 |  0.0002122683 |             f
-    95 |     9500 |     53 |  0.0006212178 |             f
-    96 |     9600 |     53 |  0.0008674702 |             f
-    97 |     9700 |     55 |  0.0024911073 |             f
-    98 |     9800 |     55 |  0.0025786398 |             f
-    99 |     9900 |     55 |  0.0001041267 |             f
-   100 |    10000 |     58 |  0.0010693803 |             f
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>FomoClassifier(accuracy_metrics=[make_scorer(FPR)],
-               estimator=LogisticRegression(n_jobs=1),
-               fairness_metrics=[&lt;function subgroup_FNR_scorer at 0x7fac27cc1440&gt;],
-               problem_type=&lt;class &#x27;fomo.problem.MLPProblem&#x27;&gt;, verbose=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">FomoClassifier</label><div class="sk-toggleable__content"><pre>FomoClassifier(accuracy_metrics=[make_scorer(FPR)],
-               estimator=LogisticRegression(n_jobs=1),
-               fairness_metrics=[&lt;function subgroup_FNR_scorer at 0x7fac27cc1440&gt;],
-               problem_type=&lt;class &#x27;fomo.problem.MLPProblem&#x27;&gt;, verbose=True)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(n_jobs=1)</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(n_jobs=1)</pre></div></div></div></div></div></div></div></div></div></div></div>
-</div>
-</section>
-<section id="visualize-model-set">
-<h1>visualize model set<a class="headerlink" href="#visualize-model-set" title="Link to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">est.plot()</span></code> will return the Pareto front found during the run, with a red dot indicating the final chosen model. By default, Fomo uses the PseudoWeights method from pymoo to choose the final model, which produces a model near the centroid of the front.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-&lt;pymoo.visualization.scatter.Scatter at 0x7fac9733fd50&gt;
+Process ForkPoolWorker-8:
+Process ForkPoolWorker-2:
+Process ForkPoolWorker-4:
+Process ForkPoolWorker-7:
+Traceback (most recent call last):
+Process ForkPoolWorker-5:
+Traceback (most recent call last):
+Traceback (most recent call last):
+Process ForkPoolWorker-3:
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+Traceback (most recent call last):
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Process ForkPoolWorker-1:
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
+    est.fit(X,y,sample_weight=sample_weight)
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
+    est.fit(X,y,sample_weight=sample_weight)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
+    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
+    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
+    est.fit(X,y,sample_weight=sample_weight)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
+    return super().__call__(iterable_with_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
+    return super().__call__(iterable_with_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 89, in _evaluate
+    f[j] = metric(est, X, y, **self.metric_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
+    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 360, in subgroup_FNR_scorer
+    return subgroup_scorer( estimator, X, y_true, &#39;FNR&#39;, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
+    return super().__call__(iterable_with_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 344, in subgroup_scorer
+    y_pred = estimator.predict_proba(X)[:,1]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 86, in _evaluate
+    f[i] = metric(est, X, y)
+           ^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1372, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Process ForkPoolWorker-6:
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
+    est.fit(X,y,sample_weight=sample_weight)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 434, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 234, in __call__
+    return self._score(
+           ^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
+    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
+    return super().__call__(iterable_with_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
+    self.results = batch()
+                   ^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 316, in _score
+    y_pred = method_caller(clf, &#34;predict_proba&#34;, X)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
+    self.results = batch()
+                   ^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
+    self.run()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 401, in decision_function
+    scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
+    est.fit(X,y,sample_weight=sample_weight)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 73, in _cached_call
+    return getattr(estimator, method)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/extmath.py&#34;, line 192, in safe_sparse_dot
+    sparse.issparse(a)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1372, in predict_proba
+    return super()._predict_proba_lr(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
+    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
+    return [func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/sparse/_base.py&#34;, line 1301, in isspmatrix
+    def isspmatrix(x):
+
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
+    return [func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 434, in _predict_proba_lr
+    prob = self.decision_function(X)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
+    return super().__call__(iterable_with_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
+    return list(itertools.starmap(args[0], args[1]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
+    if self.dispatch_one_batch(iterator):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 401, in decision_function
+    scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
+    self.results = batch()
+                   ^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/extmath.py&#34;, line 192, in safe_sparse_dot
+    sparse.issparse(a)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
+    self.problem._evaluate(x, out, *self.args, **self.kwargs)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/sparse/_base.py&#34;, line 1301, in isspmatrix
+    def isspmatrix(x):
+
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
+    opt_res = optimize.minimize(
+              ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
+    self.results = batch()
+                   ^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
+    opt_res = optimize.minimize(
+              ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
+    opt_res = optimize.minimize(
+              ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 89, in _evaluate
+    f[j] = metric(est, X, y, **self.metric_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
+    return [func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
+    opt_res = optimize.minimize(
+              ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
+    return [func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
+    self.results = batch()
+                   ^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 360, in subgroup_FNR_scorer
+    return subgroup_scorer( estimator, X, y_true, &#39;FNR&#39;, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
+    return [func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
+    return [func(*args, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
+    opt_res = optimize.minimize(
+              ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 354, in subgroup_scorer
+    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 265, in subgroup_loss
+    categories = X_protected.groupby(groups).groups
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/groupby/groupby.py&#34;, line 672, in groups
+    return self.grouper.groups
+           ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+           ^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 305, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;pandas/_libs/properties.pyx&#34;, line 36, in pandas._libs.properties.CachedProperty.__get__
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/groupby/ops.py&#34;, line 928, in groups
+    return self.axis.groupby(index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+         ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
+    loss, grad_pointwise = self.base_loss.loss_gradient(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/indexes/base.py&#34;, line 6331, in groupby
+    values = values._values
+             ^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 332, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
+    def loss_gradient(
+
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 158, in __init__
+    self._update_fun()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+         ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;pandas/_libs/properties.pyx&#34;, line 36, in pandas._libs.properties.CachedProperty.__get__
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+         ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+             ^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/indexes/multi.py&#34;, line 745, in _values
+    arr = lib.fast_zip(values)
+          ^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
+    loss, grad_pointwise = self.base_loss.loss_gradient(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
+    def loss_gradient(
+
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+         ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
+    loss, grad_pointwise = self.base_loss.loss_gradient(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
+    def loss_gradient(
+
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
+    loss, grad_pointwise = self.base_loss.loss_gradient(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+         ^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 291, in loss_gradient
+    grad[-1] = grad_pointwise.sum()
+               ^^^^^^^^^^^^^^^^^^^^
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/numpy/core/_methods.py&#34;, line 47, in _sum
+    def _sum(a, axis=None, dtype=None, out=None, keepdims=False,
+
+KeyboardInterrupt
+  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
+    def loss_gradient(
+
+KeyboardInterrupt
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_Adult_4_1.png" src="../_images/examples_Adult_4_1.png" />
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[3], line 11</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># est = FomoClassifier(</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(95,135,135)">#     estimator = LogisticRegression(),</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(95,135,135)">#     accuracy_metrics=[make_scorer(metrics.FPR)],</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> <span style="color: rgb(95,135,135)">#     problem_type=MLPProblem</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span> <span style="color: rgb(95,135,135)"># )</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span> est <span style="color: rgb(98,98,98)">=</span> FomoClassifier()
+<span class="ansi-green-fg">---&gt; 11</span> <span class="ansi-yellow-bg">est</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">Xtrain</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg">ytrain</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">groups</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">termination</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">n_gen</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">10</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/projects/fomo/fomo/fomo/estimator.py:488</span>, in <span class="ansi-cyan-fg">FomoClassifier.fit</span><span class="ansi-blue-fg">(self, X, y, grouping, abs_val, gamma, protected_features, Xp, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    484</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>y_ <span style="color: rgb(98,98,98)">=</span> y
+<span class="ansi-green-intense-fg ansi-bold">    486</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_init_metrics()
+<span class="ansi-green-fg">--&gt; 488</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">grouping</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">grouping</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">abs_val</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">abs_val</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gamma</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gamma</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">Xp</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">Xp</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    490</span> <span style="color: rgb(95,135,135)"># Return the classifier</span>
+<span class="ansi-green-intense-fg ansi-bold">    491</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span>
+
+File <span class="ansi-green-fg">~/projects/fomo/fomo/fomo/estimator.py:206</span>, in <span class="ansi-cyan-fg">FomoEstimator.fit</span><span class="ansi-blue-fg">(self, X, y, grouping, abs_val, gamma, protected_features, Xp, starting_point, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    204</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>res_ <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>algorithm_<span style="color: rgb(98,98,98)">.</span>result()
+<span class="ansi-green-intense-fg ansi-bold">    205</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-fg">--&gt; 206</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>res_ <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">minimize</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    207</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">problem_</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    208</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">algorithm_</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    209</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">seed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">random_state</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    210</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">verbose</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">verbose</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    211</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span>
+<span class="ansi-green-intense-fg ansi-bold">    212</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    214</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> n_processes <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
+<span class="ansi-green-intense-fg ansi-bold">    215</span>     pool<span style="color: rgb(98,98,98)">.</span>close()
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/optimize.py:67</span>, in <span class="ansi-cyan-fg">minimize</span><span class="ansi-blue-fg">(problem, algorithm, termination, copy_algorithm, copy_termination, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     64</span>     algorithm<span style="color: rgb(98,98,98)">.</span>setup(problem, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
+<span class="ansi-green-intense-fg ansi-bold">     66</span> <span style="color: rgb(95,135,135)"># actually execute the algorithm</span>
+<span class="ansi-green-fg">---&gt; 67</span> res <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">algorithm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">run</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     69</span> <span style="color: rgb(95,135,135)"># store the deep copied algorithm in the result object</span>
+<span class="ansi-green-intense-fg ansi-bold">     70</span> res<span style="color: rgb(98,98,98)">.</span>algorithm <span style="color: rgb(98,98,98)">=</span> algorithm
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/algorithm.py:141</span>, in <span class="ansi-cyan-fg">Algorithm.run</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    139</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">run</span>(<span style="color: rgb(0,135,0)">self</span>):
+<span class="ansi-green-intense-fg ansi-bold">    140</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">while</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>has_next():
+<span class="ansi-green-fg">--&gt; 141</span>         <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">next</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    142</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>result()
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/algorithm.py:161</span>, in <span class="ansi-cyan-fg">Algorithm.next</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    159</span> <span style="color: rgb(95,135,135)"># call the advance with them after evaluation</span>
+<span class="ansi-green-intense-fg ansi-bold">    160</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> infills <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">--&gt; 161</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">evaluator</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">eval</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">infills</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">algorithm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    162</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>advance(infills<span style="color: rgb(98,98,98)">=</span>infills)
+<span class="ansi-green-intense-fg ansi-bold">    164</span> <span style="color: rgb(95,135,135)"># if the algorithm does not follow the infill-advance scheme just call advance</span>
+<span class="ansi-green-intense-fg ansi-bold">    165</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/evaluator.py:69</span>, in <span class="ansi-cyan-fg">Evaluator.eval</span><span class="ansi-blue-fg">(self, problem, pop, skip_already_evaluated, evaluate_values_of, count_evals, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     65</span> <span style="color: rgb(95,135,135)"># evaluate the solutions (if there are any)</span>
+<span class="ansi-green-intense-fg ansi-bold">     66</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(I) <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">0</span>:
+<span class="ansi-green-intense-fg ansi-bold">     67</span>
+<span class="ansi-green-intense-fg ansi-bold">     68</span>     <span style="color: rgb(95,135,135)"># do the actual evaluation - call the sub-function to set the corresponding values to the population</span>
+<span class="ansi-green-fg">---&gt; 69</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_eval</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">pop</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">I</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">evaluate_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     71</span> <span style="color: rgb(95,135,135)"># update the function evaluation counter</span>
+<span class="ansi-green-intense-fg ansi-bold">     72</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> count_evals:
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/evaluator.py:90</span>, in <span class="ansi-cyan-fg">Evaluator._eval</span><span class="ansi-blue-fg">(self, problem, pop, evaluate_values_of, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     87</span> X <span style="color: rgb(98,98,98)">=</span> pop<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">X</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># call the problem to evaluate the solutions</span>
+<span class="ansi-green-fg">---&gt; 90</span> out <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">evaluate</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_values_of</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">evaluate_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_as_dictionary</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     92</span> <span style="color: rgb(95,135,135)"># for each of the attributes set it to the problem</span>
+<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key, val <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> out<span style="color: rgb(98,98,98)">.</span>items():
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:198</span>, in <span class="ansi-cyan-fg">Problem.evaluate</span><span class="ansi-blue-fg">(self, X, return_values_of, return_as_dictionary, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    195</span>     only_single_value <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> (<span style="color: rgb(0,135,0)">isinstance</span>(X, <span style="color: rgb(0,135,0)">list</span>) <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> <span style="color: rgb(0,135,0)">isinstance</span>(X, np<span style="color: rgb(98,98,98)">.</span>ndarray))
+<span class="ansi-green-intense-fg ansi-bold">    197</span> <span style="color: rgb(95,135,135)"># this is where the actual evaluation takes place</span>
+<span class="ansi-green-fg">--&gt; 198</span> _out <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">do</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    200</span> out <span style="color: rgb(98,98,98)">=</span> {}
+<span class="ansi-green-intense-fg ansi-bold">    201</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> k, v <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> _out<span style="color: rgb(98,98,98)">.</span>items():
+<span class="ansi-green-intense-fg ansi-bold">    202</span>
+<span class="ansi-green-intense-fg ansi-bold">    203</span>     <span style="color: rgb(95,135,135)"># copy it to a numpy array (it might be one of jax at this point)</span>
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:238</span>, in <span class="ansi-cyan-fg">Problem.do</span><span class="ansi-blue-fg">(self, X, return_values_of, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    236</span> <span style="color: rgb(95,135,135)"># do the function evaluation</span>
+<span class="ansi-green-intense-fg ansi-bold">    237</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>elementwise:
+<span class="ansi-green-fg">--&gt; 238</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_evaluate_elementwise</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">out</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    239</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">    240</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_evaluate_vectorized(X, out, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:256</span>, in <span class="ansi-cyan-fg">Problem._evaluate_elementwise</span><span class="ansi-blue-fg">(self, X, out, *args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    253</span> f <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>elementwise_func(<span style="color: rgb(0,135,0)">self</span>, args, kwargs)
+<span class="ansi-green-intense-fg ansi-bold">    255</span> <span style="color: rgb(95,135,135)"># execute the runner</span>
+<span class="ansi-green-fg">--&gt; 256</span> elems <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">elementwise_runner</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    258</span> <span style="color: rgb(95,135,135)"># for each evaluation call</span>
+<span class="ansi-green-intense-fg ansi-bold">    259</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> elem <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> elems:
+<span class="ansi-green-intense-fg ansi-bold">    260</span>
+<span class="ansi-green-intense-fg ansi-bold">    261</span>     <span style="color: rgb(95,135,135)"># for each key stored for this evaluation</span>
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:37</span>, in <span class="ansi-cyan-fg">StarmapParallelization.__call__</span><span class="ansi-blue-fg">(self, f, X)</span>
+<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__call__</span>(<span style="color: rgb(0,135,0)">self</span>, f, X):
+<span class="ansi-green-fg">---&gt; 37</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">list</span>(<span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">starmap</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">for</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(175,0,255)">in</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>)
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:375</span>, in <span class="ansi-cyan-fg">Pool.starmap</span><span class="ansi-blue-fg">(self, func, iterable, chunksize)</span>
+<span class="ansi-green-intense-fg ansi-bold">    369</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">starmap</span>(<span style="color: rgb(0,135,0)">self</span>, func, iterable, chunksize<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
+<span class="ansi-green-intense-fg ansi-bold">    370</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#39;&#39;&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">    371</span> <span style="color: rgb(175,0,0)">    Like `map()` method but the elements of the `iterable` are expected to</span>
+<span class="ansi-green-intense-fg ansi-bold">    372</span> <span style="color: rgb(175,0,0)">    be iterables as well and will be unpacked as arguments. Hence</span>
+<span class="ansi-green-intense-fg ansi-bold">    373</span> <span style="color: rgb(175,0,0)">    `func` and (a, b) becomes func(a, b).</span>
+<span class="ansi-green-intense-fg ansi-bold">    374</span> <span style="color: rgb(175,0,0)">    &#39;&#39;&#39;</span>
+<span class="ansi-green-fg">--&gt; 375</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_map_async</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">iterable</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">starmapstar</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">chunksize</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:768</span>, in <span class="ansi-cyan-fg">ApplyResult.get</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    767</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">get</span>(<span style="color: rgb(0,135,0)">self</span>, timeout<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
+<span class="ansi-green-fg">--&gt; 768</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    769</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>ready():
+<span class="ansi-green-intense-fg ansi-bold">    770</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TimeoutError</span>
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:765</span>, in <span class="ansi-cyan-fg">ApplyResult.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    764</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">wait</span>(<span style="color: rgb(0,135,0)">self</span>, timeout<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
+<span class="ansi-green-fg">--&gt; 765</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_event</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading.py:622</span>, in <span class="ansi-cyan-fg">Event.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    620</span> signaled <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_flag
+<span class="ansi-green-intense-fg ansi-bold">    621</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> signaled:
+<span class="ansi-green-fg">--&gt; 622</span>     signaled <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_cond</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    623</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> signaled
+
+File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading.py:320</span>, in <span class="ansi-cyan-fg">Condition.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    318</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:    <span style="color: rgb(95,135,135)"># restore state no matter what (e.g., KeyboardInterrupt)</span>
+<span class="ansi-green-intense-fg ansi-bold">    319</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> timeout <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">--&gt; 320</span>         <span class="ansi-yellow-bg">waiter</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">acquire</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    321</span>         gotit <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>
+<span class="ansi-green-intense-fg ansi-bold">    322</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>:
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="visualize-model-set">
+<h1>visualize model set<a class="headerlink" href="#visualize-model-set" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">est.plot()</span></code> will return the Pareto front found during the run, with a red dot indicating the final chosen model. By default, Fomo uses the PseudoWeights method from pymoo to choose the final model, which produces a model near the centroid of the front.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
 </div>
 <section id="picking-with-different-strategies">
-<h2>picking with different strategies<a class="headerlink" href="#picking-with-different-strategies" title="Link to this heading">#</a></h2>
+<h2>picking with different strategies<a class="headerlink" href="#picking-with-different-strategies" title="Link to this heading">¶</a></h2>
 <p>We can also pick with other multi-criteria decision making strategies (MDCMs). Fomo supports the PseudoWeights, Compromise, and HighTradeoffPoints strategies from <a class="reference external" href="https://pymoo.org/mcdm">pymoo</a>.</p>
 <p>Here’s an example of picking with the Compromise strategy.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;PseudoWeights&#39;</span><span class="p">)</span>
@@ -441,24 +1030,8 @@ n_gen  |  n_eval  | n_nds  |      eps      |   indicator
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 1.0, &#39;Picking with PseudoWeights&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/examples_Adult_7_1.png" src="../_images/examples_Adult_7_1.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;Compromise&#39;</span><span class="p">)</span>
@@ -468,25 +1041,9 @@ Text(0.5, 1.0, &#39;Picking with PseudoWeights&#39;)
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 1.0, &#39;Picking with Compromise&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/examples_Adult_8_1.png" src="../_images/examples_Adult_8_1.png" />
-</div>
-</div>
 <p>Here’s an example of picking with the HighTradeoffPoints strategy.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;HighTradeoffPoints&#39;</span><span class="p">)</span>
@@ -494,22 +1051,6 @@ Text(0.5, 1.0, &#39;Picking with Compromise&#39;)
 <span class="n">plot3</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Picking with HighTradeoffPoints&#39;</span><span class="p">)</span>
 </pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 1.0, &#39;Picking with HighTradeoffPoints&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/examples_Adult_10_1.png" src="../_images/examples_Adult_10_1.png" />
 </div>
 </div>
 </section>
@@ -571,14 +1112,14 @@ Text(0.5, 1.0, &#39;Picking with HighTradeoffPoints&#39;)
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=f0357c94"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=63b572e7"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/tabs.js?v=3ee01567"></script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
