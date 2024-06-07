@@ -523,7 +523,7 @@ class FomoClassifier(FomoEstimator, ClassifierMixin, BaseEstimator):
         if self.accuracy_metrics is None:
             self.accuracy_metrics_ = [make_scorer(roc_auc_score, greater_is_better=False, needs_proba=True)]
         if self.fairness_metrics is None:
-            self.fairness_metrics_ = [metrics.multicalibration_loss]
+            self.fairness_metrics_ = [metrics.subgroup_FNR_scorer]
 
     def predict_proba_archive(self, X):
         """Return a list of predictions from the archive models. """

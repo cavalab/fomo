@@ -98,7 +98,8 @@ def multicalibration_loss(
     proportional=False,
     alpha=0.01,
     gamma=0.01,
-    rho=0.1
+    rho=0.1,
+    **kwargs
 ):
     """custom scoring function for multicalibration.
        calculate current loss in terms of (proportional) multicalibration
