@@ -44,12 +44,7 @@ from fomo.algorithm import Lexicase, Lexicase_NSGA2
 class BasicProblem(ElementwiseProblem):
     """ The evaluation function for each candidate sample weights. """
 
-    def __init__(
-        self, 
-        fomo_estimator, 
-        metric_kwargs={},
-        **kwargs
-        ):
+    def __init__( self, fomo_estimator, metric_kwargs={}, **kwargs):
         self.fomo_estimator=fomo_estimator
         self.metric_kwargs=metric_kwargs
         n_var = len(self.fomo_estimator.X_)

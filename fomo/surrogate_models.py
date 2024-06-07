@@ -182,7 +182,8 @@ class Linear:
         X = self._one_hot_encode(X)
         intercept = np.ones(X.shape[0])
         Xintercept = np.column_stack((intercept, X))
-        return expit(np.dot(Xintercept,self.coefs_))
+        # return expit(np.dot(Xintercept,self.coefs_))
+        return np.dot(Xintercept,self.coefs_)
 
     def _one_hot_encode(self, X):
         if hasattr(self, 'ohc'):
@@ -235,7 +236,8 @@ class InterLinear:
         X = self._one_hot_encode(X)
         intercept = np.ones(X.shape[0])
         Xintercept = np.column_stack((intercept, X))
-        return expit(np.dot(Xintercept,self.coefs_))
+        # return expit(np.dot(Xintercept,self.coefs_))
+        return np.dot(Xintercept,self.coefs_)
 
     def _make_interaction(self, X):
         """add an interaction variable"""
