@@ -343,684 +343,185 @@
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 running 8 processes
-number of variables: 24421
+groups [&#39;race&#39;, &#39;sex&#39;]
+number of variables: 91
 number of objectives: 2
+==========================================================
+n_gen  |  n_eval  | n_nds  |      eps      |   indicator
+==========================================================
+     1 |      100 |      1 |             - |             -
+     2 |      200 |      1 |  0.000000E+00 |             f
+     3 |      300 |      1 |  0.0034228992 |         ideal
+     4 |      400 |      2 |  1.0000000000 |         ideal
+     5 |      500 |      3 |  0.8146306973 |         ideal
+     6 |      600 |      3 |  0.000000E+00 |             f
+     7 |      700 |      2 |  4.2000000000 |         ideal
+     8 |      800 |      4 |  0.3971170605 |         ideal
+     9 |      900 |      3 |  0.3057606609 |         ideal
+    10 |     1000 |      4 |  0.1323133137 |             f
+    11 |     1100 |      6 |  0.4152670028 |         ideal
+    12 |     1200 |      2 |  1.7142857143 |         ideal
+    13 |     1300 |      5 |  0.4171185424 |         ideal
+    14 |     1400 |      7 |  0.0967741935 |         ideal
+    15 |     1500 |      6 |  0.1162790698 |         ideal
+    16 |     1600 |      8 |  0.0717071378 |             f
+    17 |     1700 |      6 |  0.0639174660 |             f
+    18 |     1800 |      7 |  0.1820967625 |         ideal
+    19 |     1900 |      7 |  0.1602887731 |         ideal
+    20 |     2000 |      6 |  0.0779889666 |             f
+    21 |     2100 |      4 |  0.0400000000 |         ideal
+    22 |     2200 |      4 |  2.3993187937 |         nadir
+    23 |     2300 |      3 |  0.4210526316 |         ideal
+    24 |     2400 |      6 |  0.3841393693 |         ideal
+    25 |     2500 |      4 |  0.2140090753 |         ideal
+    26 |     2600 |      5 |  0.5524773035 |         ideal
+    27 |     2700 |      4 |  0.1600000000 |         ideal
+    28 |     2800 |      5 |  0.1603283898 |             f
+    29 |     2900 |      6 |  0.0167402515 |         nadir
+    30 |     3000 |      6 |  0.0566037736 |         ideal
+    31 |     3100 |      6 |  0.4465091611 |         ideal
+    32 |     3200 |      4 |  0.1282051282 |         ideal
+    33 |     3300 |      7 |  0.0849345529 |         ideal
+    34 |     3400 |      2 |  2.0341423686 |         ideal
+    35 |     3500 |      2 |  0.000000E+00 |             f
+    36 |     3600 |      3 |  0.3333333333 |         ideal
+    37 |     3700 |      4 |  0.1250000000 |         ideal
+    38 |     3800 |      3 |  0.2258064516 |         ideal
+    39 |     3900 |      4 |  0.6178693355 |         ideal
+    40 |     4000 |      3 |  1.1379368066 |         ideal
+    41 |     4100 |      2 |  0.8148101985 |         ideal
+    42 |     4200 |      4 |  0.1600655111 |         ideal
+    43 |     4300 |      3 |  3.5612341727 |         ideal
+    44 |     4400 |      3 |  0.2983776524 |         ideal
+    45 |     4500 |      3 |  0.4710869379 |         ideal
+    46 |     4600 |      3 |  0.9719084409 |         ideal
+    47 |     4700 |      6 |  0.3072527959 |         ideal
+    48 |     4800 |      7 |  0.0081835842 |         ideal
+    49 |     4900 |      3 |  0.0960966881 |         ideal
+    50 |     5000 |      3 |  0.2292140853 |         ideal
+    51 |     5100 |      6 |  0.2889883010 |         ideal
+    52 |     5200 |      7 |  0.5238869699 |         ideal
+    53 |     5300 |     11 |  0.0909090909 |         ideal
+    54 |     5400 |      7 |  0.0053574541 |         ideal
+    55 |     5500 |      5 |  0.3220919180 |         ideal
+    56 |     5600 |      4 |  0.1428794271 |         ideal
+    57 |     5700 |      7 |  0.2660857961 |         ideal
+    58 |     5800 |      8 |  0.1286921691 |         ideal
+    59 |     5900 |     10 |  0.0572076340 |         ideal
+    60 |     6000 |      3 |  0.5819394120 |         ideal
+    61 |     6100 |      3 |  0.6790188317 |         ideal
+    62 |     6200 |      4 |  0.1170851112 |             f
+    63 |     6300 |      6 |  0.1358298066 |         ideal
+    64 |     6400 |     11 |  0.2559945202 |         ideal
+    65 |     6500 |      7 |  0.2027911606 |         ideal
+    66 |     6600 |      7 |  0.5271397603 |         ideal
+    67 |     6700 |      6 |  0.1008411740 |         ideal
+    68 |     6800 |      5 |  0.2254303228 |         ideal
+    69 |     6900 |      7 |  0.1059056666 |         ideal
+    70 |     7000 |      8 |  0.0294117647 |         ideal
+    71 |     7100 |      8 |  0.2193978294 |         ideal
+    72 |     7200 |     13 |  0.1243357979 |         ideal
+    73 |     7300 |     12 |  0.0459063802 |         ideal
+    74 |     7400 |     12 |  0.1072023461 |         ideal
+    75 |     7500 |     13 |  0.1680118827 |         ideal
+    76 |     7600 |     12 |  0.0167520865 |         ideal
+    77 |     7700 |      8 |  0.0125914304 |         ideal
+    78 |     7800 |     13 |  0.1945921582 |         ideal
+    79 |     7900 |     12 |  0.0208720899 |             f
+    80 |     8000 |     11 |  0.0270162155 |             f
+    81 |     8100 |     12 |  0.0282667170 |         ideal
+    82 |     8200 |     12 |  0.0451739075 |         ideal
+    83 |     8300 |     15 |  0.0483224209 |         ideal
+    84 |     8400 |     18 |  0.0166697980 |         ideal
+    85 |     8500 |     19 |  0.0831185735 |         ideal
+    86 |     8600 |     18 |  0.0102047581 |             f
+    87 |     8700 |     18 |  0.0435719768 |         ideal
+    88 |     8800 |     16 |  0.0084406152 |             f
+    89 |     8900 |     19 |  0.0611135908 |         ideal
+    90 |     9000 |     19 |  0.0115793865 |             f
+    91 |     9100 |     22 |  0.0172908106 |         ideal
+    92 |     9200 |     23 |  0.0086708543 |             f
+    93 |     9300 |     21 |  0.1935483871 |         nadir
+    94 |     9400 |     21 |  0.0061117835 |             f
+    95 |     9500 |     18 |  0.0146517669 |         ideal
+    96 |     9600 |     20 |  0.0121630510 |             f
+    97 |     9700 |     20 |  0.0069372310 |         ideal
+    98 |     9800 |     21 |  0.0049116762 |             f
+    99 |     9900 |     22 |  0.0085966430 |             f
+   100 |    10000 |     21 |  0.0032119600 |             f
 </pre></div></div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>FomoClassifier(accuracy_metrics=[make_scorer(FPR)],
+               estimator=LogisticRegression(n_jobs=1),
+               fairness_metrics=[&lt;function subgroup_FNR_scorer at 0x7fb28a0c1b20&gt;],
+               problem_type=&lt;class &#x27;fomo.problem.MLPProblem&#x27;&gt;, verbose=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">FomoClassifier</label><div class="sk-toggleable__content"><pre>FomoClassifier(accuracy_metrics=[make_scorer(FPR)],
+               estimator=LogisticRegression(n_jobs=1),
+               fairness_metrics=[&lt;function subgroup_FNR_scorer at 0x7fb28a0c1b20&gt;],
+               problem_type=&lt;class &#x27;fomo.problem.MLPProblem&#x27;&gt;, verbose=True)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(n_jobs=1)</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(n_jobs=1)</pre></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-Process ForkPoolWorker-8:
-Process ForkPoolWorker-2:
-Process ForkPoolWorker-4:
-Process ForkPoolWorker-7:
-Traceback (most recent call last):
-Process ForkPoolWorker-5:
-Traceback (most recent call last):
-Traceback (most recent call last):
-Process ForkPoolWorker-3:
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-Traceback (most recent call last):
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-Traceback (most recent call last):
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-Traceback (most recent call last):
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Process ForkPoolWorker-1:
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-Traceback (most recent call last):
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
-    est.fit(X,y,sample_weight=sample_weight)
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
-    est.fit(X,y,sample_weight=sample_weight)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
-    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
-    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
-    est.fit(X,y,sample_weight=sample_weight)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
-    return super().__call__(iterable_with_config)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
-    return super().__call__(iterable_with_config)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 89, in _evaluate
-    f[j] = metric(est, X, y, **self.metric_kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
-    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 360, in subgroup_FNR_scorer
-    return subgroup_scorer( estimator, X, y_true, &#39;FNR&#39;, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
-    if self.dispatch_one_batch(iterator):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
-    if self.dispatch_one_batch(iterator):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
-    return super().__call__(iterable_with_config)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 344, in subgroup_scorer
-    y_pred = estimator.predict_proba(X)[:,1]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 86, in _evaluate
-    f[i] = metric(est, X, y)
-           ^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1372, in predict_proba
-    return super()._predict_proba_lr(X)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
-    if self.dispatch_one_batch(iterator):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Process ForkPoolWorker-6:
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
-    est.fit(X,y,sample_weight=sample_weight)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 434, in _predict_proba_lr
-    prob = self.decision_function(X)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 234, in __call__
-    return self._score(
-           ^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
-    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
-    return super().__call__(iterable_with_config)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Traceback (most recent call last):
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
-    self.results = batch()
-                   ^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
-    if self.dispatch_one_batch(iterator):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 316, in _score
-    y_pred = method_caller(clf, &#34;predict_proba&#34;, X)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
-    self.results = batch()
-                   ^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 314, in _bootstrap
-    self.run()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 401, in decision_function
-    scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 81, in _evaluate
-    est.fit(X,y,sample_weight=sample_weight)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/metrics/_scorer.py&#34;, line 73, in _cached_call
-    return getattr(estimator, method)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/extmath.py&#34;, line 192, in safe_sparse_dot
-    sparse.issparse(a)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1372, in predict_proba
-    return super()._predict_proba_lr(X)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1291, in fit
-    fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose, prefer=prefer)(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
-    return [func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/process.py&#34;, line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/sparse/_base.py&#34;, line 1301, in isspmatrix
-    def isspmatrix(x):
-
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
-    return [func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
-    return [func(*args, **kwargs)
-            ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 434, in _predict_proba_lr
-    prob = self.decision_function(X)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 125, in worker
-    result = (True, func(*args, **kwds))
-                    ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 63, in __call__
-    return super().__call__(iterable_with_config)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
-    return self.function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py&#34;, line 51, in starmapstar
-    return list(itertools.starmap(args[0], args[1]))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 1085, in __call__
-    if self.dispatch_one_batch(iterator):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_base.py&#34;, line 401, in decision_function
-    scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
-    return [func(*args, **kwargs)
-            ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 901, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 819, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
-    return self.function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
-    self.results = batch()
-                   ^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/extmath.py&#34;, line 192, in safe_sparse_dot
-    sparse.issparse(a)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py&#34;, line 20, in __call__
-    self.problem._evaluate(x, out, *self.args, **self.kwargs)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/sparse/_base.py&#34;, line 1301, in isspmatrix
-    def isspmatrix(x):
-
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
-    opt_res = optimize.minimize(
-              ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
-    self.results = batch()
-                   ^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
-    opt_res = optimize.minimize(
-              ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
-    opt_res = optimize.minimize(
-              ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-             ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/problem.py&#34;, line 89, in _evaluate
-    f[j] = metric(est, X, y, **self.metric_kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
-    return [func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
-    opt_res = optimize.minimize(
-              ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
-    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
-    return [func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
-    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/_parallel_backends.py&#34;, line 597, in __init__
-    self.results = batch()
-                   ^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 360, in subgroup_FNR_scorer
-    return subgroup_scorer( estimator, X, y_true, &#39;FNR&#39;, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-           ^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
-    return [func(*args, **kwargs)
-            ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in __call__
-    return [func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-           ^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
-    return [func(*args, **kwargs)
-            ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/joblib/parallel.py&#34;, line 288, in &lt;listcomp&gt;
-    return [func(*args, **kwargs)
-            ^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
-    return self.function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py&#34;, line 450, in _logistic_regression_path
-    opt_res = optimize.minimize(
-              ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 354, in subgroup_scorer
-    return subgroup_loss(y_true, y_pred, X_protected, metric, grouping, abs_val, gamma)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
-    return self.function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/utils/parallel.py&#34;, line 123, in __call__
-    return self.function(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
-    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/projects/fomo/fomo/fomo/metrics.py&#34;, line 265, in subgroup_loss
-    categories = X_protected.groupby(groups).groups
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
-    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-           ^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_minimize.py&#34;, line 696, in minimize
-    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/groupby/groupby.py&#34;, line 672, in groups
-    return self.grouper.groups
-           ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 359, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-           ^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
-    self.f = fun_wrapped(self.x)
-             ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_lbfgsb_py.py&#34;, line 305, in _minimize_lbfgsb
-    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
-    fx = fun(np.copy(x), *args)
-         ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;pandas/_libs/properties.pyx&#34;, line 36, in pandas._libs.properties.CachedProperty.__get__
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 285, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/groupby/ops.py&#34;, line 928, in groups
-    return self.axis.groupby(index)
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
-    self.f = fun_wrapped(self.x)
-             ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
-    fg = self.fun(x, *args)
-         ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
-    self.f = fun_wrapped(self.x)
-             ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
-    loss, grad_pointwise = self.base_loss.loss_gradient(
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
-    fx = fun(np.copy(x), *args)
-         ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
-    self.f = fun_wrapped(self.x)
-             ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/indexes/base.py&#34;, line 6331, in groupby
-    values = values._values
-             ^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 332, in _prepare_scalar_function
-    sf = ScalarFunction(fun, x0, args, grad, hess,
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
-    def loss_gradient(
-
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 158, in __init__
-    self._update_fun()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
-    fx = fun(np.copy(x), *args)
-         ^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
-    fg = self.fun(x, *args)
-         ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 251, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;pandas/_libs/properties.pyx&#34;, line 36, in pandas._libs.properties.CachedProperty.__get__
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
-    fg = self.fun(x, *args)
-         ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 155, in update_fun
-    self.f = fun_wrapped(self.x)
-             ^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/pandas/core/indexes/multi.py&#34;, line 745, in _values
-    arr = lib.fast_zip(values)
-          ^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
-    loss, grad_pointwise = self.base_loss.loss_gradient(
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
-    fx = fun(np.copy(x), *args)
-         ^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
-    def loss_gradient(
-
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
-    fg = self.fun(x, *args)
-         ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
-    loss, grad_pointwise = self.base_loss.loss_gradient(
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
-    def loss_gradient(
-
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 137, in fun_wrapped
-    fx = fun(np.copy(x), *args)
-         ^^^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 278, in loss_gradient
-    loss, grad_pointwise = self.base_loss.loss_gradient(
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 76, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/scipy/optimize/_optimize.py&#34;, line 70, in _compute_if_needed
-    fg = self.fun(x, *args)
-         ^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/linear_model/_linear_loss.py&#34;, line 291, in loss_gradient
-    grad[-1] = grad_pointwise.sum()
-               ^^^^^^^^^^^^^^^^^^^^
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/numpy/core/_methods.py&#34;, line 47, in _sum
-    def _sum(a, axis=None, dtype=None, out=None, keepdims=False,
-
-KeyboardInterrupt
-  File &#34;/home/bill/mambaforge/envs/fomo/lib/python3.11/site-packages/sklearn/_loss/loss.py&#34;, line 200, in loss_gradient
-    def loss_gradient(
-
-KeyboardInterrupt
+&lt;pymoo.visualization.scatter.Scatter at 0x7fb2f02cf310&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[3], line 11</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># est = FomoClassifier(</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(95,135,135)">#     estimator = LogisticRegression(),</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(95,135,135)">#     accuracy_metrics=[make_scorer(metrics.FPR)],</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span> <span style="color: rgb(95,135,135)">#     problem_type=MLPProblem</span>
-<span class="ansi-green-intense-fg ansi-bold">      9</span> <span style="color: rgb(95,135,135)"># )</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span> est <span style="color: rgb(98,98,98)">=</span> FomoClassifier()
-<span class="ansi-green-fg">---&gt; 11</span> <span class="ansi-yellow-bg">est</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">Xtrain</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg">ytrain</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">groups</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">termination</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">n_gen</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">10</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/projects/fomo/fomo/fomo/estimator.py:488</span>, in <span class="ansi-cyan-fg">FomoClassifier.fit</span><span class="ansi-blue-fg">(self, X, y, grouping, abs_val, gamma, protected_features, Xp, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    484</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>y_ <span style="color: rgb(98,98,98)">=</span> y
-<span class="ansi-green-intense-fg ansi-bold">    486</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_init_metrics()
-<span class="ansi-green-fg">--&gt; 488</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fit</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">y</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">grouping</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">grouping</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">abs_val</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">abs_val</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gamma</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gamma</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">protected_features</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">Xp</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">Xp</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    490</span> <span style="color: rgb(95,135,135)"># Return the classifier</span>
-<span class="ansi-green-intense-fg ansi-bold">    491</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span>
-
-File <span class="ansi-green-fg">~/projects/fomo/fomo/fomo/estimator.py:206</span>, in <span class="ansi-cyan-fg">FomoEstimator.fit</span><span class="ansi-blue-fg">(self, X, y, grouping, abs_val, gamma, protected_features, Xp, starting_point, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    204</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>res_ <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>algorithm_<span style="color: rgb(98,98,98)">.</span>result()
-<span class="ansi-green-intense-fg ansi-bold">    205</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 206</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>res_ <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">minimize</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    207</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">problem_</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    208</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">algorithm_</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    209</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">seed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">random_state</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    210</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">verbose</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">verbose</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    211</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span>
-<span class="ansi-green-intense-fg ansi-bold">    212</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    214</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> n_processes <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>:
-<span class="ansi-green-intense-fg ansi-bold">    215</span>     pool<span style="color: rgb(98,98,98)">.</span>close()
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/optimize.py:67</span>, in <span class="ansi-cyan-fg">minimize</span><span class="ansi-blue-fg">(problem, algorithm, termination, copy_algorithm, copy_termination, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     64</span>     algorithm<span style="color: rgb(98,98,98)">.</span>setup(problem, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
-<span class="ansi-green-intense-fg ansi-bold">     66</span> <span style="color: rgb(95,135,135)"># actually execute the algorithm</span>
-<span class="ansi-green-fg">---&gt; 67</span> res <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">algorithm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">run</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     69</span> <span style="color: rgb(95,135,135)"># store the deep copied algorithm in the result object</span>
-<span class="ansi-green-intense-fg ansi-bold">     70</span> res<span style="color: rgb(98,98,98)">.</span>algorithm <span style="color: rgb(98,98,98)">=</span> algorithm
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/algorithm.py:141</span>, in <span class="ansi-cyan-fg">Algorithm.run</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    139</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">run</span>(<span style="color: rgb(0,135,0)">self</span>):
-<span class="ansi-green-intense-fg ansi-bold">    140</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">while</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>has_next():
-<span class="ansi-green-fg">--&gt; 141</span>         <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">next</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    142</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>result()
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/algorithm.py:161</span>, in <span class="ansi-cyan-fg">Algorithm.next</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    159</span> <span style="color: rgb(95,135,135)"># call the advance with them after evaluation</span>
-<span class="ansi-green-intense-fg ansi-bold">    160</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> infills <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">--&gt; 161</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">evaluator</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">eval</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">infills</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">algorithm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    162</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>advance(infills<span style="color: rgb(98,98,98)">=</span>infills)
-<span class="ansi-green-intense-fg ansi-bold">    164</span> <span style="color: rgb(95,135,135)"># if the algorithm does not follow the infill-advance scheme just call advance</span>
-<span class="ansi-green-intense-fg ansi-bold">    165</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/evaluator.py:69</span>, in <span class="ansi-cyan-fg">Evaluator.eval</span><span class="ansi-blue-fg">(self, problem, pop, skip_already_evaluated, evaluate_values_of, count_evals, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     65</span> <span style="color: rgb(95,135,135)"># evaluate the solutions (if there are any)</span>
-<span class="ansi-green-intense-fg ansi-bold">     66</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(I) <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">0</span>:
-<span class="ansi-green-intense-fg ansi-bold">     67</span>
-<span class="ansi-green-intense-fg ansi-bold">     68</span>     <span style="color: rgb(95,135,135)"># do the actual evaluation - call the sub-function to set the corresponding values to the population</span>
-<span class="ansi-green-fg">---&gt; 69</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_eval</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">pop</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">I</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">evaluate_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     71</span> <span style="color: rgb(95,135,135)"># update the function evaluation counter</span>
-<span class="ansi-green-intense-fg ansi-bold">     72</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> count_evals:
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/evaluator.py:90</span>, in <span class="ansi-cyan-fg">Evaluator._eval</span><span class="ansi-blue-fg">(self, problem, pop, evaluate_values_of, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     87</span> X <span style="color: rgb(98,98,98)">=</span> pop<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">X</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-intense-fg ansi-bold">     89</span> <span style="color: rgb(95,135,135)"># call the problem to evaluate the solutions</span>
-<span class="ansi-green-fg">---&gt; 90</span> out <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">problem</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">evaluate</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_values_of</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">evaluate_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_as_dictionary</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     92</span> <span style="color: rgb(95,135,135)"># for each of the attributes set it to the problem</span>
-<span class="ansi-green-intense-fg ansi-bold">     93</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key, val <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> out<span style="color: rgb(98,98,98)">.</span>items():
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:198</span>, in <span class="ansi-cyan-fg">Problem.evaluate</span><span class="ansi-blue-fg">(self, X, return_values_of, return_as_dictionary, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    195</span>     only_single_value <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> (<span style="color: rgb(0,135,0)">isinstance</span>(X, <span style="color: rgb(0,135,0)">list</span>) <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> <span style="color: rgb(0,135,0)">isinstance</span>(X, np<span style="color: rgb(98,98,98)">.</span>ndarray))
-<span class="ansi-green-intense-fg ansi-bold">    197</span> <span style="color: rgb(95,135,135)"># this is where the actual evaluation takes place</span>
-<span class="ansi-green-fg">--&gt; 198</span> _out <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">do</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">return_values_of</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    200</span> out <span style="color: rgb(98,98,98)">=</span> {}
-<span class="ansi-green-intense-fg ansi-bold">    201</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> k, v <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> _out<span style="color: rgb(98,98,98)">.</span>items():
-<span class="ansi-green-intense-fg ansi-bold">    202</span>
-<span class="ansi-green-intense-fg ansi-bold">    203</span>     <span style="color: rgb(95,135,135)"># copy it to a numpy array (it might be one of jax at this point)</span>
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:238</span>, in <span class="ansi-cyan-fg">Problem.do</span><span class="ansi-blue-fg">(self, X, return_values_of, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    236</span> <span style="color: rgb(95,135,135)"># do the function evaluation</span>
-<span class="ansi-green-intense-fg ansi-bold">    237</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>elementwise:
-<span class="ansi-green-fg">--&gt; 238</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_evaluate_elementwise</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">out</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    239</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-intense-fg ansi-bold">    240</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_evaluate_vectorized(X, out, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:256</span>, in <span class="ansi-cyan-fg">Problem._evaluate_elementwise</span><span class="ansi-blue-fg">(self, X, out, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    253</span> f <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>elementwise_func(<span style="color: rgb(0,135,0)">self</span>, args, kwargs)
-<span class="ansi-green-intense-fg ansi-bold">    255</span> <span style="color: rgb(95,135,135)"># execute the runner</span>
-<span class="ansi-green-fg">--&gt; 256</span> elems <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">elementwise_runner</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    258</span> <span style="color: rgb(95,135,135)"># for each evaluation call</span>
-<span class="ansi-green-intense-fg ansi-bold">    259</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> elem <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> elems:
-<span class="ansi-green-intense-fg ansi-bold">    260</span>
-<span class="ansi-green-intense-fg ansi-bold">    261</span>     <span style="color: rgb(95,135,135)"># for each key stored for this evaluation</span>
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/site-packages/pymoo/core/problem.py:37</span>, in <span class="ansi-cyan-fg">StarmapParallelization.__call__</span><span class="ansi-blue-fg">(self, f, X)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__call__</span>(<span style="color: rgb(0,135,0)">self</span>, f, X):
-<span class="ansi-green-fg">---&gt; 37</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span style="color: rgb(0,135,0)">list</span>(<span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">starmap</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">f</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">for</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">x</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(175,0,255)">in</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">X</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>)
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:375</span>, in <span class="ansi-cyan-fg">Pool.starmap</span><span class="ansi-blue-fg">(self, func, iterable, chunksize)</span>
-<span class="ansi-green-intense-fg ansi-bold">    369</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">starmap</span>(<span style="color: rgb(0,135,0)">self</span>, func, iterable, chunksize<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-intense-fg ansi-bold">    370</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">&#39;&#39;&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">    371</span> <span style="color: rgb(175,0,0)">    Like `map()` method but the elements of the `iterable` are expected to</span>
-<span class="ansi-green-intense-fg ansi-bold">    372</span> <span style="color: rgb(175,0,0)">    be iterables as well and will be unpacked as arguments. Hence</span>
-<span class="ansi-green-intense-fg ansi-bold">    373</span> <span style="color: rgb(175,0,0)">    `func` and (a, b) becomes func(a, b).</span>
-<span class="ansi-green-intense-fg ansi-bold">    374</span> <span style="color: rgb(175,0,0)">    &#39;&#39;&#39;</span>
-<span class="ansi-green-fg">--&gt; 375</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_map_async</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">iterable</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">starmapstar</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">chunksize</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:768</span>, in <span class="ansi-cyan-fg">ApplyResult.get</span><span class="ansi-blue-fg">(self, timeout)</span>
-<span class="ansi-green-intense-fg ansi-bold">    767</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">get</span>(<span style="color: rgb(0,135,0)">self</span>, timeout<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-fg">--&gt; 768</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    769</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>ready():
-<span class="ansi-green-intense-fg ansi-bold">    770</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TimeoutError</span>
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/multiprocessing/pool.py:765</span>, in <span class="ansi-cyan-fg">ApplyResult.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
-<span class="ansi-green-intense-fg ansi-bold">    764</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">wait</span>(<span style="color: rgb(0,135,0)">self</span>, timeout<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">None</span>):
-<span class="ansi-green-fg">--&gt; 765</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_event</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading.py:622</span>, in <span class="ansi-cyan-fg">Event.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
-<span class="ansi-green-intense-fg ansi-bold">    620</span> signaled <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_flag
-<span class="ansi-green-intense-fg ansi-bold">    621</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> signaled:
-<span class="ansi-green-fg">--&gt; 622</span>     signaled <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_cond</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">wait</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">timeout</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    623</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> signaled
-
-File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading.py:320</span>, in <span class="ansi-cyan-fg">Condition.wait</span><span class="ansi-blue-fg">(self, timeout)</span>
-<span class="ansi-green-intense-fg ansi-bold">    318</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:    <span style="color: rgb(95,135,135)"># restore state no matter what (e.g., KeyboardInterrupt)</span>
-<span class="ansi-green-intense-fg ansi-bold">    319</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> timeout <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">--&gt; 320</span>         <span class="ansi-yellow-bg">waiter</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">acquire</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    321</span>         gotit <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>
-<span class="ansi-green-intense-fg ansi-bold">    322</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>:
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
+<img alt="../_images/examples_Adult_4_1.png" src="../_images/examples_Adult_4_1.png" />
 </div>
 </div>
 </section>
 <section id="visualize-model-set">
 <h1>visualize model set<a class="headerlink" href="#visualize-model-set" title="Link to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">est.plot()</span></code> will return the Pareto front found during the run, with a red dot indicating the final chosen model. By default, Fomo uses the PseudoWeights method from pymoo to choose the final model, which produces a model near the centroid of the front.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pymoo.visualization.scatter.Scatter at 0x7fb289cb9290&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Adult_6_1.png" src="../_images/examples_Adult_6_1.png" />
+</div>
+</div>
 <section id="picking-with-different-strategies">
 <h2>picking with different strategies<a class="headerlink" href="#picking-with-different-strategies" title="Link to this heading">¶</a></h2>
 <p>We can also pick with other multi-criteria decision making strategies (MDCMs). Fomo supports the PseudoWeights, Compromise, and HighTradeoffPoints strategies from <a class="reference external" href="https://pymoo.org/mcdm">pymoo</a>.</p>
 <p>Here’s an example of picking with the Compromise strategy.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;PseudoWeights&#39;</span><span class="p">)</span>
@@ -1030,8 +531,24 @@ File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading
 <br/></pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Picking with PseudoWeights&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Adult_9_1.png" src="../_images/examples_Adult_9_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;Compromise&#39;</span><span class="p">)</span>
@@ -1041,9 +558,25 @@ File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading
 <br/></pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Picking with Compromise&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Adult_10_1.png" src="../_images/examples_Adult_10_1.png" />
+</div>
+</div>
 <p>Here’s an example of picking with the HighTradeoffPoints strategy.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">est</span><span class="o">.</span><span class="n">best_estimator_</span> <span class="o">=</span> <span class="n">est</span><span class="o">.</span><span class="n">pick_best</span><span class="p">(</span><span class="s1">&#39;HighTradeoffPoints&#39;</span><span class="p">)</span>
@@ -1051,6 +584,22 @@ File <span class="ansi-green-fg">~/mambaforge/envs/fomo/lib/python3.11/threading
 <span class="n">plot3</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Picking with HighTradeoffPoints&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Picking with HighTradeoffPoints&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Adult_12_1.png" src="../_images/examples_Adult_12_1.png" />
 </div>
 </div>
 </section>
