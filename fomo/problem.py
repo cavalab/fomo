@@ -85,18 +85,20 @@ class BasicProblem(ElementwiseProblem):
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
             j += 1
+            if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
+            # Add information needed for lexicase selection to out
+                group_loss, gp_lens, inter_group_loss, inter_gp_lens, y_pred = metrics.flex_loss(est, X, y, metric._score_func, **self.metric_kwargs)
+                out['group_loss'] = group_loss 
+                out['gp_lens'] = gp_lens 
+                out['inter_group_loss'] = inter_group_loss 
+                out['inter_gp_lens'] = inter_gp_lens 
+                out['y_pred'] = y_pred 
+                out['y_true'] = y 
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
             
         out['F'] = np.asarray(f)
-
-        if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
-            fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
-            out['fn'] = fn #FNR of all samples to be used in Flex
-            out['fng'] = fng #FNR of every group to be used in Flex
-            out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
-            out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
 
 
 class SurrogateProblem(ElementwiseProblem):
@@ -171,18 +173,20 @@ class SurrogateProblem(ElementwiseProblem):
         for i, metric in enumerate(self.fomo_estimator.accuracy_metrics_):
             f[i] = metric(est, X, y)
             j += 1
+            if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
+            # Add information needed for lexicase selection to out
+                group_loss, gp_lens, inter_group_loss, inter_gp_lens, y_pred = metrics.flex_loss(est, X, y, metric._score_func, **self.metric_kwargs)
+                out['group_loss'] = group_loss 
+                out['gp_lens'] = gp_lens 
+                out['inter_group_loss'] = inter_group_loss 
+                out['inter_gp_lens'] = inter_gp_lens 
+                out['y_pred'] = y_pred 
+                out['y_true'] = y 
         for metric in self.fomo_estimator.fairness_metrics_:
             f[j] = metric(est, X, y, **self.metric_kwargs)
             j += 1
 
         out['F'] = np.asarray(f)
-
-        if isinstance(self.fomo_estimator.algorithm, (Lexicase, Lexicase_NSGA2)):
-            fn, fng, samples_fnr, gp_lens = metrics.flex_loss(est, X, y, 'FNR', **self.metric_kwargs)
-            out['fn'] = fn #FNR of all samples to be used in Flex
-            out['fng'] = fng #FNR of every group to be used in Flex
-            out['samples_fnr'] = samples_fnr #FNR of each sample to be used in Flex with weighted coin flip
-            out['gp_lens'] = gp_lens #Length of each protected group to be used in Flex with weighted coin flip
 
 class MLPProblem(SurrogateProblem):
     """ The evaluation function for each candidate weights. 
