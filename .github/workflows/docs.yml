@@ -18,10 +18,12 @@ jobs:
           fetch-depth: 30
       - 
         name: Install Conda environment with Micromamba
-        uses: mamba-org/setup-micromamba@v2
+        uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: environment.yml
           cache-environment: true
+          create-args: >-
+            pandoc
       - 
         name: Install
         run: | 
