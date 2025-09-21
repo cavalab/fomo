@@ -86,13 +86,26 @@ def categorize(X, y, groups, grouping,
 
 
     df = X[groups].copy()
-    df.loc[:,'interval'], retbins = pd.cut(y, bins, 
-                                           include_lowest=True,
-                                           retbins=True
-                                          )
+    
     categories = {}
     # group_ids = groupby(X, y, groups, grouping)
-    group_ids = df.groupby(groups).groups
+    if grouping == 'intersectional':
+        group_ids = df.groupby(groups).groups
+
+    elif grouping == 'marginal':
+        group_ids = {}
+        for col in df.columns:
+            unique_values = df[col].unique()
+            for val in unique_values:
+                category_key = (val,)
+                mask = df[col] == val
+                indices = df[mask].index
+                group_ids[category_key] = indices
+
+    df.loc[:,'interval'], retbins = pd.cut(y, bins, 
+                                            include_lowest=True,
+                                            retbins=True
+                                            )
 
     min_grp_size = gamma*len(X) 
     min_cat_size = min_grp_size*alpha/n_bins
