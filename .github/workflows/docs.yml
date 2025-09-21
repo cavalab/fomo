@@ -22,7 +22,7 @@ jobs:
         with:
           environment-file: environment.yml
           cache-environment: true
-          extra-specs: | 
+          create-args: |> 
             pandoc
       - 
         name: Install
